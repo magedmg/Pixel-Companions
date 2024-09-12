@@ -3,22 +3,19 @@
 #include <raymath.h>
 
 #include <iostream>
+using namespace std;
 
 int main() {
   Color darkBlue = {44, 44, 127, 255};
   Color white = {255, 255, 255, 0};
   Color transparent = {255, 255, 255, 0};
 
-  int screenWidth = GetScreenWidth();
-  int screenHeight = GetScreenHeight();
-
-  InitWindow(screenWidth, screenHeight, "Pixel Companions");
-  ToggleFullscreen();
+  InitWindow(1000, 700, "Pixel Companions");
 
   Image bg_img =
       LoadImage("resources/rename.png"); // Loaded in CPU memory (RAM)
 
-  ImageResize(&bg_img, 1900, 1200);
+  ImageResize(&bg_img, 1000, 700);
   Texture2D bg_texture = LoadTextureFromImage(
       bg_img); // Image converted to texture, GPU memory (VRAM)
 
@@ -29,7 +26,8 @@ int main() {
       corgi_img); // Image converted to texture, GPU memory (VRAM)
 
   SetTargetFPS(60); // fps
-  // close icon is pressed or the esc key
+                    // close icon is pressed or the esc key
+
   while (!WindowShouldClose()) {
     ClearBackground(BLANK); // create a background with a clear darkblue colour
     BeginDrawing();
