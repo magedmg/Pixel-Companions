@@ -1,3 +1,4 @@
+#include <ostream>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -5,15 +6,19 @@
 
 int main() {
   Color darkBlue = {44, 44, 127, 255};
-
   Color white = {255, 255, 255, 0};
-
   Color transparent = {255, 255, 255, 0};
 
-  InitWindow(600, 600, "Pixel Companion"); // size
+  int screenWidth = GetScreenWidth();
+  int screenHeight = GetScreenHeight();
+
+  InitWindow(screenWidth, screenHeight, "Pixel Companions");
+  ToggleFullscreen();
 
   Image bg_img =
-      LoadImage("resources/backgroundimage.png"); // Loaded in CPU memory (RAM)
+      LoadImage("resources/rename.png"); // Loaded in CPU memory (RAM)
+
+  ImageResize(&bg_img, 1900, 1200);
   Texture2D bg_texture = LoadTextureFromImage(
       bg_img); // Image converted to texture, GPU memory (VRAM)
 
@@ -25,10 +30,10 @@ int main() {
 
   SetTargetFPS(60); // fps
   // close icon is pressed or the esc key
-  while (WindowShouldClose() == false) {
-    ClearBackground(
-        RAYWHITE); // create a background with a clear darkblue colour
+  while (!WindowShouldClose()) {
+    ClearBackground(BLANK); // create a background with a clear darkblue colour
     BeginDrawing();
+
     DrawTexture(
         bg_texture, 0, 0,
         WHITE); // make sure to leave tint on white. does not work with blank
