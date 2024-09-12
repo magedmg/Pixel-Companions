@@ -1,4 +1,3 @@
-
 #include <raylib.h>
 #include <raymath.h>
 
@@ -18,7 +17,8 @@ int main() {
   Texture2D bg_texture = LoadTextureFromImage(
       bg_img); // Image converted to texture, GPU memory (VRAM)
 
-  Image corgi_img = LoadImage("resources/Corgi.png"); // Loaded in CPU memory (RAM)
+  Image corgi_img =
+      LoadImage("resources/Corgi.png"); // Loaded in CPU memory (RAM)
   ImageResize(&corgi_img, 110, 120);
   Texture2D corgi_texture = LoadTextureFromImage(
       corgi_img); // Image converted to texture, GPU memory (VRAM)
@@ -29,7 +29,6 @@ int main() {
     ClearBackground(
         RAYWHITE); // create a background with a clear darkblue colour
     BeginDrawing();
-
     DrawTexture(
         bg_texture, 0, 0,
         WHITE); // make sure to leave tint on white. does not work with blank
@@ -38,7 +37,7 @@ int main() {
   }
 
   UnloadTexture(bg_texture); // Texture unloadin
-  CloseWindow();          // closes the window
+  CloseWindow();             // closes the window
 
   return 0;
 }
