@@ -18,7 +18,7 @@ int main() {
   Image bg_img =
       LoadImage("resources/rename.png"); // Loaded in CPU memory (RAM)
 
-  ImageResize(&bg_img, 1900, 1200);
+  ImageResize(&bg_img, 1440, 900);
   Texture2D bg_texture = LoadTextureFromImage(
       bg_img); // Image converted to texture, GPU memory (VRAM)
 
