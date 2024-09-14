@@ -5,7 +5,6 @@
 using namespace std;
 
 int main() {
-  int windowSize[2] = {1000, 700};
 
   int windowWidth = 1000;
   int windowHeight = 700;
