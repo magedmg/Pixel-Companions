@@ -3,6 +3,9 @@
 Cat::Cat() {
     this->pet_type = "dog";
     this->movementSpeedCat = 10;
+    this->lastDrunk = time(0);
+    this->lastFed = time(0);
+    this->lastPetted = time(0);
 }
 
 int Cat::calc_catHunger(time_t lastFed) { // if 10 or more seconds pass after last being fed, reduce hunger by 20
@@ -41,3 +44,6 @@ int Cat::calc_catHappiness(time_t lastPetted) { // if 20 or more seconds pass af
     }
 }
         
+std::vector<Poop> Cat::get_poops() {
+    return this->poops;
+}

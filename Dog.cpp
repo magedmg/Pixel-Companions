@@ -3,6 +3,9 @@
 Dog::Dog() {
     this->pet_type = "dog";
     this->movementSpeedDog = 20;
+    this->lastDrunk = time(0);
+    this->lastFed = time(0);
+    this->lastPetted = time(0);
 }
 
 int Dog::calc_dogHunger(time_t lastFed) { // if 10 or more seconds pass after last being fed, reduce hunger by 20
@@ -41,3 +44,6 @@ int Dog::calc_dogHappiness(time_t lastPetted) { // if 20 or more seconds pass af
     }
 }
         
+std::vector<Poop> Dog::get_poops() {
+    return this->poops;
+}
