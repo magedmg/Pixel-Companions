@@ -1,0 +1,6 @@
+# Ignore compiled files
+*.o
+*.out
+
+# Ignore macOS system files
+.DS_Store
