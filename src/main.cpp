@@ -20,9 +20,8 @@ int main() {
   // Load and resize standing cat images
   Texture2D standTextures[4];
   for (int i = 0; i < 4; i++) {
-    const char *filename = TextFormat("resources/cat/1%d.png", i + 1);
 
-    Image catImage = LoadImage(filename);
+    Image catImage = LoadImage(TextFormat("resources/cat/1%d.png", i + 1));
     ImageResize(&catImage, 85, 95);
     standTextures[i] = LoadTextureFromImage(catImage);
     UnloadImage(catImage); // Unload image after converting to texture
@@ -31,9 +30,7 @@ int main() {
   // Load and resize running cat images (right direction)
   Texture2D runRightTextures[6];
   for (int i = 0; i < 6; i++) {
-    const char *filename = TextFormat("resources/cat/2%d.png", i + 1);
-
-    Image catImage = LoadImage(filename);
+    Image catImage = LoadImage(TextFormat("resources/cat/2%d.png", i + 1));
     ImageResize(&catImage, 85, 95);
     runRightTextures[i] = LoadTextureFromImage(catImage);
     UnloadImage(catImage); // Unload image after converting to texture
@@ -42,12 +39,10 @@ int main() {
   // Load and resize running cat images (left direction)
   Texture2D runLeftTextures[6];
   for (int i = 0; i < 6; i++) {
-    const char *filename = TextFormat("resources/cat/3%d.png", i + 1);
-
-    Image catImage = LoadImage(filename);
+    Image catImage = LoadImage(TextFormat("resources/cat/3%d.png", i + 1));
     ImageResize(&catImage, 85, 95);
     runLeftTextures[i] = LoadTextureFromImage(catImage);
-    UnloadImage(catImage); // Unload image after converting to texture
+    UnloadImage(catImage);  // Unload image after converting to texture
   }
 
   SetTargetFPS(60);
