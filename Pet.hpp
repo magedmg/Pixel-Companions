@@ -9,7 +9,6 @@ class Pet {
         int hungerLevel;
         int thirstLevel;
         int happinessLevel;
-        int poopCount;
 
         std::string name;
         std::string pet_type;
@@ -35,8 +34,5 @@ class Pet {
 
         void set_happinessLevel(int happiness);
         int get_happinessLevel();
-
-        void set_poopCount(int poopCount);
-        int get_poopCount();
 };
 

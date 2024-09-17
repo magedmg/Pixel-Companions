@@ -41,11 +41,3 @@ void Pet::set_happinessLevel(int happiness) {
 int Pet::get_happinessLevel() {
     return this->happinessLevel;
 }
-
-void Pet::set_poopCount(int poopCount) {
-    this->poopCount = poopCount;
-}
-
-int Pet::get_poopCount() {
-    return this->poopCount;
-}
