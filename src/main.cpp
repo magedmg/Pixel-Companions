@@ -26,6 +26,8 @@ int main() {
 
   Texture2D foodbuttonTexture;
   createImage(foodbuttonSize, foodbuttonTexture, "buttons/foodbutton");
+	Texture2D foodbuttonClickedTexture;
+	createImage(foodbuttonSize, foodbuttonClickedTexture, "buttons/foodbuttonclicked");
 
   Texture2D standTextures[4];
   createAnimation(4, catSize, standTextures, "cat/1");
@@ -51,16 +53,19 @@ int main() {
   float foodSpeed = 200.0f;
   Rectangle foodButtonRect = {880, 16, (float)foodbuttonSize[0],
                               (float)foodbuttonSize[1]};
+	bool isButtonPressed = false;
 
   // GAME LOOP
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
 
     // 1. Event Handling & Updating Positions
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON && foodFalling == false)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && foodFalling == false) {
       Vector2 mousePosition = GetMousePosition();
 
       if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
+        isButtonPressed = true;
+
         // random place for food falling
         foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
         while (foodPosition.x < 0 || foodPosition.x > 950) {
@@ -78,6 +83,8 @@ int main() {
         isRunning = true;
         curFrame = 0;
       }
+    } else {
+      isButtonPressed = false;
     }
 
 		if (foodFalling) {
@@ -103,12 +110,14 @@ int main() {
         if (catPosition.x >= targetPosition.x) {
           catPosition.x = targetPosition.x;
           isRunning = false;
+					curFrame = 0;
         }
       } else {
         catPosition.x -= moveSpeed * deltaTime;
         if (catPosition.x <= targetPosition.x) {
           catPosition.x = targetPosition.x;
           isRunning = false;
+					curFrame = 0;
         }
       }
     }
@@ -132,7 +141,12 @@ int main() {
       DrawTexture(standTextures[curFrame], (int)catPosition.x, (int)catPosition.y, WHITE);
     }
 
-    DrawTexture(foodbuttonTexture, 880, 16, WHITE);
+    if (isButtonPressed) {
+			DrawTexture(foodbuttonClickedTexture, 880, 16, WHITE);
+		} else {
+			DrawTexture(foodbuttonTexture, 880, 16, WHITE); 
+		}
+
     EndDrawing();
   }
 
@@ -147,6 +161,7 @@ int main() {
   }
   UnloadTexture(fishTexture);
   UnloadTexture(foodbuttonTexture);
+  UnloadTexture(foodbuttonClickedTexture);
 
   CloseWindow();
   return 0;
