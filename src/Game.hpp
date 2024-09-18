@@ -13,6 +13,9 @@ private:
 
   DogX dog;
 
+  Image healthBarImage;
+  Texture2D healthBarTexture;
+
 public:
   Game();
 

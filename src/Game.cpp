@@ -8,11 +8,17 @@ Game::Game() {
   bgImage = LoadImage("resources/bg.png");
   ImageResize(&bgImage, windowWidth, windowHeight);
   bgImageTexture = LoadTextureFromImage(bgImage);
+  // Load health bar image and resize it
+  healthBarImage = LoadImage("resources/health bar.png");
+  ImageResize(&healthBarImage, 300, 40);
+  healthBarTexture = LoadTextureFromImage(healthBarImage);
 }
 
 void Game::updateAll() {
   flag = 0;
+
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
+
   dog.Draw();
 
   dog.Poo1();
@@ -34,4 +40,5 @@ void Game::updateAll() {
   if (flag == 0) {
     dog.Update();
   }
+  DrawTextureV(healthBarTexture, {10, 10}, WHITE);
 }
