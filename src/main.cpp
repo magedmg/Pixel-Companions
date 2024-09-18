@@ -4,126 +4,139 @@
 #include <iostream>
 using namespace std;
 
+void createAnimation(int, int[2], Texture2D*, const char*);
+void createImage(int[2], Texture2D&, const char*);
+
 int main() {
+  // DECLARE WINDOW SIZE
   int windowSize[2] = {1000, 700};
-
   InitWindow(windowSize[0], windowSize[1], "Pixel Companions");
-
-  // Load and resize background image
-  Image bgImage = LoadImage("resources/bg.png");
-  ImageResize(&bgImage, windowSize[0], windowSize[1]);
-  Texture2D bgTexture = LoadTextureFromImage(bgImage);
-  UnloadImage(bgImage);  // Unload image after converting to texture
-
-  // Load and resize standing cat images
-  Texture2D standTextures[4];
-  for (int i = 0; i < 4; i++) {
-    const char* filename = TextFormat("resources/cat/1%d.png", i + 1);
-
-    Image catImage = LoadImage(filename);
-    ImageResize(&catImage, 85, 95);
-    standTextures[i] = LoadTextureFromImage(catImage);
-    UnloadImage(catImage);  // Unload image after converting to texture
-  }
-
-  // Load and resize running cat images (right direction)
-  Texture2D runRightTextures[6];
-  for (int i = 0; i < 6; i++) {
-    const char* filename = TextFormat("resources/cat/2%d.png", i + 1);
-
-    Image catImage = LoadImage(filename);
-    ImageResize(&catImage, 85, 95);
-    runRightTextures[i] = LoadTextureFromImage(catImage);
-    UnloadImage(catImage);  // Unload image after converting to texture
-  }
-
-  // Load and resize running cat images (left direction)
-  Texture2D runLeftTextures[6];
-  for (int i = 0; i < 6; i++) {
-    const char* filename = TextFormat("resources/cat/3%d.png", i + 1);
-
-    Image catImage = LoadImage(filename);
-    ImageResize(&catImage, 85, 95);
-    runLeftTextures[i] = LoadTextureFromImage(catImage);
-    UnloadImage(catImage);  // Unload image after converting to texture
-  }
-
   SetTargetFPS(60);
 
+  // IMPORT ELEMENTS (BG & SPRITES)
+  int catSize[2] = {85, 95};
+  int fishSize[2] = {55, 65};
+  int foodbuttonSize[2] = {95, 95};
+
+  Texture2D bgTexture;
+  createImage(windowSize, bgTexture, "bg");
+
+  Texture2D fishTexture;
+  createImage(fishSize, fishTexture, "food/fish");
+
+  Texture2D foodbuttonTexture;
+  createImage(foodbuttonSize, foodbuttonTexture, "buttons/foodbutton");
+
+  Texture2D standTextures[4];
+  createAnimation(4, catSize, standTextures, "cat/1");
+
+  Texture2D runRightTextures[6];
+  createAnimation(6, catSize, runRightTextures, "cat/2");
+
+  Texture2D runLeftTextures[6];
+  createAnimation(6, catSize, runLeftTextures, "cat/3");
+
+  // DEFINE VARIABLES TO USE IN LOOP
   Vector2 catPosition = {250, 480};
   Vector2 targetPosition = catPosition;
-  int currentFrame = 0;      // Index of the current frame
-  float frameSpeed = 0.1f;   // Speed at which frames change (seconds per frame)
-  float frameTime = 0.0f;    // Time accumulator
-  float moveSpeed = 100.0f;  // Speed at which the cat moves (pixels per second)
-  bool isRunning = false;    // Indicates whether the cat is running
-  bool movingRight = true;   // Direction of movement (right by default)
+  int curFrame = 0;
+  float frameSpeed = 0.1f;
+  float frameTime = 0.0f;
+  float moveSpeed = 100.0f;
+  bool isRunning = false;
+  bool movingRight = true;
 
+  Vector2 foodPosition = {0, -100};
+  bool foodFalling = false;
+  float foodSpeed = 200.0f;
+  Rectangle foodButtonRect = {880, 16, (float)foodbuttonSize[0],
+                              (float)foodbuttonSize[1]};
+
+  // GAME LOOP
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
 
-    // Check for mouse click and update target position
+    // 1. Event Handling & Updating Positions
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-      targetPosition = GetMousePosition();
-      // Determine direction based on mouse position
-      if (targetPosition.x > catPosition.x) {
-        movingRight = true;
-      } else if (targetPosition.x < catPosition.x) {
-        movingRight = false;
+      Vector2 mousePosition = GetMousePosition();
+
+      if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
+        // random place for food falling
+        foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
+        while (foodPosition.x < 0 || foodPosition.x > 950) {
+          foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
+        }
+        foodPosition.y = 0;
+        foodFalling = true;
+
+        targetPosition.x = foodPosition.x;
+        if (targetPosition.x > catPosition.x) {
+					movingRight = true;
+				} else {
+					movingRight = false;
+				}
+        isRunning = true;
+        curFrame = 0;
       }
-      isRunning = true;  // Start running when the mouse is pressed
     }
 
-    // Update frame time and change frame if needed
+		if (foodFalling) {
+      foodPosition.y += foodSpeed * deltaTime;
+      if (foodPosition.y >= 480) {
+        foodFalling = false;
+      }
+    }
+
     frameTime += deltaTime;
     if (frameTime >= frameSpeed) {
-      frameTime = 0.0f;  // Reset frame time
+      frameTime = 0.0f;
       if (isRunning) {
-        currentFrame = (currentFrame + 1) % 6;  // Cycle through run frames
+        curFrame = (curFrame + 1) % 6;
       } else {
-        currentFrame = (currentFrame + 1) % 4;  // Cycle through stand frames
+        curFrame = (curFrame + 1) % 4;
       }
     }
 
-    // Move the cat left or right towards the target position if running
     if (isRunning) {
       if (movingRight) {
         catPosition.x += moveSpeed * deltaTime;
         if (catPosition.x >= targetPosition.x) {
           catPosition.x = targetPosition.x;
-          isRunning = false;  // Stop running when the target is reached
+          isRunning = false;
         }
       } else {
         catPosition.x -= moveSpeed * deltaTime;
         if (catPosition.x <= targetPosition.x) {
           catPosition.x = targetPosition.x;
-          isRunning = false;  // Stop running when the target is reached
+          isRunning = false;
         }
       }
     }
 
+    // 2. Drawing
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(bgTexture, 0, 0, WHITE);
 
-    // Draw the appropriate texture based on the cat's state and direction
-    if (isRunning) {
-      if (movingRight) {
-        DrawTexture(runRightTextures[currentFrame], (int)catPosition.x,
-                    (int)catPosition.y, WHITE);
-      } else {
-        DrawTexture(runLeftTextures[currentFrame], (int)catPosition.x,
-                    (int)catPosition.y, WHITE);
-      }
-    } else {
-      DrawTexture(standTextures[currentFrame], (int)catPosition.x,
-                  (int)catPosition.y, WHITE);
+		if (foodFalling) {
+      DrawTexture(fishTexture, (int)foodPosition.x, (int)foodPosition.y, WHITE);
     }
 
+    if (isRunning) {
+      if (movingRight) {
+        DrawTexture(runRightTextures[curFrame], (int)catPosition.x, (int)catPosition.y, WHITE);
+      } else {
+        DrawTexture(runLeftTextures[curFrame], (int)catPosition.x, (int)catPosition.y, WHITE);
+      }
+    } else {
+      DrawTexture(standTextures[curFrame], (int)catPosition.x, (int)catPosition.y, WHITE);
+    }
+
+    DrawTexture(foodbuttonTexture, 880, 16, WHITE);
     EndDrawing();
   }
 
-  // Unload textures and close window
+  // UNLOAD TEXTURES
   UnloadTexture(bgTexture);
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
@@ -132,43 +145,28 @@ int main() {
     UnloadTexture(runRightTextures[i]);
     UnloadTexture(runLeftTextures[i]);
   }
-  CloseWindow();
+  UnloadTexture(fishTexture);
+  UnloadTexture(foodbuttonTexture);
 
+  CloseWindow();
   return 0;
 }
 
-// int main() {
-//   Color darkBlue = {44, 44, 127,
-//                     255};  // Not used, can be removed if unnecessary
+void createAnimation(int numLoop, int sizes[2], Texture2D* textures,
+                     const char* path) {
+  for (int i = 0; i < numLoop; i++) {
+    const char* filename = TextFormat("resources/%s%d.png", path, i + 1);
+    Image targetImage = LoadImage(filename);
+    ImageResize(&targetImage, sizes[0], sizes[1]);
+    textures[i] = LoadTextureFromImage(targetImage);
+    UnloadImage(targetImage);
+  }
+}
 
-//   int windowSize[2] = {1000, 700};
-
-//   InitWindow(windowSize[0], windowSize[1], "Pixel Companions");
-
-//   // Load and resize images
-//   Image bgImage = LoadImage("resources/bg.png");
-//   ImageResize(&bgImage, windowSize[0], windowSize[1]);
-//   Texture2D bgTexture = LoadTextureFromImage(bgImage);
-//   UnloadImage(bgImage);  // Unload image after converting to texture
-
-//   Image corgi_img = LoadImage("resources/corgi.png");
-//   ImageResize(&corgi_img, 80, 90);
-//   Texture2D corgi_texture = LoadTextureFromImage(corgi_img);
-//   UnloadImage(corgi_img);  // Unload image after converting to texture
-//   SetTargetFPS(60);
-
-//   while (!WindowShouldClose()) {
-//     BeginDrawing();
-//     ClearBackground(darkBlue);  // Clear with dark blue background
-//     DrawTexture(bgTexture, 0, 0, WHITE);
-//     DrawTexture(corgi_texture, 250, 480, WHITE);
-//     EndDrawing();
-//   }
-
-//   // Unload textures and close window
-//   UnloadTexture(bgTexture);
-//   UnloadTexture(corgi_texture);
-//   CloseWindow();
-
-//   return 0;
-// }
+void createImage(int sizes[2], Texture2D& ImgTexture, const char* path) {
+  const char* filename = TextFormat("resources/%s.png", path);
+  Image targetImage = LoadImage(filename);
+  ImageResize(&targetImage, sizes[0], sizes[1]);
+  ImgTexture = LoadTextureFromImage(targetImage);
+  UnloadImage(targetImage);
+}
