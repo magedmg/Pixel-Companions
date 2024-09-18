@@ -16,7 +16,7 @@ int main() {
   // IMPORT ELEMENTS (BG & SPRITES)
   int catSize[2] = {85, 95};
   int fishSize[2] = {55, 65};
-  int foodbuttonSize[2] = {95, 95};
+  int buttonSize[2] = {95, 95};
 
   Texture2D bgTexture;
   createImage(windowSize, bgTexture, "bg");
@@ -25,9 +25,14 @@ int main() {
   createImage(fishSize, fishTexture, "food/fish");
 
   Texture2D foodbuttonTexture;
-  createImage(foodbuttonSize, foodbuttonTexture, "buttons/foodbutton");
+  createImage(buttonSize, foodbuttonTexture, "buttons/foodbutton");
 	Texture2D foodbuttonClickedTexture;
-	createImage(foodbuttonSize, foodbuttonClickedTexture, "buttons/foodbuttonclicked");
+	createImage(buttonSize, foodbuttonClickedTexture, "buttons/foodbuttonclicked");
+
+  Texture2D waterbuttonTexture;
+  createImage(buttonSize, waterbuttonTexture, "buttons/waterbutton");
+	Texture2D waterbuttonClickedTexture;
+	createImage(buttonSize, waterbuttonClickedTexture, "buttons/waterbuttonclicked");
 
   Texture2D standTextures[4];
   createAnimation(4, catSize, standTextures, "cat/1");
@@ -51,20 +56,25 @@ int main() {
   Vector2 foodPosition = {0, -100};
   bool foodFalling = false;
   float foodSpeed = 200.0f;
-  Rectangle foodButtonRect = {880, 16, (float)foodbuttonSize[0],
-                              (float)foodbuttonSize[1]};
-	bool isButtonPressed = false;
+  Rectangle foodButtonRect = {870, 16, (float)buttonSize[0],
+                              (float)buttonSize[1]};
+	bool isfoodbuttonPressed = false;
+
+  Rectangle waterButtonRect = {750, 16, (float)buttonSize[0],
+                              (float)buttonSize[1]};
+	bool iswaterbuttonPressed = false;
 
   // GAME LOOP
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
 
     // 1. Event Handling & Updating Positions
+    // FEEDING PART
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && foodFalling == false) {
       Vector2 mousePosition = GetMousePosition();
 
       if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
-        isButtonPressed = true;
+        isfoodbuttonPressed = true;
 
         // random place for food falling
         foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
@@ -84,7 +94,18 @@ int main() {
         curFrame = 0;
       }
     } else {
-      isButtonPressed = false;
+      isfoodbuttonPressed = false;
+    }
+
+    // GIVING WATER PART
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && foodFalling == false) {
+      Vector2 mousePosition = GetMousePosition();
+
+      if(CheckCollisionPointRec(mousePosition, waterButtonRect)) {
+        iswaterbuttonPressed = true;
+      }
+    } else {
+      iswaterbuttonPressed = false;
     }
 
 		if (foodFalling) {
@@ -141,10 +162,16 @@ int main() {
       DrawTexture(standTextures[curFrame], (int)catPosition.x, (int)catPosition.y, WHITE);
     }
 
-    if (isButtonPressed) {
-			DrawTexture(foodbuttonClickedTexture, 880, 16, WHITE);
+    if (isfoodbuttonPressed) {
+			DrawTexture(foodbuttonClickedTexture, 870, 16, WHITE);
 		} else {
-			DrawTexture(foodbuttonTexture, 880, 16, WHITE); 
+			DrawTexture(foodbuttonTexture, 870, 16, WHITE);
+		}
+
+    if (iswaterbuttonPressed) {
+			DrawTexture(waterbuttonClickedTexture, 750, 16, WHITE);
+		} else {
+			DrawTexture(waterbuttonTexture, 750, 16, WHITE);
 		}
 
     EndDrawing();
@@ -162,6 +189,8 @@ int main() {
   UnloadTexture(fishTexture);
   UnloadTexture(foodbuttonTexture);
   UnloadTexture(foodbuttonClickedTexture);
+  UnloadTexture(waterbuttonTexture);
+  UnloadTexture(waterbuttonClickedTexture);
 
   CloseWindow();
   return 0;
