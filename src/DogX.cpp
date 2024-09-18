@@ -1,5 +1,7 @@
 #include "DogX.hpp"
+#include <iostream>
 #include <raylib.h>
+using namespace std;
 
 DogX::DogX() {
   // Initial position
@@ -35,6 +37,17 @@ DogX::DogX() {
   frameSpeed = 0.1f;  // Speed at which frames change (seconds per frame)
   frameTime = 0.0f;   // Time accumulator
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
+
+  // setting last poop time
+  lastPooTime = GetTime();
+
+  currentPooCount = 0;
+  poos = new Poop *[5];
+  for (int i = 0; i < 5; i++) {
+    poos[i] = new Poop({0, 0});
+  }
+
+  randomPooInterval = GetRandomValue(5, 10);
 }
 
 void DogX::Draw() {
@@ -101,5 +114,16 @@ DogX::~DogX() {
   for (int i = 0; i < 6; i++) {
     UnloadTexture(runRightTextures[i]);
     UnloadTexture(runLeftTextures[i]);
+  }
+}
+
+void DogX::Poo1() {
+  if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
+    poos[currentPooCount]->position = {position.x - image.width - 30,
+                                       position.y + 40};
+    poos[currentPooCount]->Spawn();
+    lastPooTime = GetTime();
+    currentPooCount++;
+    randomPooInterval = GetRandomValue(5, 10);
   }
 }

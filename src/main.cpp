@@ -5,8 +5,9 @@
 #include "DogX.hpp"
 #include "Game.cpp"
 #include "Game.hpp"
+#include "Poop.cpp"
+#include "Poop.hpp"
 
-#include <iostream>
 using namespace std;
 
 int main() {
@@ -20,13 +21,17 @@ int main() {
   Game game;
 
   SetConfigFlags(FLAG_VSYNC_HINT); // Vsync
+  SetTargetFPS(60);                // Sets fps cap to 60
 
   while (!WindowShouldClose()) {
     BeginDrawing();
+
     // Clears the game of any remaining artifacts of the previous frame
     ClearBackground(RAYWHITE);
+
     // Updates each frame
     game.updateAll();
+
     EndDrawing();
   }
 

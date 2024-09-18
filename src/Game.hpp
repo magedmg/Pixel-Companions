@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DogX.hpp"
+#include "Poop.hpp"
 #include "raylib.h"
 class Game {
 private:
@@ -16,4 +17,6 @@ public:
   Game();
 
   void updateAll();
+
+  int flag;
 };

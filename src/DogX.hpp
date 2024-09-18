@@ -1,5 +1,7 @@
 #pragma once
+#include "Poop.hpp"
 #include <raylib.h>
+#include <vector>
 
 class DogX {
 
@@ -8,6 +10,13 @@ public:
   ~DogX();
   void Draw();
   void Update();
+
+  void Poo1();
+
+  Poop **poos;
+  int currentPooCount;
+
+  std::vector<Poop> poos1;
 
 private:
   Vector2 position;
@@ -22,4 +31,8 @@ private:
   float moveSpeed;  // Speed at which the cat moves (pixels per second)
   bool isRunning;   // Indicates whether the cat is running
   bool movingRight; // Direction of movement (right by default)
+
+  float lastPooTime;
+
+  int randomPooInterval;
 };
