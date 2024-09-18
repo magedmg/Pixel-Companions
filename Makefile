@@ -1,5 +1,5 @@
-CC=clang++
-CFLAGS= -std=c++11 -I "/System/Volumes/Data/opt/homebrew/Cellar/raylib/5.0/include/"
+CC=g++
+CFLAGS= -std=c++17 -I "/System/Volumes/Data/opt/homebrew/Cellar/raylib/5.0/include/"
 LDFLAGS= -L "/System/Volumes/Data/opt/homebrew/Cellar/raylib/5.0/lib" -lraylib
 TARGET=main
 SOURCE=src/main.cpp
