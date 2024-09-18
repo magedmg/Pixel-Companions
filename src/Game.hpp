@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DogX.hpp"
+#include "Poop.hpp"
 #include "raylib.h"
 class Game {
 private:
@@ -12,8 +13,13 @@ private:
 
   DogX dog;
 
+  Image healthBarImage;
+  Texture2D healthBarTexture;
+
 public:
   Game();
 
   void updateAll();
+
+  int flag;
 };
