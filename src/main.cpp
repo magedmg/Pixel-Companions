@@ -57,7 +57,7 @@ int main() {
     float deltaTime = GetFrameTime();
 
     // 1. Event Handling & Updating Positions
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON && foodFalling == false)) {
       Vector2 mousePosition = GetMousePosition();
 
       if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
