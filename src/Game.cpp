@@ -27,7 +27,7 @@ Game::Game() {
 }
 
 void Game::updateAll() {
-  int scoreTimer = GetTime();
+  int scoreTimer = GetTime(); //current time elapsed in seconds
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
