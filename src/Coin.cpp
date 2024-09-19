@@ -7,9 +7,9 @@ Coin::Coin(Vector2 position) {
     coinImage = LoadImage(TextFormat("resources/Coins/c%d.png", i));
 
     if (i == 4) {
-      ImageResize(&coinImage, 15, 95);
+      ImageResize(&coinImage, 15, 35);
     } else {
-      ImageResize(&coinImage, 85, 95);
+      ImageResize(&coinImage, 15, 35);
     }
 
     coinTextures[i - 1] = LoadTextureFromImage(coinImage);
@@ -54,6 +54,9 @@ void Coin::Draw() {
     position.y -=
         deltaTime * moveSpeed; // moves the coin up because the cat touched it
     DrawTexture(coinTextures[currentFrame], position.x, position.y, WHITE);
+    if (GetTime() - collisionTime >= 3) {
+      active = false; // after 3 seconds stop drawing the coin on the screen
+    }
   }
 }
 

@@ -20,4 +20,5 @@ public:
   void Draw();
   void Update();
   Rectangle getRect();
+  int collisionTime;
 };
