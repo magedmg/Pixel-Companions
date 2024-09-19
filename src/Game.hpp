@@ -26,6 +26,9 @@ private:
 
   int lastCoinTime;
 
+  int coinCounter;
+  std::string coinsCollected;
+
 public:
   Game();
 

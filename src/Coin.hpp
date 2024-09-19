@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <string>
 
 class Coin {
 private:
@@ -21,4 +22,5 @@ public:
   void Update();
   Rectangle getRect();
   int collisionTime;
+  bool collected;
 };

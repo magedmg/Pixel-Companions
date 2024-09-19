@@ -1,6 +1,7 @@
 #include "Coin.hpp"
 #include "raylib.h"
 #include <filesystem>
+#include <string>
 
 Coin::Coin(Vector2 position) {
   for (int i = 1; i < 7; i++) {
@@ -22,6 +23,7 @@ Coin::Coin(Vector2 position) {
   frameSpeed = 0.2;
   this->position = position;
   moveSpeed = 70;
+  collected = false;
 }
 
 void Coin::Draw() {
