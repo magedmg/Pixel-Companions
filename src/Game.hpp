@@ -27,10 +27,8 @@ private:
   int lastCoinTime;
 
   int coinCounter;
-  std::string coinsCollected;
 
   int scoreValue;
-  std::string score;
 
   int scoreTimer;
 

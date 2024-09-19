@@ -23,20 +23,16 @@ Game::Game() {
   lastCoinTime = GetTime();
 
   coinCounter = 0;
-  coinsCollected = "0";
-
   scoreValue = 0;
-  score = "0";
 }
 
 void Game::updateAll() {
   int scoreTimer = GetTime();
-  score = std::to_string(scoreTimer + scoreValue);
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  DrawText(coinsCollected.c_str(), 915, 655, 30, WHITE);
-  DrawText(score.c_str(), 30, 648, 50, WHITE);
+  DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
+  DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
   dog.Draw();
   
   dog.Poo1();
@@ -51,12 +47,8 @@ void Game::updateAll() {
     for (int i = 0; i < dog.currentPooCount; i++) {
       if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
         dog.poos[i]->deactivate();
+        scoreValue += 30;
         flag = 1;
-        if (dog.poos[i]->cleaned == false) {
-        scoreValue += 50;
-        score = std::to_string(scoreValue);
-        }
-        dog.poos[i]->cleaned = true;
       }
     }
   }
@@ -92,16 +84,13 @@ void Game::loadCoins() {
 void Game::checkCollisions() {
   for (auto &coin : coins) {
     if (CheckCollisionRecs(coin.getRect(), dog.getRect())) {
+      if (coin.collision == false) {
+        coinCounter += 1;
+        scoreValue += 20;
+      }
       coin.collision = true;
       coin.collisionTime = GetTime();
-      if (coin.collected == false) {
-        coinCounter += 1;
-        coinsCollected = std::to_string(coinCounter);
-        coin.collected = true;
-        scoreValue += 20;
-        score = std::to_string(scoreValue);
-      }
-    
     }
+    
   }
 }
