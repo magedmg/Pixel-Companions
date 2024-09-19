@@ -1,6 +1,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "Coin.cpp"
+#include "Coin.hpp"
 #include "DogX.cpp"
 #include "DogX.hpp"
 #include "Game.cpp"
@@ -20,6 +22,8 @@ int main() {
 
   Game game;
 
+  Coin c1({100, 100});
+
   SetConfigFlags(FLAG_VSYNC_HINT); // Vsync
   SetTargetFPS(60);                // Sets fps cap to 60
 
@@ -31,6 +35,8 @@ int main() {
 
     // Updates each frame
     game.updateAll();
+
+    c1.Draw();
 
     EndDrawing();
   }
