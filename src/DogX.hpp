@@ -18,9 +18,11 @@ public:
 
   std::vector<Poop> poos1;
 
+  Rectangle getRect();
+
 private:
-  Vector2 position;
   Texture2D image;
+  Vector2 position;
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
   Texture2D runLeftTextures[6];

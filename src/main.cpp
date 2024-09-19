@@ -1,6 +1,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "Coin.cpp"
+#include "Coin.hpp"
 #include "DogX.cpp"
 #include "DogX.hpp"
 #include "Game.cpp"

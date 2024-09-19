@@ -127,3 +127,12 @@ void DogX::Poo1() {
     randomPooInterval = GetRandomValue(5, 10);
   }
 }
+
+Rectangle DogX::getRect() {
+  Rectangle rect;
+  rect.x = position.x;
+  rect.y = position.y;
+  rect.height = 95;
+  rect.width = 85;
+  return rect;
+}
