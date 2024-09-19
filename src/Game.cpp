@@ -30,6 +30,8 @@ Game::Game() {
 }
 
 void Game::updateAll() {
+  int scoreTimer = GetTime();
+  score = std::to_string(scoreTimer + scoreValue);
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);

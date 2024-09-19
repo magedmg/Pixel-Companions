@@ -32,6 +32,8 @@ private:
   int scoreValue;
   std::string score;
 
+  int scoreTimer;
+
 public:
   Game();
 
