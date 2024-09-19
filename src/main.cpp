@@ -108,6 +108,7 @@ int main() {
       iswaterbuttonPressed = false;
     }
 
+    // FOOD FALLING PART
 		if (foodFalling) {
       foodPosition.y += foodSpeed * deltaTime;
       if (foodPosition.y >= 480) {
@@ -125,6 +126,7 @@ int main() {
       }
     }
 
+    // CAT RUNNING PART
     if (isRunning) {
       if (movingRight) {
         catPosition.x += moveSpeed * deltaTime;
