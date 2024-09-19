@@ -24,13 +24,17 @@ Game::Game() {
 
   coinCounter = 0;
   coinsCollected = "0";
+
+  scoreValue = 0;
+  score = "0";
 }
 
 void Game::updateAll() {
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  DrawText(coinsCollected.c_str(), 800, 600, 20, WHITE);
+  DrawText(coinsCollected.c_str(), 915, 655, 30, WHITE);
+  DrawText(score.c_str(), 30, 648, 50, WHITE);
   dog.Draw();
   
   dog.Poo1();
@@ -46,6 +50,11 @@ void Game::updateAll() {
       if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
         dog.poos[i]->deactivate();
         flag = 1;
+        if (dog.poos[i]->cleaned == false) {
+        scoreValue += 50;
+        score = std::to_string(scoreValue);
+        }
+        dog.poos[i]->cleaned = true;
       }
     }
   }
@@ -87,6 +96,8 @@ void Game::checkCollisions() {
         coinCounter += 1;
         coinsCollected = std::to_string(coinCounter);
         coin.collected = true;
+        scoreValue += 20;
+        score = std::to_string(scoreValue);
       }
     
     }

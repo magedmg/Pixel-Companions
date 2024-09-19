@@ -16,6 +16,8 @@ public:
   Rectangle getRect();
   void deactivate();
 
+  bool cleaned;
+
 private:
   bool active;
 

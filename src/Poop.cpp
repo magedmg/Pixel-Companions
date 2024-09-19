@@ -11,6 +11,7 @@ Poop::Poop(Vector2 position) {
   pooTexture = LoadTextureFromImage(pooImage);
 
   this->position = position;
+  cleaned = false;
   Spawn();
 }
 

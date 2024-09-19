@@ -29,6 +29,9 @@ private:
   int coinCounter;
   std::string coinsCollected;
 
+  int scoreValue;
+  std::string score;
+
 public:
   Game();
 
