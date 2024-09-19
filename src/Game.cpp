@@ -2,7 +2,6 @@
 #include "DogX.hpp"
 #include "Poop.hpp"
 #include "raylib.h"
-#include <_stdlib.h>
 
 Game::Game() {
   // Load and resize background image
