@@ -26,6 +26,12 @@ private:
 
   int lastCoinTime;
 
+  int coinCounter;
+
+  int scoreValue;
+
+  int scoreTimer;
+
 public:
   Game();
 

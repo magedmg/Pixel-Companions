@@ -2,6 +2,7 @@
 #include "DogX.hpp"
 #include "Poop.hpp"
 #include "raylib.h"
+#include <string>
 
 Game::Game() {
   // Load and resize background image
@@ -20,15 +21,20 @@ Game::Game() {
 
   randomCoinInterval = GetRandomValue(5, 10);
   lastCoinTime = GetTime();
+
+  coinCounter = 0;
+  scoreValue = 0;
 }
 
 void Game::updateAll() {
+  int scoreTimer = GetTime(); //current time elapsed in seconds
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-
+  DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
+  DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
   dog.Draw();
-
+  
   dog.Poo1();
 
   for (int i = 0; i < dog.currentPooCount; i++) {
@@ -41,6 +47,7 @@ void Game::updateAll() {
     for (int i = 0; i < dog.currentPooCount; i++) {
       if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
         dog.poos[i]->deactivate();
+        scoreValue += 30;
         flag = 1;
       }
     }
@@ -77,8 +84,13 @@ void Game::loadCoins() {
 void Game::checkCollisions() {
   for (auto &coin : coins) {
     if (CheckCollisionRecs(coin.getRect(), dog.getRect())) {
+      if (coin.collision == false) {
+        coinCounter += 1;
+        scoreValue += 20;
+      }
       coin.collision = true;
       coin.collisionTime = GetTime();
     }
+    
   }
 }
