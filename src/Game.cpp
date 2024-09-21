@@ -1,7 +1,8 @@
 #include "Game.hpp"
-#include "DogX.hpp"
-#include "Poop.hpp"
 #include "raylib.h"
+
+void createAnimation(int, int[2], Texture2D *, const char *);
+void createImage(int[2], Texture2D &, const char *);
 
 Game::Game() {
   // Load and resize background image
@@ -21,6 +22,7 @@ Game::Game() {
   randomCoinInterval = GetRandomValue(5, 10);
   lastCoinTime = GetTime();
 }
+
 
 void Game::updateAll() {
   flag = 0;
@@ -64,11 +66,11 @@ void Game::updateAll() {
 
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
-    lastCoinTime = GetTime(); // Reset the last time a coin was spawned
-    randomCoinInterval =
-        GetRandomValue(10, 25); // Get a new interval for the next coin to spawn
+    lastCoinTime = GetTime();  // Reset the last time a coin was spawned
+    randomCoinInterval = GetRandomValue(
+        10, 25);  // Get a new interval for the next coin to spawn
     float randomSpawn = GetRandomValue(
-        20, 980); // set to float so that it can be passed in the pushback
+        20, 980);  // set to float so that it can be passed in the pushback
 
     coins.push_back(Coin({randomSpawn, 525}));
   }
