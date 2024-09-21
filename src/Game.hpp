@@ -18,6 +18,9 @@ private:
   Image healthBarImage;
   Texture2D healthBarTexture;
 
+  Image hungerBarImage;
+  Texture2D hungerBarTexture;
+
   Image coinBarImage;
   Texture2D coinBarTexture;
 

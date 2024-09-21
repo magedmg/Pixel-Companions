@@ -40,8 +40,19 @@ DogX::DogX() {
 
   // setting last poop time
   lastPooTime = GetTime();
+  lastFedTime = GetTime();
+  lastDrankTime = GetTime();
+  lastPetTime = GetTime();
 
   currentPooCount = 0;
+  currentHunger = 100;
+  currentThirst = 100;
+  currentHappiness = 100; 
+
+  hungerInterval = 15;
+  thirstInterval = 12;
+  happinessInterval = 20;
+
   poos = new Poop *[5];
   for (int i = 0; i < 5; i++) {
     poos[i] = new Poop({0, 0});

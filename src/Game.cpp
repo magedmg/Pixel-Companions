@@ -33,6 +33,10 @@ void Game::updateAll() {
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
   DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
+
+  DrawText(std::to_string(dog.currentHunger).c_str(), 30, 60, 30, RED);
+  DrawText(std::to_string(dog.currentThirst).c_str(), 30, 100, 30, BLUE);
+  DrawText(std::to_string(dog.currentHappiness).c_str(), 30, 140, 30, PINK);
   dog.Draw();
   
   dog.Poo1();
@@ -67,6 +71,22 @@ void Game::updateAll() {
     coin.Draw();
   }
   checkCollisions();
+
+// decreases status bars over time if respective needs are not met
+  if (GetTime() - dog.lastFedTime >= dog.hungerInterval) {
+    dog.currentHunger -= 25;
+    dog.lastFedTime = GetTime();
+  }
+
+  if (GetTime() - dog.lastDrankTime >= dog.thirstInterval) {
+    dog.currentThirst -= 25;
+    dog.lastDrankTime = GetTime();
+  }
+
+  if (GetTime() - dog.lastPetTime >= dog.happinessInterval) {
+    dog.currentHappiness -= 25;
+    dog.lastPetTime = GetTime();
+  }
 }
 
 void Game::loadCoins() {

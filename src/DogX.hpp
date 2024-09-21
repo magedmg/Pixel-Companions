@@ -15,6 +15,17 @@ public:
 
   Poop **poos;
   int currentPooCount;
+  int currentHunger;
+  int currentThirst;
+  int currentHappiness;
+
+  int hungerInterval;
+  int thirstInterval;
+  int happinessInterval;
+
+  float lastFedTime;
+  float lastDrankTime;
+  float lastPetTime;
 
   std::vector<Poop> poos1;
 
