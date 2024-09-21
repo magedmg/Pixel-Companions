@@ -88,14 +88,14 @@ void DogX::Update() {
       if (position.x >= targetPosition.x) {
         position.x = targetPosition.x;
         isRunning = false;
-        curFrame = 0;
+        // curFrame = 0;
       }
     } else {
       position.x -= moveSpeed * deltaTime;
       if (position.x <= targetPosition.x) {
         position.x = targetPosition.x;
         isRunning = false;
-        curFrame = 0;
+        // curFrame = 0;
       }
     }
   }

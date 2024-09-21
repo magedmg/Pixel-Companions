@@ -5,12 +5,12 @@
 #include "Coin.hpp"
 #include "DogX.hpp"
 #include "Food.hpp"
-#include "Water.hpp"
 #include "Poop.hpp"
+#include "Water.hpp"
 #include "raylib.h"
 
 class Game {
- private:
+private:
   int windowWidth = 1000;
   int windowHeight = 700;
   Image bgImage;
@@ -43,7 +43,9 @@ class Game {
 
   int lastCoinTime;
 
- public:
+  Food food;
+
+public:
   Game();
 
   void updateAll();

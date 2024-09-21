@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Food.hpp"
 #include "raylib.h"
 
 void createAnimation(int, int[2], Texture2D *, const char *);
@@ -61,6 +62,7 @@ void Game::updateAll() {
     coin.Draw();
   }
   checkCollisions();
+  food.draw();
 }
 
 void Game::loadCoins() {

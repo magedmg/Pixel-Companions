@@ -5,6 +5,8 @@
 #include "Coin.hpp"
 #include "DogX.cpp"
 #include "DogX.hpp"
+#include "Food.cpp"
+#include "Food.hpp"
 #include "Game.cpp"
 #include "Game.hpp"
 #include "Poop.cpp"
