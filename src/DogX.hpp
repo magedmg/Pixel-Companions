@@ -23,8 +23,6 @@ private:
   float lastPooTime;
   int randomPooInterval;
 
-  Vector2 catPosition;
-
 public:
   DogX();
   ~DogX();

@@ -20,14 +20,14 @@ DogX::DogX() {
   createAnimation(6, catSize, runLeftTextures, "cat/3");
 
   // DEFINE VARIABLES TO USE IN LOOP
-  Vector2 catPosition = {250, 480};
-  Vector2 targetPosition = catPosition;
-  int curFrame = 0;
-  float frameSpeed = 0.1f;
-  float frameTime = 0.0f;
-  float moveSpeed = 100.0f;
-  bool isRunning = false;
-  bool movingRight = true;
+  targetPosition = position;
+  isRunning = false; // Indicates whether the cat is running
+  movingRight = true;
+  targetPosition = position;
+  curFrame = 0;       // Index of the current frame
+  frameSpeed = 0.1f;  // Speed at which frames change (seconds per frame)
+  frameTime = 0.0f;   // Time accumulator
+  moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
   // setting last poop time
   lastPooTime = GetTime();
@@ -48,7 +48,7 @@ void DogX::Draw() {
   if (frameTime >= frameSpeed) {
     frameTime = 0.0f;
     if (isRunning) {
-      curFrame = (curFrame + 1) % 6;
+      curFrame = (curFrame + 1) % 5;
     } else {
       curFrame = (curFrame + 1) % 4;
     }
@@ -56,14 +56,14 @@ void DogX::Draw() {
 
   if (isRunning) {
     if (movingRight) {
-      DrawTexture(runRightTextures[curFrame], (int)catPosition.x,
-                  (int)catPosition.y, WHITE);
+      DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y,
+                  WHITE);
     } else {
-      DrawTexture(runLeftTextures[curFrame], (int)catPosition.x,
-                  (int)catPosition.y, WHITE);
+      DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y,
+                  WHITE);
     }
   } else {
-    DrawTexture(standTextures[curFrame], (int)catPosition.x, (int)catPosition.y,
+    DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y,
                 WHITE);
   }
 }
@@ -84,19 +84,29 @@ void DogX::Update() {
   // CAT RUNNING PART
   if (isRunning) {
     if (movingRight) {
-      catPosition.x += moveSpeed * deltaTime;
-      if (catPosition.x >= targetPosition.x) {
-        catPosition.x = targetPosition.x;
+      position.x += moveSpeed * deltaTime;
+      if (position.x >= targetPosition.x) {
+        position.x = targetPosition.x;
         isRunning = false;
         curFrame = 0;
       }
     } else {
-      catPosition.x -= moveSpeed * deltaTime;
-      if (catPosition.x <= targetPosition.x) {
-        catPosition.x = targetPosition.x;
+      position.x -= moveSpeed * deltaTime;
+      if (position.x <= targetPosition.x) {
+        position.x = targetPosition.x;
         isRunning = false;
         curFrame = 0;
       }
+    }
+  }
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    targetPosition = GetMousePosition();
+    isRunning = true;
+    // Determine direction based on mouse position
+    if (targetPosition.x > position.x) {
+      movingRight = true;
+    } else if (targetPosition.x < position.x) {
+      movingRight = false;
     }
   }
 }
