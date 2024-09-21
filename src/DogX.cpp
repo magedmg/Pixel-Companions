@@ -5,13 +5,16 @@
 #include <iostream>
 using namespace std;
 
-void createAnimation(int, int[2], Texture2D*, const char*);
+void createAnimation(int, int[2], Texture2D *, const char *);
 
 DogX::DogX() {
   // Initial position
   position = {250, 480};
 
-  // Load all the images for left and right movements, as well as standing still
+  int catSize[2] = {85, 95};
+
+  // Load all the images for left and right movements, as well as standing
+  // still
   createAnimation(4, catSize, standTextures, "cat/1");
   createAnimation(6, catSize, runRightTextures, "cat/2");
   createAnimation(6, catSize, runLeftTextures, "cat/3");
@@ -30,7 +33,7 @@ DogX::DogX() {
   lastPooTime = GetTime();
 
   currentPooCount = 0;
-  poos = new Poop*[5];
+  poos = new Poop *[5];
   for (int i = 0; i < 5; i++) {
     poos[i] = new Poop({0, 0});
   }
@@ -128,10 +131,10 @@ Rectangle DogX::getRect() {
   return rect;
 }
 
-void createAnimation(int numLoop, int sizes[2], Texture2D* textures,
-                     const char* path) {
+void createAnimation(int numLoop, int sizes[2], Texture2D *textures,
+                     const char *path) {
   for (int i = 0; i < numLoop; i++) {
-    const char* filename = TextFormat("resources/%s%d.png", path, i + 1);
+    const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
     Image targetImage = LoadImage(filename);
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);

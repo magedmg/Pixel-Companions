@@ -6,7 +6,7 @@
 #include "Poop.hpp"
 
 class DogX {
- private:
+private:
   Texture2D image;
   Vector2 position;
   Texture2D standTextures[4];
@@ -23,11 +23,9 @@ class DogX {
   float lastPooTime;
   int randomPooInterval;
 
-  int catSize[2];
   Vector2 catPosition;
-  int curFrame;
 
- public:
+public:
   DogX();
   ~DogX();
   void Draw();

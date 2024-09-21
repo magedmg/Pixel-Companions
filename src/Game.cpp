@@ -23,7 +23,6 @@ Game::Game() {
   lastCoinTime = GetTime();
 }
 
-
 void Game::updateAll() {
   flag = 0;
 
@@ -66,11 +65,11 @@ void Game::updateAll() {
 
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
-    lastCoinTime = GetTime();  // Reset the last time a coin was spawned
-    randomCoinInterval = GetRandomValue(
-        10, 25);  // Get a new interval for the next coin to spawn
+    lastCoinTime = GetTime(); // Reset the last time a coin was spawned
+    randomCoinInterval =
+        GetRandomValue(10, 25); // Get a new interval for the next coin to spawn
     float randomSpawn = GetRandomValue(
-        20, 980);  // set to float so that it can be passed in the pushback
+        20, 980); // set to float so that it can be passed in the pushback
 
     coins.push_back(Coin({randomSpawn, 525}));
   }
