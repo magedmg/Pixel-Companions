@@ -1,8 +1,9 @@
 #include "Game.hpp"
-#include "DogX.hpp"
-#include "Poop.hpp"
+#include "Food.hpp"
 #include "raylib.h"
+#include <iostream>
 #include <string>
+using namespace std;
 
 Game::Game() {
   // Load and resize background image
@@ -31,8 +32,8 @@ void Game::updateAll() {
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
-  DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
+  DrawText(to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
+  DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
   dog.Draw();
   
   dog.Poo1();
@@ -43,6 +44,8 @@ void Game::updateAll() {
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     Vector2 mousePos = GetMousePosition();
+    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+
     Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
     for (int i = 0; i < dog.currentPooCount; i++) {
       if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
@@ -53,7 +56,11 @@ void Game::updateAll() {
     }
   }
   if (flag == 0) {
-    dog.Update();
+    Vector2 mousePos = GetMousePosition();
+    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect)) {
+      dog.Update();
+    }
   }
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
@@ -67,6 +74,14 @@ void Game::updateAll() {
     coin.Draw();
   }
   checkCollisions();
+
+  // Drawing food on the screen and updating it each frame
+  food.draw();
+  food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
+
+  // Water
+  water.draw();
+  water.update();
 }
 
 void Game::loadCoins() {
