@@ -12,6 +12,7 @@ private:
   bool foodFalling;
   float foodSpeed;
   bool isfoodbuttonPressed;
+  int* currCoins;
 
 public:
   Food();
@@ -21,4 +22,6 @@ public:
   void draw();
   void unloadTextures();
   Rectangle foodButtonRect;
+
+  void getCoins(int* currentCoins);
 };
