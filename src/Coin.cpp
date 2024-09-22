@@ -1,6 +1,7 @@
 #include "Coin.hpp"
 #include "raylib.h"
 #include <filesystem>
+#include <string>
 
 Coin::Coin(Vector2 position) {
   for (int i = 1; i < 7; i++) {
@@ -61,10 +62,16 @@ void Coin::Draw() {
 }
 
 Rectangle Coin::getRect() {
+  if (collision == true) {
+    return {0,0,0,0};
+  }
+  else {
   Rectangle rect;
   rect.x = position.x;
   rect.y = position.y;
   rect.height = coinImage.height;
   rect.width = coinImage.width;
   return rect;
+  }
+  
 }

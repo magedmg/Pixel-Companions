@@ -1,11 +1,11 @@
 #pragma once
 
 #include <raylib.h>
+#include <string>
 
 class Coin {
 private:
   Texture2D coinTextures[6];
-  bool active;
   float frameTime;
   int currentFrame;
   float frameSpeed;
@@ -21,4 +21,5 @@ public:
   void Update();
   Rectangle getRect();
   int collisionTime;
+  bool active;
 };

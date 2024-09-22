@@ -42,9 +42,13 @@ private:
   int randomCoinInterval;
 
   int lastCoinTime;
-
+  int coinCounter;
+  int scoreValue;
+  int scoreTimer;
+  
   Food food;
   Water water;
+
 
 public:
   Game();

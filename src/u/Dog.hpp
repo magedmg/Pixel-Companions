@@ -1,6 +1,7 @@
 #pragma once
 #include "../Poop.hpp"
 #include "Pet.hpp"
+#include <vector>
 class Dog : public Pet {
 protected:
   int movementSpeedDog; // maybe breed can affect movement speed?

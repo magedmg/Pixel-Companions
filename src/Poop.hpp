@@ -16,9 +16,9 @@ public:
   Rectangle getRect();
   void deactivate();
 
-private:
   bool active;
 
+private:
   Image pooImage;
 
   Texture2D pooTexture;
