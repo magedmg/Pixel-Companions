@@ -4,9 +4,6 @@
 #include <iostream>
 using namespace std;
 
-void createAnimation(int, int[2], Texture2D *, const char *);
-void createImage(int[2], Texture2D &, const char *);
-
 Game::Game() {
   // Load and resize background image
   bgImage = LoadImage("resources/bg.png");
