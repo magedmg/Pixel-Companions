@@ -8,17 +8,15 @@
 class DogX {
 private:
   Texture2D image;
-  Vector2 position;
+
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
   Texture2D runLeftTextures[6];
-  Vector2 targetPosition;
+
   int curFrame;
   float frameSpeed;
   float frameTime;
   float moveSpeed;
-  bool isRunning;
-  bool movingRight;
 
   float lastPooTime;
   int randomPooInterval;
@@ -36,4 +34,10 @@ public:
   std::vector<Poop> poos1;
 
   Rectangle getRect();
+
+  // Create getters and setters for these in the futore
+  Vector2 position;
+  Vector2 targetPosition;
+  bool isRunning;
+  bool movingRight;
 };

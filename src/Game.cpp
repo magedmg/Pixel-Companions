@@ -1,6 +1,8 @@
 #include "Game.hpp"
 #include "Food.hpp"
 #include "raylib.h"
+#include <iostream>
+using namespace std;
 
 void createAnimation(int, int[2], Texture2D *, const char *);
 void createImage(int[2], Texture2D &, const char *);
@@ -39,6 +41,8 @@ void Game::updateAll() {
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     Vector2 mousePos = GetMousePosition();
+    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+
     Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
     for (int i = 0; i < dog.currentPooCount; i++) {
       if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
@@ -48,7 +52,11 @@ void Game::updateAll() {
     }
   }
   if (flag == 0) {
-    dog.Update();
+    Vector2 mousePos = GetMousePosition();
+    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect)) {
+      dog.Update();
+    }
   }
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
@@ -63,6 +71,7 @@ void Game::updateAll() {
   }
   checkCollisions();
   food.draw();
+  food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
 }
 
 void Game::loadCoins() {

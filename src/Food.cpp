@@ -4,18 +4,18 @@
 
 #include "raylib.h"
 
-void createImage(int sizes[2], Texture2D& ImgTexture, const char* path);
+void createImage(float sizes[2], Texture2D &ImgTexture, const char *path);
 
 Food::Food() {
-  int buttonSize[2] = {95, 95};
-  int fishSize[2] = {55, 65};
+  float buttonSize[2] = {95, 95};
+  float fishSize[2] = {55, 65};
 
   createImage(buttonSize, foodbuttonTexture, "buttons/foodbutton");
   createImage(buttonSize, foodbuttonClickedTexture,
               "buttons/foodbuttonclicked");
   createImage(fishSize, fishTexture, "food/fish");
 
-  foodButtonRect = {870, 16, (float)buttonSize[0], (float)buttonSize[1]};
+  foodButtonRect = {870, 16, buttonSize[0], buttonSize[1]};
   foodPosition = {0, -100};
   foodFalling = false;
   foodSpeed = 200.0f;
@@ -24,9 +24,9 @@ Food::Food() {
 
 Food::~Food() { unloadTextures(); }
 
-void Food::update(float deltaTime, Vector2& catPosition,
-                    Vector2& targetPosition, bool& isRunning,
-                    bool& movingRight) {
+void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
+                  bool &isRunning, bool &movingRight) {
+  float deltaTime = GetFrameTime();
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !foodFalling) {
     Vector2 mousePosition = GetMousePosition();
 
@@ -40,9 +40,9 @@ void Food::update(float deltaTime, Vector2& catPosition,
       foodPosition.y = 0;
       foodFalling = true;
 
-      targetPosition.x = foodPosition.x;
-      movingRight = (targetPosition.x > catPosition.x);
-      isRunning = true;
+      // targetPosition.x = foodPosition.x;
+      //  movingRight = (targetPosition.x > catPosition.x);
+      //  isRunning = true;
     }
   } else {
     isfoodbuttonPressed = false;
@@ -74,8 +74,8 @@ void Food::unloadTextures() {
   UnloadTexture(foodbuttonClickedTexture);
 }
 
-void createImage(int sizes[2], Texture2D& ImgTexture, const char* path) {
-  const char* filename = TextFormat("resources/%s.png", path);
+void createImage(float sizes[2], Texture2D &ImgTexture, const char *path) {
+  const char *filename = TextFormat("resources/%s.png", path);
   Image targetImage = LoadImage(filename);
   ImageResize(&targetImage, sizes[0], sizes[1]);
   ImgTexture = LoadTextureFromImage(targetImage);

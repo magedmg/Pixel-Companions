@@ -70,6 +70,14 @@ void DogX::Draw() {
 
 void DogX::Update() {
   float deltaTime = GetFrameTime();
+  // Make sure the cat cant go off the screen
+  if (position.x >= (1000 - 85)) {
+    position.x = 915;
+    isRunning = false;
+  } else if (position.x < 20) {
+    position.x = 20;
+    isRunning = false;
+  }
 
   frameTime += deltaTime;
   if (frameTime >= frameSpeed) {
@@ -95,7 +103,7 @@ void DogX::Update() {
       if (position.x <= targetPosition.x) {
         position.x = targetPosition.x;
         isRunning = false;
-        // curFrame = 0;
+        // dcurFrame = 0;
       }
     }
   }
