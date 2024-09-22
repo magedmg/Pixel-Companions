@@ -7,7 +7,7 @@
 #include "Food.hpp"
 #include "Poop.hpp"
 #include "Water.hpp"
-#include "raylib.h"
+#include <raylib.h>
 
 class Game {
 private:
@@ -44,6 +44,7 @@ private:
   int lastCoinTime;
 
   Food food;
+  Water water;
 
 public:
   Game();

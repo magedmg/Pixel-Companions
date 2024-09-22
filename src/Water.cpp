@@ -1,18 +1,22 @@
 #include "Water.hpp"
 
-#include <filesystem>
-
 #include "raylib.h"
 
-void createImage(int sizes[2], Texture2D& ImgTexture, const char* path);
+void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
+  const char *filename = TextFormat("resources/%s.png", path);
+  Image targetImage = LoadImage(filename);
+  ImageResize(&targetImage, sizes[0], sizes[1]);
+  ImgTexture = LoadTextureFromImage(targetImage);
+  UnloadImage(targetImage);
+}
 
 Water::Water() {
-  int buttonSize[2] = {95, 95};
-  createImage(buttonSize, waterbuttonTexture, "buttons/waterbutton");
-  createImage(buttonSize, waterbuttonClickedTexture,
-              "buttons/waterbuttonclicked");
+  float buttonSize[2] = {95, 95};
+  createImage2(buttonSize, waterbuttonTexture, "buttons/waterbutton");
+  createImage2(buttonSize, waterbuttonClickedTexture,
+               "buttons/waterbuttonclicked");
 
-  waterButtonRect = {750, 16, (float)buttonSize[0], (float)buttonSize[1]};
+  waterButtonRect = {750, 16, buttonSize[0], buttonSize[1]};
   iswaterbuttonPressed = false;
 }
 

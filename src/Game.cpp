@@ -70,8 +70,14 @@ void Game::updateAll() {
     coin.Draw();
   }
   checkCollisions();
+
+  // Drawing food on the screen and updating it each frame
   food.draw();
   food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
+
+  // Water
+  water.draw();
+  water.update();
 }
 
 void Game::loadCoins() {

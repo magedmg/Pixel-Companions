@@ -11,6 +11,8 @@
 #include "Game.hpp"
 #include "Poop.cpp"
 #include "Poop.hpp"
+#include "Water.cpp"
+#include "Water.hpp"
 
 using namespace std;
 

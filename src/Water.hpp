@@ -3,13 +3,13 @@
 #include "raylib.h"
 
 class Water {
- private:
+private:
   Texture2D waterbuttonTexture;
   Texture2D waterbuttonClickedTexture;
   Rectangle waterButtonRect;
   bool iswaterbuttonPressed;
 
- public:
+public:
   Water();
   ~Water();
   void update();
