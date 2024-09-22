@@ -41,7 +41,7 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
         }
         foodPosition.y = 0;
         foodFalling = true;
-        *currCoins -= 1;
+        *currCoins -= 2;
       }
     } 
     else {
