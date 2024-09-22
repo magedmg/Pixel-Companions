@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "raylib.h"
+#include <iostream>
 
 void createImage(float sizes[2], Texture2D &ImgTexture, const char *path);
 
@@ -31,21 +32,21 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
-      isfoodbuttonPressed = true;
+      if (*currCoins >= 2) {
+        isfoodbuttonPressed = true;
 
-      foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
-      while (foodPosition.x < 0 || foodPosition.x > 950) {
         foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
+        while (foodPosition.x < 0 || foodPosition.x > 950) {
+          foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
+        }
+        foodPosition.y = 0;
+        foodFalling = true;
+        *currCoins -= 2;
       }
-      foodPosition.y = 0;
-      foodFalling = true;
-
-      // targetPosition.x = foodPosition.x;
-      //  movingRight = (targetPosition.x > catPosition.x);
-      //  isRunning = true;
-    }
-  } else {
+    } 
+    else {
     isfoodbuttonPressed = false;
+  }
   }
 
   if (foodFalling) {
@@ -55,6 +56,7 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     }
   }
 }
+
 
 void Food::draw() {
   if (foodFalling) {
@@ -80,4 +82,8 @@ void createImage(float sizes[2], Texture2D &ImgTexture, const char *path) {
   ImageResize(&targetImage, sizes[0], sizes[1]);
   ImgTexture = LoadTextureFromImage(targetImage);
   UnloadImage(targetImage);
+}
+
+void Food::getCoins(int *currentCoins) {
+  this->currCoins = currentCoins;
 }

@@ -27,11 +27,15 @@ void Water::update() {
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, waterButtonRect)) {
-      iswaterbuttonPressed = true;
+        if (*currCoins >= 1) {
+          iswaterbuttonPressed = true;
+          *currCoins -= 1;
+        }
     }
   } else {
     iswaterbuttonPressed = false;
   }
+  // fill up water bowl here
 }
 
 void Water::draw() {
@@ -45,4 +49,9 @@ void Water::draw() {
 void Water::unloadTextures() {
   UnloadTexture(waterbuttonTexture);
   UnloadTexture(waterbuttonClickedTexture);
+}
+
+
+void Water::getCoins(int *currentCoins) {
+  this->currCoins = currentCoins;
 }

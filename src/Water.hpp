@@ -8,6 +8,7 @@ private:
   Texture2D waterbuttonClickedTexture;
   Rectangle waterButtonRect;
   bool iswaterbuttonPressed;
+  int* currCoins;
 
 public:
   Water();
@@ -15,4 +16,6 @@ public:
   void update();
   void draw();
   void unloadTextures();
+
+  void getCoins(int* currentCoins);
 };

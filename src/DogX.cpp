@@ -25,7 +25,7 @@ DogX::DogX() {
   movingRight = true;
   targetPosition = position;
   curFrame = 0;       // Index of the current frame
-  frameSpeed = 0.1f;  // Speed at which frames change (seconds per frame)
+  frameSpeed = 0.2f;  // Speed at which frames change (seconds per frame)
   frameTime = 0.0f;   // Time accumulator
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
