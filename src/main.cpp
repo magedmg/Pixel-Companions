@@ -32,8 +32,6 @@ int main() {
 
   Game game;
 
-  healthBar h;
-
   SetConfigFlags(FLAG_VSYNC_HINT); // Vsync
   SetTargetFPS(60);                // Sets fps cap to 60
 
@@ -45,10 +43,6 @@ int main() {
 
     // Updates each frame
     game.updateAll();
-
-    h.Draw();
-
-    h.takeDamage(1);
 
     EndDrawing();
   }
