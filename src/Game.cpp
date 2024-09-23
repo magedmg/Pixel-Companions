@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Food.hpp"
+#include "Petting.hpp"
 #include "raylib.h"
 #include <iostream>
 #include <string>
@@ -97,14 +98,24 @@ void Game::updateAll() {
         flag = 1;
       }
     }
-  }
-  if (flag == 0) {
-    Vector2 mousePos = GetMousePosition();
-    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
-    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect)) {
-      dog.Update();
+
+    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect) &&
+        !CheckCollisionRecs(mouseRect, waterButtonRect)) {
+      if (CheckCollisionRecs(mouseRect, dog.getRect())) {
+        pettings.push_back(Petting({dog.position}));
+        flag = 1;
+      }
     }
   }
+  if (flag == 0) {
+    dog.Update();
+  }
+
+  for (auto &petting : pettings) {
+    petting.Draw();
+  }
+
+  dog.Draw();
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
                {static_cast<float>(windowWidth - coinBarImage.width) - 20,
@@ -116,6 +127,7 @@ void Game::updateAll() {
   for (auto &coin : coins) {
     coin.Draw();
   }
+
   checkCollisions();
 
   // Drawing food on the screen and updating it each frame
@@ -142,7 +154,6 @@ void Game::updateAll() {
     }
   }
 }
-
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned

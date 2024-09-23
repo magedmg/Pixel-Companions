@@ -37,7 +37,9 @@ int main() {
   SetConfigFlags(FLAG_VSYNC_HINT); // Vsync
   SetTargetFPS(60);                // Sets fps cap to 60
 
-  Petting p({{500, 500}});
+  // Petting p({{500, 500}});
+
+  Coin c({100, 100});
 
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -48,7 +50,9 @@ int main() {
     // Updates each frame
     game.updateAll();
 
-    p.Draw();
+    // p.Draw();
+
+    c.Draw();
 
     EndDrawing();
   }

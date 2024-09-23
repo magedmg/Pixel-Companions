@@ -17,5 +17,8 @@ private:
 
 public:
   Petting(Vector2 position);
+  Petting();
   void Draw();
+
+  bool Status();
 };

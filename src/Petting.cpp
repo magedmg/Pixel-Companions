@@ -29,6 +29,8 @@ Petting::Petting(Vector2 position) {
   time = GetTime();
 }
 
+Petting::Petting() {}
+
 void Petting::Draw() {
 
   if (active) {
@@ -43,6 +45,8 @@ void Petting::Draw() {
     position.y -= deltaTime * 30;
 
     cout << position.y << endl;
+
+    cout << "bomboclatt" << endl;
 
     DrawTexture(heartTextures[currentFrame], (int)position.x + 20,
                 (int)position.y, WHITE);
@@ -60,3 +64,5 @@ void Petting::Draw() {
     }
   }
 }
+
+bool Petting::Status() { return active; }

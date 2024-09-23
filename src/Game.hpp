@@ -5,11 +5,12 @@
 #include "Coin.hpp"
 #include "DogX.hpp"
 #include "Food.hpp"
+#include "Pet.hpp"
+#include "Petting.hpp"
 #include "Poop.hpp"
 #include "Water.hpp"
 #include "healthBar.hpp"
 #include <raylib.h>
-
 class Game {
 private:
   int windowWidth = 1000;
@@ -63,6 +64,8 @@ private:
   int lastTimeDamaged;
   int lastTimeHealed;
 
+  std::vector<Petting> pettings;
+
 public:
   Game();
 
@@ -74,4 +77,6 @@ public:
   void checkCollisions();
 
   void DrawUI();
+
+  Petting p;
 };
