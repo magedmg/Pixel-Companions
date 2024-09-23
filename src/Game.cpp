@@ -10,10 +10,26 @@ Game::Game() {
   bgImage = LoadImage("resources/bg.png");
   ImageResize(&bgImage, windowWidth, windowHeight);
   bgImageTexture = LoadTextureFromImage(bgImage);
+
   // Load health bar image and resize it
   healthBarImage = LoadImage("resources/health bar.png");
   ImageResize(&healthBarImage, 300, 40);
   healthBarTexture = LoadTextureFromImage(healthBarImage);
+
+  // Load fish hunger image and resize it
+  hungerImage = LoadImage("resources/food/fish.png");
+  ImageResize(&hungerImage, 30, 30);
+  hungerTexture = LoadTextureFromImage(hungerImage);
+
+  // Load water image and resize it
+  waterImage = LoadImage("resources/water.png");
+  ImageResize(&waterImage, 30, 30);
+  waterTexture = LoadTextureFromImage(waterImage);
+
+  // Load heart happiness image and resize it
+  happinessImage = LoadImage("resources/happiness.png");
+  ImageResize(&happinessImage, 30, 30);
+  happinessTexture = LoadTextureFromImage(happinessImage);
 
   // Coin in the menu
   coinBarImage = LoadImage("resources/Coins/c1.png");
@@ -22,6 +38,8 @@ Game::Game() {
 
   randomCoinInterval = GetRandomValue(5, 10);
   lastCoinTime = GetTime();
+  lastTimeDamaged = GetTime();
+  lastTimeHealed = GetTime();
 
   coinCounter = 0;
   scoreValue = 0;
@@ -38,6 +56,16 @@ void Game::updateAll() {
   DrawText(to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
   DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
 
+  // display status values
+  DrawText(std::to_string(dog.currentHunger).c_str(), 45, 60, 30, RED);
+  DrawTextureV(hungerTexture, {10, 60}, WHITE);
+
+  DrawText(std::to_string(dog.currentThirst).c_str(), 45, 100, 30, BLUE);
+  DrawTextureV(waterTexture, {10, 100}, WHITE);
+
+  DrawText(std::to_string(dog.currentHappiness).c_str(), 45, 140, 30, PINK);
+  DrawTextureV(happinessTexture, {10, 140}, WHITE);
+
   // displays cost for food
   DrawTextureV(coinBarTexture, {885, 130}, WHITE);
   DrawText("2", 930, 135, 35, WHITE);
@@ -45,6 +73,10 @@ void Game::updateAll() {
   // displays cost for water
   DrawTextureV(coinBarTexture, {770, 130}, WHITE);
   DrawText("1", 815, 135, 35, WHITE);
+
+  // Water
+  water.draw();
+  water.update();
 
   dog.Draw();
   dog.Poo1();
@@ -90,12 +122,26 @@ void Game::updateAll() {
   food.draw();
   food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
 
-  // Water
-  water.draw();
-  water.update();
-
   // Health
   health.Draw();
+
+  // if status bars are not replenished, deplete them
+  dog.updateStatus();
+
+// if any status bar is 0, take damage every second the status bar is 0
+  if (dog.currentHappiness == 0 || dog.currentHunger == 0 || dog.currentThirst == 0) {
+    if (GetTime() - lastTimeDamaged > 2) {
+      health.takeDamage(5);
+      lastTimeDamaged = GetTime();
+    }
+  }
+  else {
+    if (GetTime() - lastTimeHealed > 2) {
+      health.healDamage(10);
+      lastTimeHealed = GetTime();
+    }
+  }
+
 }
 
 void Game::loadCoins() {
@@ -111,7 +157,7 @@ void Game::loadCoins() {
 }
 
 void Game::checkCollisions() {
-  for (auto &coin : coins) {
+  for (auto &coin : coins) { // if pet touches with coin, consume coin
     if (CheckCollisionRecs(coin.getRect(), dog.getRect())) {
       if (coin.collision == false) {
         coinCounter += 1;
@@ -121,4 +167,28 @@ void Game::checkCollisions() {
       coin.collisionTime = GetTime();
     }
   }
+
+// if cat rectangle collides with water bowl rectangle, empty the water bowl
+  if (CheckCollisionRecs(water.getRect(),dog.getRect())) {
+    water.drink();
+    dog.lastDrankTime = GetTime();
+    if (dog.currentThirst + 25 > 100) {
+    dog.currentThirst = 100;
+  } else {
+    dog.currentThirst += 25;
+  }
+  }
+
+  // if cat rectangle collides with fish rectangle, consume fish
+  if (CheckCollisionRecs(food.getRect(),dog.getRect())) {
+    food.eat();
+    dog.lastFedTime = GetTime();
+    if (dog.currentHunger + 50 > 100) {
+    dog.currentHunger = 100;
+  } else {
+    dog.currentHunger += 50;
+  }
+  }
+
 }
+

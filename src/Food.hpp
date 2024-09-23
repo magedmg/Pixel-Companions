@@ -8,6 +8,8 @@ private:
   Texture2D foodbuttonClickedTexture;
   Texture2D fishTexture;
 
+  Rectangle foodRect;
+
   Vector2 foodPosition;
   bool foodFalling;
   float foodSpeed;
@@ -22,6 +24,8 @@ public:
   void draw();
   void unloadTextures();
   Rectangle foodButtonRect;
+  Rectangle getRect();
+  void eat();
 
   void getCoins(int* currentCoins);
 };

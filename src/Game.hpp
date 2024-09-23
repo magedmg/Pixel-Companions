@@ -26,6 +26,15 @@ private:
   Image coinBarImage;
   Texture2D coinBarTexture;
 
+  Image hungerImage;
+  Texture2D hungerTexture;
+
+  Image waterImage;
+  Texture2D waterTexture;
+
+  Image happinessImage;
+  Texture2D happinessTexture;
+
   int catSize[2], fishSize[2], buttonSize[2];
   Texture2D fishTexture, foodbuttonTexture, foodbuttonClickedTexture;
   Texture2D waterbuttonTexture, waterbuttonClickedTexture;
@@ -50,6 +59,9 @@ private:
   Food food;
   Water water;
   healthBar health;
+
+  int lastTimeDamaged;
+  int lastTimeHealed;
 
 public:
   Game();
