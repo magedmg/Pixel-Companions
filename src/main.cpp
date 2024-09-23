@@ -9,6 +9,8 @@
 #include "Food.hpp"
 #include "Game.cpp"
 #include "Game.hpp"
+#include "Petting.cpp"
+#include "Petting.hpp"
 #include "Poop.cpp"
 #include "Poop.hpp"
 #include "Water.cpp"
@@ -35,6 +37,8 @@ int main() {
   SetConfigFlags(FLAG_VSYNC_HINT); // Vsync
   SetTargetFPS(60);                // Sets fps cap to 60
 
+  Petting p({{500, 500}});
+
   while (!WindowShouldClose()) {
     BeginDrawing();
 
@@ -43,6 +47,8 @@ int main() {
 
     // Updates each frame
     game.updateAll();
+
+    p.Draw();
 
     EndDrawing();
   }

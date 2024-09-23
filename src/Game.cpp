@@ -128,20 +128,19 @@ void Game::updateAll() {
   // if status bars are not replenished, deplete them
   dog.updateStatus();
 
-// if any status bar is 0, take damage every second the status bar is 0
-  if (dog.currentHappiness == 0 || dog.currentHunger == 0 || dog.currentThirst == 0) {
+  // if any status bar is 0, take damage every second the status bar is 0
+  if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
+      dog.currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 2) {
       health.takeDamage(5);
       lastTimeDamaged = GetTime();
     }
-  }
-  else {
+  } else {
     if (GetTime() - lastTimeHealed > 2) {
       health.healDamage(10);
       lastTimeHealed = GetTime();
     }
   }
-
 }
 
 void Game::loadCoins() {
@@ -168,27 +167,25 @@ void Game::checkCollisions() {
     }
   }
 
-// if cat rectangle collides with water bowl rectangle, empty the water bowl
-  if (CheckCollisionRecs(water.getRect(),dog.getRect())) {
+  // if cat rectangle collides with water bowl rectangle, empty the water bowl
+  if (CheckCollisionRecs(water.getRect(), dog.getRect())) {
     water.drink();
     dog.lastDrankTime = GetTime();
     if (dog.currentThirst + 25 > 100) {
-    dog.currentThirst = 100;
-  } else {
-    dog.currentThirst += 25;
-  }
+      dog.currentThirst = 100;
+    } else {
+      dog.currentThirst += 25;
+    }
   }
 
   // if cat rectangle collides with fish rectangle, consume fish
-  if (CheckCollisionRecs(food.getRect(),dog.getRect())) {
+  if (CheckCollisionRecs(food.getRect(), dog.getRect())) {
     food.eat();
     dog.lastFedTime = GetTime();
     if (dog.currentHunger + 50 > 100) {
-    dog.currentHunger = 100;
-  } else {
-    dog.currentHunger += 50;
+      dog.currentHunger = 100;
+    } else {
+      dog.currentHunger += 50;
+    }
   }
-  }
-
 }
-

@@ -72,4 +72,6 @@ public:
   void loadCoins();
 
   void checkCollisions();
+
+  void DrawUI();
 };
