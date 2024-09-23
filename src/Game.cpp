@@ -121,4 +121,9 @@ void Game::checkCollisions() {
       coin.collisionTime = GetTime();
     }
   }
+
+  if (CheckCollisionRecs(water.getRect(),dog.getRect())) {
+    water.drink();
+  }
+
 }
