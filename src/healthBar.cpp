@@ -33,9 +33,9 @@ void healthBar::healDamage(int heal) {
   int previoushealth = health;
   if (heal + health > 96) {
     health = 96;
+  } else {
+    health += heal;
   }
-
-  health += heal;
 
   for (int i = previoushealth; i < health; i++) {
     Vector2 positionCol;
