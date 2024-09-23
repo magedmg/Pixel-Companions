@@ -12,7 +12,7 @@ void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
 
 Water::Water() {
   float buttonSize[2] = {95, 95};
-  float emptyWaterBowlSize[2] = {90,70};
+  float emptyWaterBowlSize[2] = {95,70};
   float fullWaterBowlSize[2] = {110,90};
   createImage2(buttonSize, waterbuttonTexture, "buttons/waterbutton");
   createImage2(buttonSize, waterbuttonClickedTexture,
@@ -57,7 +57,7 @@ void Water::draw() {
     DrawTexture(fullWaterBowlTexture, 700, 470, WHITE);
   }
   else {
-    DrawTexture(emptyWaterBowlTexture, 710, 480, WHITE);
+    DrawTexture(emptyWaterBowlTexture, 708, 482, WHITE);
   }
 }
 

@@ -46,6 +46,10 @@ void Game::updateAll() {
   DrawTextureV(coinBarTexture, {770, 130}, WHITE);
   DrawText("1", 815, 135, 35, WHITE);
 
+  // Water
+  water.draw();
+  water.update();
+
   dog.Draw();
   dog.Poo1();
 
@@ -90,9 +94,6 @@ void Game::updateAll() {
   food.draw();
   food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
 
-  // Water
-  water.draw();
-  water.update();
 
   // Health
   health.Draw();
@@ -111,7 +112,7 @@ void Game::loadCoins() {
 }
 
 void Game::checkCollisions() {
-  for (auto &coin : coins) {
+  for (auto &coin : coins) { // if pet touches with coin, consume coin
     if (CheckCollisionRecs(coin.getRect(), dog.getRect())) {
       if (coin.collision == false) {
         coinCounter += 1;
@@ -122,8 +123,10 @@ void Game::checkCollisions() {
     }
   }
 
+// if cat rectangle collides with water bowl rectangle, empty the water bowl
   if (CheckCollisionRecs(water.getRect(),dog.getRect())) {
     water.drink();
   }
 
 }
+
