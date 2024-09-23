@@ -113,6 +113,10 @@ void Game::updateAll() {
 
   for (auto &petting : pettings) {
     petting.Draw();
+    int i = 0;
+    i++;
+
+    cout << i << endl;
   }
 
   dog.Draw();
