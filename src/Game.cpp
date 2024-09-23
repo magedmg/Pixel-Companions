@@ -125,33 +125,8 @@ void Game::updateAll() {
   // Health
   health.Draw();
 
-  // decreases status bars over time if respective needs are not met
-  if (GetTime() - dog.lastFedTime >= dog.hungerInterval) {
-    if (dog.currentHunger - 25 < 0) {
-    dog.currentHunger = 0;
-  } else {
-    dog.currentHunger -= 25;
-  }
-    dog.lastFedTime = GetTime();
-  }
-
-  if (GetTime() - dog.lastDrankTime >= dog.thirstInterval) {
-    if (dog.currentThirst - 25 < 0) {
-    dog.currentThirst = 0;
-  } else {
-    dog.currentThirst -= 25;
-  }
-    dog.lastDrankTime = GetTime();
-  }
-
-  if (GetTime() - dog.lastPetTime >= dog.happinessInterval) {
-    if (dog.currentHappiness - 25 < 0) {
-    dog.currentHappiness = 0;
-  } else {
-    dog.currentHappiness -= 25;
-  }
-    dog.lastPetTime = GetTime();
-  }
+  // if status bars are not replenished, deplete them
+  dog.updateStatus();
 
 // if any status bar is 0, take damage every second the status bar is 0
   if (dog.currentHappiness == 0 || dog.currentHunger == 0 || dog.currentThirst == 0) {
@@ -166,7 +141,6 @@ void Game::updateAll() {
       lastTimeHealed = GetTime();
     }
   }
-
 
 }
 

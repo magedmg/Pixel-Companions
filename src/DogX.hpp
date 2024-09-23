@@ -1,11 +1,12 @@
 #pragma once
 #include <raylib.h>
-
+#include "Pet.hpp"
 #include <vector>
+#include "Pet.cpp"
 
 #include "Poop.hpp"
 
-class DogX {
+class DogX : public Pet {
 private:
   Texture2D image;
 
@@ -28,19 +29,6 @@ public:
   void Draw();
   void Update();
   void Poo1();
-
-  int currentHunger;
-  int currentThirst;
-  int currentHappiness;
-
-  int hungerInterval;
-  int thirstInterval;
-  int happinessInterval;
-
-  float lastFedTime;
-  float lastDrankTime;
-  float lastPetTime;
-
 
   Poop **poos;
   int currentPooCount;
