@@ -16,4 +16,6 @@ public:
   void Draw();
 
   void takeDamage(int damage);
+
+  void healDamage(int heal);
 };

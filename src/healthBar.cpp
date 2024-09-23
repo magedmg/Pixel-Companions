@@ -1,4 +1,5 @@
 #include "healthBar.hpp"
+#include "pRow.hpp"
 #include "raylib.h"
 
 healthBar::healthBar() {
@@ -24,5 +25,22 @@ void healthBar::takeDamage(int damage) {
     for (int i = 0; i < damage; i++) {
       rows.pop_back();
     }
+  }
+}
+
+void healthBar::healDamage(int heal) {
+
+  int previoushealth = health;
+  if (heal + health > 96) {
+    health = 96;
+  }
+
+  health += heal;
+
+  for (int i = previoushealth; i < health; i++) {
+    Vector2 positionCol;
+    positionCol.x = position.x + (i * 3);
+    positionCol.y = position.y;
+    rows.push_back(pRow({positionCol}));
   }
 }
