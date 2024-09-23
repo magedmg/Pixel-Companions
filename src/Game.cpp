@@ -31,25 +31,20 @@ Game::Game() {
 }
 
 void Game::updateAll() {
-  int scoreTimer = GetTime(); //current time elapsed in seconds
+  int scoreTimer = GetTime(); // current time elapsed in seconds
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
   DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
-  
-  // displays cost for food
-  DrawTextureV(coinBarTexture,
-              {885,130},
-              WHITE);
-  DrawText("2", 930, 135, 35, WHITE);
-  
-  // displays cost for water
-  DrawTextureV(coinBarTexture,
-              {770,130},
-              WHITE);
-  DrawText("1", 815, 135, 35, WHITE);
 
+  // displays cost for food
+  DrawTextureV(coinBarTexture, {885, 130}, WHITE);
+  DrawText("2", 930, 135, 35, WHITE);
+
+  // displays cost for water
+  DrawTextureV(coinBarTexture, {770, 130}, WHITE);
+  DrawText("1", 815, 135, 35, WHITE);
 
   dog.Draw();
   dog.Poo1();
@@ -98,13 +93,16 @@ void Game::updateAll() {
   // Water
   water.draw();
   water.update();
+
+  // Health
+  health.Draw();
 }
 
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned
     randomCoinInterval =
-        GetRandomValue(5,12); // Get a new interval for the next coin to spawn
+        GetRandomValue(5, 12); // Get a new interval for the next coin to spawn
     float randomSpawn = GetRandomValue(
         20, 980); // set to float so that it can be passed in the pushback
 
@@ -122,6 +120,5 @@ void Game::checkCollisions() {
       coin.collision = true;
       coin.collisionTime = GetTime();
     }
-    
   }
 }

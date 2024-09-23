@@ -7,6 +7,7 @@
 #include "Food.hpp"
 #include "Poop.hpp"
 #include "Water.hpp"
+#include "healthBar.hpp"
 #include <raylib.h>
 
 class Game {
@@ -45,10 +46,10 @@ private:
   int coinCounter;
   int scoreValue;
   int scoreTimer;
-  
+
   Food food;
   Water water;
-
+  healthBar health;
 
 public:
   Game();

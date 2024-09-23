@@ -27,10 +27,9 @@ Poop::~Poop() { UnloadTexture(pooTexture); }
 Rectangle Poop::getRect() {
   if (active == false) {
     return {};
-  }
-  else {
-  return {position.x, position.y, float{static_cast<float>(pooImage.width)},
-          float{static_cast<float>(pooImage.height)}};
+  } else {
+    return {position.x, position.y, float{static_cast<float>(pooImage.width)},
+            float{static_cast<float>(pooImage.height)}};
   }
 }
 

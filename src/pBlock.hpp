@@ -8,8 +8,6 @@ public:
 
   void Draw();
 
-  Rectangle getrect();
-
 private:
   Vector2 position;
 };

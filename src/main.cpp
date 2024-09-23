@@ -13,6 +13,12 @@
 #include "Poop.hpp"
 #include "Water.cpp"
 #include "Water.hpp"
+#include "healthBar.cpp"
+#include "healthBar.hpp"
+#include "pBlock.cpp"
+#include "pBlock.hpp"
+#include "pRow.cpp"
+#include "pRow.hpp"
 
 using namespace std;
 
