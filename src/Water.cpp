@@ -74,6 +74,11 @@ void Water::getCoins(int *currentCoins) {
 }
 
 Rectangle Water::getRect() {
-  return waterBowlRect;
+  if (isBowlFull) {
+    return waterBowlRect;
   }
+  else {
+    return {0,0,0,0};
+  }
+}
   

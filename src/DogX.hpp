@@ -19,6 +19,7 @@ private:
   float moveSpeed;
 
   float lastPooTime;
+
   int randomPooInterval;
 
 public:
@@ -27,6 +28,19 @@ public:
   void Draw();
   void Update();
   void Poo1();
+
+  int currentHunger;
+  int currentThirst;
+  int currentHappiness;
+
+  int hungerInterval;
+  int thirstInterval;
+  int happinessInterval;
+
+  float lastFedTime;
+  float lastDrankTime;
+  float lastPetTime;
+
 
   Poop **poos;
   int currentPooCount;
