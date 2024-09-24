@@ -46,3 +46,7 @@ void healthBar::healDamage(int heal) {
     rows.push_back(pRow({positionCol}));
   }
 }
+
+int healthBar::getHealth() {
+  return health;
+}

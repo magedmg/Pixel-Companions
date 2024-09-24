@@ -44,7 +44,6 @@ void Petting::Draw() {
     }
     position.y -= deltaTime * 30;
 
-    // cout << position.y << endl;
     DrawTexture(heartTextures[currentFrame], (int)position.x + 40,
                 (int)position.y, WHITE);
 

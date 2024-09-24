@@ -18,4 +18,6 @@ public:
   void takeDamage(int damage);
 
   void healDamage(int heal);
+  
+  int getHealth();
 };

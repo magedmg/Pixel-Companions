@@ -1,6 +1,6 @@
 #include "Pet.hpp"
 
-Pet::Pet() {}
+Pet::Pet() {this->petAlive = true;}
 
 void Pet::updateStatus() {
   // decreases status bars over time if respective needs are not met
