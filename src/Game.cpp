@@ -153,13 +153,12 @@ void Game::updateAll() {
   // if status bars are not replenished, deplete them
   dog.updateStatus();
 
-  
   // if any status bar is 0, take damage every second the status bar is 0
   if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
       dog.currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 2) {
       for (int i = 0; i < 5; i++) {
-      health.takeDamage(1);
+        health.takeDamage(1);
       }
       lastTimeDamaged = GetTime();
       if (health.getHealth() == 0) {
@@ -169,7 +168,7 @@ void Game::updateAll() {
   } else {
     if (GetTime() - lastTimeHealed > 2) {
       for (int i = 0; i < 5; i++) {
-      health.healDamage(1);
+        health.healDamage(1);
       }
       lastTimeHealed = GetTime();
     }
