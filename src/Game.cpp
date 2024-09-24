@@ -41,6 +41,7 @@ Game::Game() {
   lastCoinTime = GetTime();
   lastTimeDamaged = GetTime();
   lastTimeHealed = GetTime();
+  lastTimePetted = GetTime();
 
   coinCounter = 0;
   scoreValue = 0;
@@ -48,7 +49,8 @@ Game::Game() {
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
 
-  lastTimePetted = GetTime();
+  petAlive = true;
+
 }
 
 void Game::updateAll() {
@@ -106,6 +108,11 @@ void Game::updateAll() {
       if (GetTime() - lastTimePetted > 4) {
         pet.Update(dog.position);
         lastTimePetted = GetTime(); // reset the last time petted
+        if (dog.currentHappiness + 25 > 100) {
+          dog.currentHappiness = 100;
+        } else {
+          dog.currentHappiness += 25;
+        }
       }
       flag = 1; // so that the cat doesnt move
     }
@@ -150,12 +157,19 @@ void Game::updateAll() {
   if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
       dog.currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 2) {
-      health.takeDamage(5);
+      for (int i = 0; i < 5; i++) {
+        health.takeDamage(1);
+      }
       lastTimeDamaged = GetTime();
+      if (health.getHealth() == 0) {
+        petAlive = false; // pet is dead if health is 0
+      }
     }
   } else {
     if (GetTime() - lastTimeHealed > 2) {
-      health.healDamage(10);
+      for (int i = 0; i < 5; i++) {
+        health.healDamage(1);
+      }
       lastTimeHealed = GetTime();
     }
   }

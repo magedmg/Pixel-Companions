@@ -65,6 +65,7 @@ private:
   int lastTimeHealed;
 
   Petting pet;
+  bool petAlive;
 
   float lastTimePetted;
 

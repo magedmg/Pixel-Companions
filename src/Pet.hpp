@@ -24,6 +24,7 @@ class Pet {
         int thirstInterval;
         int happinessInterval;
 
+
         Pet();
         void updateStatus();
         virtual ~Pet();
