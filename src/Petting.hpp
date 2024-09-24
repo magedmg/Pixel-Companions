@@ -16,9 +16,13 @@ private:
   float time;
 
 public:
-  Petting(Vector2 position);
   Petting();
+
   void Draw();
 
   bool Status();
+
+  void Update(Vector2 position);
+
+  ~Petting();
 };

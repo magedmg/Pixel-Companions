@@ -47,6 +47,8 @@ Game::Game() {
 
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
+
+  lastTimePetted = GetTime();
 }
 
 void Game::updateAll() {
@@ -102,8 +104,11 @@ void Game::updateAll() {
     if (!CheckCollisionRecs(mouseRect, food.foodButtonRect) &&
         !CheckCollisionRecs(mouseRect, waterButtonRect)) {
       if (CheckCollisionRecs(mouseRect, dog.getRect())) {
-        pettings.push_back(Petting({dog.position}));
-        flag = 1;
+        if (GetTime() - lastTimePetted > 4) {
+          pet.Update(dog.position);
+          flag = 1;                   // so that the cat doesnt move
+          lastTimePetted = GetTime(); // reset the last time petted
+        }
       }
     }
   }
@@ -111,13 +116,7 @@ void Game::updateAll() {
     dog.Update();
   }
 
-  for (auto &petting : pettings) {
-    petting.Draw();
-    int i = 0;
-    i++;
-
-    cout << i << endl;
-  }
+  pet.Draw();
 
   dog.Draw();
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
@@ -138,6 +137,7 @@ void Game::updateAll() {
   food.draw();
   food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
 
+  health.takeDamage(1);
   // Health
   health.Draw();
 

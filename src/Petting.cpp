@@ -12,25 +12,24 @@ void createAnimation2(int numLoop, int sizes[2], Texture2D *textures,
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);
     UnloadImage(targetImage);
-    SetTextureFilter(textures[i], TEXTURE_FILTER_POINT);
+    SetTextureFilter(textures[i],
+                     TEXTURE_FILTER_POINT); // makes the pixel art look clearer
   }
 }
 
-Petting::Petting(Vector2 position) {
+Petting::Petting() {
   int imageSize[2] = {20, 20};
   createAnimation2(5, imageSize, heartTextures, "hearts/h");
 
   currentFrame = 0;
   frameTime = 0;
-  frameSpeed = 0.25;
+  frameSpeed = 0.3;
 
-  this->position = position;
-  active = true;
+  this->position = {0, 0};
+  active = false;
 
   time = GetTime();
 }
-
-Petting::Petting() {}
 
 void Petting::Draw() {
 
@@ -45,25 +44,32 @@ void Petting::Draw() {
     }
     position.y -= deltaTime * 30;
 
-    cout << position.y << endl;
-
-    cout << "bomboclatt" << endl;
-
-    DrawTexture(heartTextures[currentFrame], (int)position.x + 20,
+    // cout << position.y << endl;
+    DrawTexture(heartTextures[currentFrame], (int)position.x + 40,
                 (int)position.y, WHITE);
 
     // If it has been longer than 1 seconds since the hearts spawned, despawn
     // them
     float currentTime = GetTime();
 
-    if (currentTime - time > 1) {
+    if (currentTime - time > 1.1) {
       active = false;
     }
-  } else {
-    for (int i = 0; i < 5; i++) {
-      UnloadTexture(heartTextures[i]);
-    }
   }
+  // do nothing if the petting is not active
 }
 
 bool Petting::Status() { return active; }
+
+Petting::~Petting() {
+  for (int i = 0; i < 5; i++) {
+    UnloadTexture(heartTextures[i]);
+  }
+}
+
+void Petting::Update(Vector2 position) {
+  this->position = position;
+  active = true;
+  time = GetTime(); // reset the time
+  currentFrame = 0; // resets the current frame
+}

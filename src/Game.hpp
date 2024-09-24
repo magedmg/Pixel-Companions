@@ -64,7 +64,9 @@ private:
   int lastTimeDamaged;
   int lastTimeHealed;
 
-  std::vector<Petting> pettings;
+  Petting pet;
+
+  float lastTimePetted;
 
 public:
   Game();
@@ -77,6 +79,4 @@ public:
   void checkCollisions();
 
   void DrawUI();
-
-  Petting p;
 };
