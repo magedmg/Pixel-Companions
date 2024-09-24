@@ -34,7 +34,7 @@ void healthBar::healDamage(int heal) {
 
   int previoushealth = health;
   if (heal + health > 96) {
-    health = 96;
+    health = 97;
   } else {
     health += heal;
   }
@@ -47,6 +47,4 @@ void healthBar::healDamage(int heal) {
   }
 }
 
-int healthBar::getHealth() {
-  return health;
-}
+int healthBar::getHealth() { return health; }
