@@ -49,6 +49,8 @@ Game::Game() {
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
 
+  petAlive = true;
+
 }
 
 void Game::updateAll() {
@@ -161,7 +163,7 @@ void Game::updateAll() {
       }
       lastTimeDamaged = GetTime();
       if (health.getHealth() == 0) {
-        dog.petAlive = false; // pet is dead if health is 0
+        petAlive = false; // pet is dead if health is 0
       }
     }
   } else {

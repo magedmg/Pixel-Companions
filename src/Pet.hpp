@@ -24,7 +24,6 @@ class Pet {
         int thirstInterval;
         int happinessInterval;
 
-        bool petAlive;
 
         Pet();
         void updateStatus();
