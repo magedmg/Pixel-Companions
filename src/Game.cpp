@@ -101,15 +101,30 @@ void Game::updateAll() {
       }
     }
 
-    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect) &&
-        !CheckCollisionRecs(mouseRect, waterButtonRect)) {
-      if (CheckCollisionRecs(mouseRect, dog.getRect())) {
-        if (GetTime() - lastTimePetted > 4) {
-          pet.Update(dog.position);
-          flag = 1;                   // so that the cat doesnt move
-          lastTimePetted = GetTime(); // reset the last time petted
+    /*
+      if (!CheckCollisionRecs(mouseRect, food.foodButtonRect) &&
+          !CheckCollisionRecs(mouseRect, waterButtonRect)) {
+        if (CheckCollisionRecs(mouseRect, dog.getRect())) {
+          if (GetTime() - lastTimePetted > 4) {
+            pet.Update(dog.position);
+            flag = 1;                   // so that the cat doesnt move
+            lastTimePetted = GetTime(); // reset the last time petted
+          }
         }
       }
+      */
+    // Checks if the pet has been petted
+    if (CheckCollisionRecs(mouseRect, dog.getRect())) {
+      if (GetTime() - lastTimePetted > 4) {
+        pet.Update(dog.position);
+        lastTimePetted = GetTime(); // reset the last time petted
+      }
+      flag = 1; // so that the cat doesnt move
+    }
+    // If the user clicks the food and water buttons dont move the pet
+    if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
+        CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
+      flag = 1;
     }
   }
   if (flag == 0) {
@@ -137,7 +152,6 @@ void Game::updateAll() {
   food.draw();
   food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
 
-  health.takeDamage(1);
   // Health
   health.Draw();
 

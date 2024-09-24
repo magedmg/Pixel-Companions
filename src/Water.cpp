@@ -12,8 +12,8 @@ void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
 
 Water::Water() {
   float buttonSize[2] = {95, 95};
-  float emptyWaterBowlSize[2] = {95,70};
-  float fullWaterBowlSize[2] = {110,90};
+  float emptyWaterBowlSize[2] = {95, 70};
+  float fullWaterBowlSize[2] = {110, 90};
   createImage2(buttonSize, waterbuttonTexture, "buttons/waterbutton");
   createImage2(buttonSize, waterbuttonClickedTexture,
                "buttons/waterbuttonclicked");
@@ -34,16 +34,15 @@ void Water::update() {
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, waterButtonRect)) {
-        if (*currCoins >= 1) {
-          iswaterbuttonPressed = true;
-          isBowlFull = true;
-          *currCoins -= 1;
-        }
+      if (*currCoins >= 1) {
+        iswaterbuttonPressed = true;
+        isBowlFull = true;
+        *currCoins -= 1;
+      }
     }
   } else {
     iswaterbuttonPressed = false;
   }
-
 }
 
 void Water::draw() {
@@ -55,8 +54,7 @@ void Water::draw() {
 
   if (isBowlFull) {
     DrawTexture(fullWaterBowlTexture, 700, 470, WHITE);
-  }
-  else {
+  } else {
     DrawTexture(emptyWaterBowlTexture, 708, 482, WHITE);
   }
 }
@@ -66,19 +64,13 @@ void Water::unloadTextures() {
   UnloadTexture(waterbuttonClickedTexture);
 }
 
-void Water::drink() {
-  isBowlFull = false;
-}
-void Water::getCoins(int *currentCoins) {
-  this->currCoins = currentCoins;
-}
+void Water::drink() { isBowlFull = false; }
+void Water::getCoins(int *currentCoins) { this->currCoins = currentCoins; }
 
 Rectangle Water::getRect() {
   if (isBowlFull) {
     return waterBowlRect;
-  }
-  else {
-    return {0,0,0,0};
+  } else {
+    return {0, 0, 0, 0};
   }
 }
-  
