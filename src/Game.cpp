@@ -62,14 +62,14 @@ void Game::updateAll() {
   DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
 
   // display status values
-  DrawText(std::to_string(dog.currentHunger).c_str(), 45, 60, 30, RED);
-  DrawTextureV(hungerTexture, {10, 60}, WHITE);
+  DrawText(std::to_string(dog.currentHunger).c_str(), 370, 20, 30, RED);
+  DrawTextureV(hungerTexture, {330, 20}, WHITE);
 
-  DrawText(std::to_string(dog.currentThirst).c_str(), 45, 100, 30, BLUE);
-  DrawTextureV(waterTexture, {10, 100}, WHITE);
+  DrawText(std::to_string(dog.currentThirst).c_str(), 500, 20, 30, BLUE);
+  DrawTextureV(waterTexture, {460, 20}, WHITE);
 
-  DrawText(std::to_string(dog.currentHappiness).c_str(), 45, 140, 30, PINK);
-  DrawTextureV(happinessTexture, {10, 140}, WHITE);
+  DrawText(std::to_string(dog.currentHappiness).c_str(), 630, 20, 30, PINK);
+  DrawTextureV(happinessTexture, {590, 20}, WHITE);
 
   // displays cost for food
   DrawTextureV(coinBarTexture, {885, 130}, WHITE);
