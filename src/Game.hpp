@@ -5,11 +5,12 @@
 #include "Coin.hpp"
 #include "DogX.hpp"
 #include "Food.hpp"
+#include "Pet.hpp"
+#include "Petting.hpp"
 #include "Poop.hpp"
 #include "Water.hpp"
 #include "healthBar.hpp"
 #include <raylib.h>
-
 class Game {
 private:
   int windowWidth = 1000;
@@ -63,6 +64,10 @@ private:
   int lastTimeDamaged;
   int lastTimeHealed;
 
+  Petting pet;
+
+  float lastTimePetted;
+
 public:
   Game();
 
@@ -72,4 +77,6 @@ public:
   void loadCoins();
 
   void checkCollisions();
+
+  void DrawUI();
 };

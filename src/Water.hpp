@@ -9,11 +9,10 @@ private:
   Texture2D emptyWaterBowlTexture;
   Texture2D fullWaterBowlTexture;
 
-  Rectangle waterButtonRect;
   Rectangle waterBowlRect;
   bool iswaterbuttonPressed;
   bool isBowlFull;
-  int* currCoins;
+  int *currCoins;
 
 public:
   Water();
@@ -24,5 +23,7 @@ public:
   void drink();
   Rectangle getRect();
 
-  void getCoins(int* currentCoins);
+  Rectangle waterButtonRect;
+
+  void getCoins(int *currentCoins);
 };

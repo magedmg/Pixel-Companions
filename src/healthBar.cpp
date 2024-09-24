@@ -25,6 +25,8 @@ void healthBar::takeDamage(int damage) {
     for (int i = 0; i < damage; i++) {
       rows.pop_back();
     }
+  } else {
+    health = 0;
   }
 }
 

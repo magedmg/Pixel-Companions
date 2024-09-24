@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Food.hpp"
+#include "Petting.hpp"
 #include "raylib.h"
 #include <iostream>
 #include <string>
@@ -46,6 +47,8 @@ Game::Game() {
 
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
+
+  lastTimePetted = GetTime();
 }
 
 void Game::updateAll() {
@@ -97,14 +100,28 @@ void Game::updateAll() {
         flag = 1;
       }
     }
-  }
-  if (flag == 0) {
-    Vector2 mousePos = GetMousePosition();
-    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
-    if (!CheckCollisionRecs(mouseRect, food.foodButtonRect)) {
-      dog.Update();
+
+    // Checks if the pet has been petted
+    if (CheckCollisionRecs(mouseRect, dog.getRect())) {
+      if (GetTime() - lastTimePetted > 4) {
+        pet.Update(dog.position);
+        lastTimePetted = GetTime(); // reset the last time petted
+      }
+      flag = 1; // so that the cat doesnt move
+    }
+    // If the user clicks the food and water buttons dont move the pet
+    if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
+        CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
+      flag = 1;
     }
   }
+  if (flag == 0) {
+    dog.Update();
+  }
+
+  pet.Draw();
+
+  dog.Draw();
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
                {static_cast<float>(windowWidth - coinBarImage.width) - 20,
@@ -116,6 +133,7 @@ void Game::updateAll() {
   for (auto &coin : coins) {
     coin.Draw();
   }
+
   checkCollisions();
 
   // Drawing food on the screen and updating it each frame
@@ -128,22 +146,20 @@ void Game::updateAll() {
   // if status bars are not replenished, deplete them
   dog.updateStatus();
 
-// if any status bar is 0, take damage every second the status bar is 0
-  if (dog.currentHappiness == 0 || dog.currentHunger == 0 || dog.currentThirst == 0) {
+  // if any status bar is 0, take damage every second the status bar is 0
+  if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
+      dog.currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 2) {
       health.takeDamage(5);
       lastTimeDamaged = GetTime();
     }
-  }
-  else {
+  } else {
     if (GetTime() - lastTimeHealed > 2) {
       health.healDamage(10);
       lastTimeHealed = GetTime();
     }
   }
-
 }
-
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned
@@ -168,27 +184,25 @@ void Game::checkCollisions() {
     }
   }
 
-// if cat rectangle collides with water bowl rectangle, empty the water bowl
-  if (CheckCollisionRecs(water.getRect(),dog.getRect())) {
+  // if cat rectangle collides with water bowl rectangle, empty the water bowl
+  if (CheckCollisionRecs(water.getRect(), dog.getRect())) {
     water.drink();
     dog.lastDrankTime = GetTime();
     if (dog.currentThirst + 25 > 100) {
-    dog.currentThirst = 100;
-  } else {
-    dog.currentThirst += 25;
-  }
+      dog.currentThirst = 100;
+    } else {
+      dog.currentThirst += 25;
+    }
   }
 
   // if cat rectangle collides with fish rectangle, consume fish
-  if (CheckCollisionRecs(food.getRect(),dog.getRect())) {
+  if (CheckCollisionRecs(food.getRect(), dog.getRect())) {
     food.eat();
     dog.lastFedTime = GetTime();
     if (dog.currentHunger + 50 > 100) {
-    dog.currentHunger = 100;
-  } else {
-    dog.currentHunger += 50;
+      dog.currentHunger = 100;
+    } else {
+      dog.currentHunger += 50;
+    }
   }
-  }
-
 }
-

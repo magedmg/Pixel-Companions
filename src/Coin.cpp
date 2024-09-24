@@ -7,11 +7,7 @@ Coin::Coin(Vector2 position) {
   for (int i = 1; i < 7; i++) {
     coinImage = LoadImage(TextFormat("resources/Coins/c%d.png", i));
 
-    if (i == 4) {
-      ImageResize(&coinImage, 15, 35);
-    } else {
-      ImageResize(&coinImage, 15, 35);
-    }
+    ImageResize(&coinImage, 15, 35);
 
     coinTextures[i - 1] = LoadTextureFromImage(coinImage);
     UnloadImage(coinImage); // Unload image after converting to texture
@@ -63,15 +59,13 @@ void Coin::Draw() {
 
 Rectangle Coin::getRect() {
   if (collision == true) {
-    return {0,0,0,0};
+    return {0, 0, 0, 0};
+  } else {
+    Rectangle rect;
+    rect.x = position.x;
+    rect.y = position.y;
+    rect.height = coinImage.height;
+    rect.width = coinImage.width;
+    return rect;
   }
-  else {
-  Rectangle rect;
-  rect.x = position.x;
-  rect.y = position.y;
-  rect.height = coinImage.height;
-  rect.width = coinImage.width;
-  return rect;
-  }
-  
 }

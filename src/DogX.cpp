@@ -37,7 +37,7 @@ DogX::DogX() {
 
   currentHunger = 100;
   currentThirst = 100;
-  currentHappiness = 100; 
+  currentHappiness = 100;
 
   hungerInterval = 20;
   thirstInterval = 15;
@@ -168,5 +168,7 @@ void createAnimation(int numLoop, int sizes[2], Texture2D *textures,
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);
     UnloadImage(targetImage);
+    SetTextureFilter(textures[i],
+                     TEXTURE_FILTER_POINT); // makes the pixel art look clearer
   }
 }
