@@ -5,11 +5,12 @@
 #include "Coin.hpp"
 #include "DogX.hpp"
 #include "Food.hpp"
+#include "Pet.hpp"
+#include "Petting.hpp"
 #include "Poop.hpp"
 #include "Water.hpp"
 #include "healthBar.hpp"
 #include <raylib.h>
-
 class Game {
 private:
   int windowWidth = 1000;
@@ -25,6 +26,15 @@ private:
 
   Image coinBarImage;
   Texture2D coinBarTexture;
+
+  Image hungerImage;
+  Texture2D hungerTexture;
+
+  Image waterImage;
+  Texture2D waterTexture;
+
+  Image happinessImage;
+  Texture2D happinessTexture;
 
   int catSize[2], fishSize[2], buttonSize[2];
   Texture2D fishTexture, foodbuttonTexture, foodbuttonClickedTexture;
@@ -51,6 +61,14 @@ private:
   Water water;
   healthBar health;
 
+  int lastTimeDamaged;
+  int lastTimeHealed;
+
+  Petting pet;
+  bool petAlive;
+
+  float lastTimePetted;
+
 public:
   Game();
 
@@ -60,4 +78,6 @@ public:
   void loadCoins();
 
   void checkCollisions();
+
+  void DrawUI();
 };

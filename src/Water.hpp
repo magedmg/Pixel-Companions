@@ -6,9 +6,13 @@ class Water {
 private:
   Texture2D waterbuttonTexture;
   Texture2D waterbuttonClickedTexture;
-  Rectangle waterButtonRect;
+  Texture2D emptyWaterBowlTexture;
+  Texture2D fullWaterBowlTexture;
+
+  Rectangle waterBowlRect;
   bool iswaterbuttonPressed;
-  int* currCoins;
+  bool isBowlFull;
+  int *currCoins;
 
 public:
   Water();
@@ -16,6 +20,10 @@ public:
   void update();
   void draw();
   void unloadTextures();
+  void drink();
+  Rectangle getRect();
 
-  void getCoins(int* currentCoins);
+  Rectangle waterButtonRect;
+
+  void getCoins(int *currentCoins);
 };

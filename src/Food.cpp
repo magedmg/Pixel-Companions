@@ -43,20 +43,20 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
         foodFalling = true;
         *currCoins -= 2;
       }
-    } 
-    else {
-    isfoodbuttonPressed = false;
-  }
+    } else {
+      isfoodbuttonPressed = false;
+    }
   }
 
   if (foodFalling) {
+    float fishSize[2] = {55, 65};
     foodPosition.y += foodSpeed * deltaTime;
+    foodRect = {foodPosition.x, foodPosition.y, fishSize[0], fishSize[1]};
     if (foodPosition.y >= 480) {
       foodFalling = false;
     }
   }
 }
-
 
 void Food::draw() {
   if (foodFalling) {
@@ -84,6 +84,11 @@ void createImage(float sizes[2], Texture2D &ImgTexture, const char *path) {
   UnloadImage(targetImage);
 }
 
-void Food::getCoins(int *currentCoins) {
-  this->currCoins = currentCoins;
+void Food::getCoins(int *currentCoins) { this->currCoins = currentCoins; }
+
+Rectangle Food::getRect() { return foodRect; }
+
+void Food::eat() {
+  foodRect = {0, 0, 0, 0};
+  foodFalling = false;
 }

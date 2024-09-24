@@ -25,6 +25,8 @@ void healthBar::takeDamage(int damage) {
     for (int i = 0; i < damage; i++) {
       rows.pop_back();
     }
+  } else {
+    health = 0;
   }
 }
 
@@ -32,7 +34,7 @@ void healthBar::healDamage(int heal) {
 
   int previoushealth = health;
   if (heal + health > 96) {
-    health = 96;
+    health = 97;
   } else {
     health += heal;
   }
@@ -44,3 +46,5 @@ void healthBar::healDamage(int heal) {
     rows.push_back(pRow({positionCol}));
   }
 }
+
+int healthBar::getHealth() { return health; }

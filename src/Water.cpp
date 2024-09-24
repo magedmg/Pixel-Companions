@@ -12,12 +12,19 @@ void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
 
 Water::Water() {
   float buttonSize[2] = {95, 95};
+  float emptyWaterBowlSize[2] = {95, 70};
+  float fullWaterBowlSize[2] = {110, 90};
   createImage2(buttonSize, waterbuttonTexture, "buttons/waterbutton");
   createImage2(buttonSize, waterbuttonClickedTexture,
                "buttons/waterbuttonclicked");
+  createImage2(emptyWaterBowlSize, emptyWaterBowlTexture, "water/emptyWater");
+  createImage2(fullWaterBowlSize, fullWaterBowlTexture, "water/fullWater");
 
   waterButtonRect = {750, 16, buttonSize[0], buttonSize[1]};
+  waterBowlRect = {700, 470, fullWaterBowlSize[0], fullWaterBowlSize[1]};
+
   iswaterbuttonPressed = false;
+  isBowlFull = false;
 }
 
 Water::~Water() { unloadTextures(); }
@@ -27,15 +34,15 @@ void Water::update() {
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, waterButtonRect)) {
-        if (*currCoins >= 1) {
-          iswaterbuttonPressed = true;
-          *currCoins -= 1;
-        }
+      if (*currCoins >= 1) {
+        iswaterbuttonPressed = true;
+        isBowlFull = true;
+        *currCoins -= 1;
+      }
     }
   } else {
     iswaterbuttonPressed = false;
   }
-  // fill up water bowl here
 }
 
 void Water::draw() {
@@ -44,6 +51,12 @@ void Water::draw() {
   } else {
     DrawTexture(waterbuttonTexture, 750, 16, WHITE);
   }
+
+  if (isBowlFull) {
+    DrawTexture(fullWaterBowlTexture, 700, 470, WHITE);
+  } else {
+    DrawTexture(emptyWaterBowlTexture, 708, 482, WHITE);
+  }
 }
 
 void Water::unloadTextures() {
@@ -51,7 +64,13 @@ void Water::unloadTextures() {
   UnloadTexture(waterbuttonClickedTexture);
 }
 
+void Water::drink() { isBowlFull = false; }
+void Water::getCoins(int *currentCoins) { this->currCoins = currentCoins; }
 
-void Water::getCoins(int *currentCoins) {
-  this->currCoins = currentCoins;
+Rectangle Water::getRect() {
+  if (isBowlFull) {
+    return waterBowlRect;
+  } else {
+    return {0, 0, 0, 0};
+  }
 }
