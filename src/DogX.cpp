@@ -78,6 +78,11 @@ void DogX::Draw() {
     DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y,
                 WHITE);
   }
+
+  if (isDying) {
+    DrawTexture(dieTextures[curFrame], (int)position.x, (int)position.y,
+                WHITE);
+  }
 }
 
 void DogX::Update() {
@@ -115,10 +120,16 @@ void DogX::Update() {
       if (position.x <= targetPosition.x) {
         position.x = targetPosition.x;
         isRunning = false;
-        // dcurFrame = 0;
+        // curFrame = 0;
       }
     }
   }
+
+  // CAT DYING PART
+  if (isDying) {
+    
+  }
+
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     targetPosition = GetMousePosition();
     isRunning = true;

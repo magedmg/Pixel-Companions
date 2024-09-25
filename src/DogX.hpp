@@ -42,5 +42,6 @@ public:
   Vector2 position;
   Vector2 targetPosition;
   bool isRunning;
+  bool isDying;
   bool movingRight;
 };
