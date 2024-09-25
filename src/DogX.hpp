@@ -13,6 +13,7 @@ private:
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
   Texture2D runLeftTextures[6];
+  Texture2D dieTextures[4];
 
   int curFrame;
   float frameSpeed;

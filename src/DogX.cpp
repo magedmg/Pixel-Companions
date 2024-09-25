@@ -18,6 +18,7 @@ DogX::DogX() {
   createAnimation(4, catSize, standTextures, "cat/1");
   createAnimation(6, catSize, runRightTextures, "cat/2");
   createAnimation(6, catSize, runLeftTextures, "cat/3");
+  createAnimation(4, catSize, dieTextures, "cat/11");
 
   // DEFINE VARIABLES TO USE IN LOOP
   targetPosition = position;
