@@ -9,16 +9,17 @@
 class DogX : public Pet {
 private:
   Texture2D image;
+  Image deathImage;
 
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
   Texture2D runLeftTextures[6];
-  Texture2D dieTextures[4];
+  Texture2D deathTexture;
 
-  int curFrame;
   float frameSpeed;
   float frameTime;
   float moveSpeed;
+  int curFrame;
 
   float lastPooTime;
 
@@ -42,6 +43,7 @@ public:
   Vector2 position;
   Vector2 targetPosition;
   bool isRunning;
-  bool isDying;
+  bool isDead;
   bool movingRight;
+
 };

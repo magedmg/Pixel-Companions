@@ -156,13 +156,19 @@ void Game::updateAll() {
   // if any status bar is 0, take damage every second the status bar is 0
   if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
       dog.currentThirst == 0) {
-    if (GetTime() - lastTimeDamaged > 2) {
+    if (GetTime() - lastTimeDamaged > 1.5) {
       for (int i = 0; i < 5; i++) {
         health.takeDamage(1);
       }
       lastTimeDamaged = GetTime();
       if (health.getHealth() == 0) {
-        petAlive = false; // pet is dead if health is 0
+        if (petAlive == true) {
+          petAlive = false;
+          dog.isRunning = false;
+          dog.isDead = true;
+          //replayGame();
+        }
+
       }
     }
   } else {
@@ -220,3 +226,9 @@ void Game::checkCollisions() {
     }
   }
 }
+
+/*void Game::replayGame() {
+  DrawText("You died!", 500, 135, 35, WHITE);
+  DrawText("Play again?", 500, 135, 35, WHITE);
+}
+*/

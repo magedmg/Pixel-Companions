@@ -18,15 +18,20 @@ DogX::DogX() {
   createAnimation(4, catSize, standTextures, "cat/1");
   createAnimation(6, catSize, runRightTextures, "cat/2");
   createAnimation(6, catSize, runLeftTextures, "cat/3");
-  createAnimation(4, catSize, dieTextures, "cat/11");
+
+  // Load death image and resize it
+  deathImage = LoadImage("resources/cat/114.png");
+  ImageResize(&deathImage, catSize[0], catSize[1]);
+  deathTexture = LoadTextureFromImage(deathImage);
 
   // DEFINE VARIABLES TO USE IN LOOP
   targetPosition = position;
   isRunning = false; // Indicates whether the cat is running
+  isDead = false;
   movingRight = true;
   targetPosition = position;
   curFrame = 0;       // Index of the current frame
-  frameSpeed = 0.2f;  // Speed at which frames change (seconds per frame)
+  frameSpeed = 0.25f;  // Speed at which frames change (seconds per frame)
   frameTime = 0.0f;   // Time accumulator
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
@@ -41,7 +46,7 @@ DogX::DogX() {
   currentHappiness = 100;
 
   hungerInterval = 20;
-  thirstInterval = 15;
+  thirstInterval = 3;
   happinessInterval = 25;
 
   currentPooCount = 0;
@@ -57,7 +62,7 @@ void DogX::Draw() {
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
-  if (frameTime >= frameSpeed) {
+  if (!isDead && frameTime >= frameSpeed) {
     frameTime = 0.0f;
     if (isRunning) {
       curFrame = (curFrame + 1) % 5;
@@ -66,28 +71,28 @@ void DogX::Draw() {
     }
   }
 
-  if (isRunning) {
-    if (movingRight) {
-      DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y,
-                  WHITE);
-    } else {
-      DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y,
-                  WHITE);
-    }
-  } else {
-    DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y,
-                WHITE);
+  if (isDead) {
+    cout << "Drawing death image" << endl;
+      DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
+  } 
+  else if (isRunning) {
+      if (movingRight) {
+          DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y, WHITE);
+      } else {
+          DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y, WHITE);
+      }
+  } 
+  else {
+      DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y, WHITE);
   }
 
-  if (isDying) {
-    DrawTexture(dieTextures[curFrame], (int)position.x, (int)position.y,
-                WHITE);
-  }
 }
+
 
 void DogX::Update() {
   float deltaTime = GetFrameTime();
   // Make sure the cat cant go off the screen
+if (!isDead) {
   if (position.x > (1000 - 85)) {
     position.x = 915;
     isRunning = false;
@@ -125,10 +130,6 @@ void DogX::Update() {
     }
   }
 
-  // CAT DYING PART
-  if (isDying) {
-    
-  }
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     targetPosition = GetMousePosition();
@@ -140,6 +141,7 @@ void DogX::Update() {
       movingRight = false;
     }
   }
+}
 }
 
 DogX::~DogX() {
