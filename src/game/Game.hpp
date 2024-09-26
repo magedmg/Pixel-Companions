@@ -13,6 +13,9 @@
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
 #include <raylib.h>
+#include "../companion/pinkCat.hpp"
+#include "../companion/shibaInu.hpp"
+#include "../companion/Dog.hpp"
 
 class Game {
 private:
@@ -23,9 +26,11 @@ private:
   Texture2D bgImageTexture;
   std::string petType;
 
-  // DogX dog;
-  // Cat cat;
-  greyCat greyCat;
+   Dog dog;
+   Cat cat;
+   greyCat greyCat;
+   pinkCat pinkCat;
+   shibaInu shibaInu;
 
   Image healthBarImage;
   Texture2D healthBarTexture;
