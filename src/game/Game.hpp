@@ -1,16 +1,19 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
-#include "Coin.hpp"
-#include "DogX.hpp"
-#include "Food.hpp"
-#include "Pet.hpp"
-#include "Petting.hpp"
-#include "Poop.hpp"
-#include "Water.hpp"
-#include "healthBar.hpp"
+#include "../companion/Cat.hpp"
+#include "../companion/Pet.hpp"
+#include "../companion/greyCat.hpp"
+#include "../health/healthBar.hpp"
+#include "../pet-essentials/Coin.hpp"
+#include "../pet-essentials/Food.hpp"
+#include "../pet-essentials/Petting.hpp"
+#include "../pet-essentials/Poop.hpp"
+#include "../pet-essentials/Water.hpp"
 #include <raylib.h>
+
 class Game {
 private:
   int windowWidth = 1000;
@@ -18,8 +21,11 @@ private:
   Image bgImage;
 
   Texture2D bgImageTexture;
+  std::string petType;
 
-  DogX dog;
+  // DogX dog;
+  // Cat cat;
+  greyCat greyCat;
 
   Image healthBarImage;
   Texture2D healthBarTexture;
@@ -76,6 +82,7 @@ public:
 
   int flag;
   void loadCoins();
+  void replayGame();
 
   void checkCollisions();
 

@@ -18,7 +18,7 @@ void createAnimation2(int numLoop, int sizes[2], Texture2D *textures,
 }
 
 Petting::Petting() {
-  int imageSize[2] = {20, 20};
+  int imageSize[2] = {55, 65};
   createAnimation2(5, imageSize, heartTextures, "hearts/h");
 
   currentFrame = 0;
@@ -44,8 +44,8 @@ void Petting::Draw() {
     }
     position.y -= deltaTime * 30;
 
-    DrawTexture(heartTextures[currentFrame], (int)position.x + 40,
-                (int)position.y, WHITE);
+    DrawTexture(heartTextures[currentFrame], (int)position.x + 20,
+                (int)position.y - 55, WHITE);
 
     // If it has been longer than 1 seconds since the hearts spawned, despawn
     // them

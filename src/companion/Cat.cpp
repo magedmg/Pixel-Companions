@@ -1,62 +1,48 @@
-#include "DogX.hpp"
+#include "Cat.hpp"
 
 #include <raylib.h>
 
 #include <iostream>
 using namespace std;
 
-void createAnimation(int, int[2], Texture2D *, const char *);
 
-DogX::DogX() {
+Cat::Cat() {
   // Initial position
   position = {250, 480};
 
-  int catSize[2] = {85, 95};
-
-  // Load all the images for left and right movements, as well as standing
-  // still
-  createAnimation(4, catSize, standTextures, "cat/1");
-  createAnimation(6, catSize, runRightTextures, "cat/2");
-  createAnimation(6, catSize, runLeftTextures, "cat/3");
-
-  // DEFINE VARIABLES TO USE IN LOOP
-  targetPosition = position;
-  isRunning = false; // Indicates whether the cat is running
-  movingRight = true;
-  targetPosition = position;
-  curFrame = 0;       // Index of the current frame
-  frameSpeed = 0.2f;  // Speed at which frames change (seconds per frame)
-  frameTime = 0.0f;   // Time accumulator
-  moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
-
-  // setting last poop time
+  poos = new Poop *[5];
+  for (int i = 0; i < 5; i++) {
+    poos[i] = new Poop({0, 0});
+  }
+    // setting last poop time
   lastPooTime = GetTime();
   lastFedTime = GetTime();
   lastDrankTime = GetTime();
   lastPetTime = GetTime();
 
+  // DEFINE VARIABLES TO USE IN LOOP
+  targetPosition = position;
+  isRunning = false; // Indicates whether the cat is running
+  isDead = false;
+  movingRight = true;
+  targetPosition = position;
+  curFrame = 0;       // Index of the current frame
+  frameSpeed = 0.25f;  // Speed at which frames change (seconds per frame)
+  frameTime = 0.0f;   // Time accumulator
+
   currentHunger = 100;
   currentThirst = 100;
   currentHappiness = 100;
 
-  hungerInterval = 20;
-  thirstInterval = 15;
-  happinessInterval = 25;
-
   currentPooCount = 0;
-  poos = new Poop *[5];
-  for (int i = 0; i < 5; i++) {
-    poos[i] = new Poop({0, 0});
-  }
 
-  randomPooInterval = GetRandomValue(5, 10);
 }
 
-void DogX::Draw() {
+void Cat::Draw() {
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
-  if (frameTime >= frameSpeed) {
+  if (!isDead && frameTime >= frameSpeed) {
     frameTime = 0.0f;
     if (isRunning) {
       curFrame = (curFrame + 1) % 5;
@@ -64,24 +50,13 @@ void DogX::Draw() {
       curFrame = (curFrame + 1) % 4;
     }
   }
-
-  if (isRunning) {
-    if (movingRight) {
-      DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y,
-                  WHITE);
-    } else {
-      DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y,
-                  WHITE);
-    }
-  } else {
-    DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y,
-                WHITE);
-  }
 }
 
-void DogX::Update() {
+
+void Cat::Update() {
   float deltaTime = GetFrameTime();
   // Make sure the cat cant go off the screen
+if (!isDead) {
   if (position.x > (1000 - 85)) {
     position.x = 915;
     isRunning = false;
@@ -114,10 +89,12 @@ void DogX::Update() {
       if (position.x <= targetPosition.x) {
         position.x = targetPosition.x;
         isRunning = false;
-        // dcurFrame = 0;
+        // curFrame = 0;
       }
     }
   }
+
+
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     targetPosition = GetMousePosition();
     isRunning = true;
@@ -129,18 +106,11 @@ void DogX::Update() {
     }
   }
 }
-
-DogX::~DogX() {
-  for (int i = 0; i < 4; i++) {
-    UnloadTexture(standTextures[i]);
-  }
-  for (int i = 0; i < 6; i++) {
-    UnloadTexture(runRightTextures[i]);
-    UnloadTexture(runLeftTextures[i]);
-  }
 }
 
-void DogX::Poo1() {
+Cat::~Cat() {}
+
+void Cat::Poo1() {
   if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
     poos[currentPooCount]->position = {position.x - image.width - 30,
                                        position.y + 40};
@@ -151,7 +121,7 @@ void DogX::Poo1() {
   }
 }
 
-Rectangle DogX::getRect() {
+Rectangle Cat::getRect() {
   Rectangle rect;
   rect.x = position.x;
   rect.y = position.y;
