@@ -7,6 +7,10 @@
 #include "companion/Pet.hpp"
 #include "companion/greyCat.cpp"
 #include "companion/greyCat.hpp"
+#include "companion/pinkCat.cpp"
+#include "companion/pinkCat.hpp"
+#include "companion/shibaInu.cpp"
+#include "companion/shibaInu.hpp"
 #include "game/Game.cpp"
 #include "game/Game.hpp"
 #include "health/healthBar.cpp"
@@ -26,6 +30,8 @@
 #include "pet-essentials/Water.cpp"
 #include "pet-essentials/Water.hpp"
 
+#include "companion/Dog.cpp"
+#include "companion/Dog.hpp"
 using namespace std;
 
 int main() {

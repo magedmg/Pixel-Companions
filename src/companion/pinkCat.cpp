@@ -1,6 +1,6 @@
 #include "pinkCat.hpp"
 
-void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
+void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
     const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
@@ -18,9 +18,9 @@ pinkCat::pinkCat() {
 
   // Load all the images for left and right movements, as well as standing
   // still
-  createAnimation4(4, catSize, standTextures, "cat/4");
-  createAnimation4(6, catSize, runRightTextures, "cat/5");
-  createAnimation4(6, catSize, runLeftTextures, "cat/6");
+  createAnimation6(4, catSize, standTextures, "cat/4");
+  createAnimation6(6, catSize, runRightTextures, "cat/5");
+  createAnimation6(6, catSize, runLeftTextures, "cat/6");
 
   // Load death image and resize it
   deathImage = LoadImage("resources/cat/214.png");
