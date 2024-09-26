@@ -50,7 +50,6 @@ Game::Game() {
   water.getCoins(&coinCounter);
 
   petAlive = true;
-
 }
 
 void Game::updateAll() {
@@ -62,13 +61,13 @@ void Game::updateAll() {
   DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
 
   // display status values
-  DrawText(std::to_string(dog.currentHunger).c_str(), 370, 20, 30, RED);
+  DrawText(std::to_string(greyCat.currentHunger).c_str(), 370, 20, 30, RED);
   DrawTextureV(hungerTexture, {330, 20}, WHITE);
 
-  DrawText(std::to_string(dog.currentThirst).c_str(), 500, 20, 30, BLUE);
+  DrawText(std::to_string(greyCat.currentThirst).c_str(), 500, 20, 30, BLUE);
   DrawTextureV(waterTexture, {460, 20}, WHITE);
 
-  DrawText(std::to_string(dog.currentHappiness).c_str(), 630, 20, 30, PINK);
+  DrawText(std::to_string(greyCat.currentHappiness).c_str(), 630, 20, 30, PINK);
   DrawTextureV(happinessTexture, {590, 20}, WHITE);
 
   // displays cost for food
@@ -83,11 +82,11 @@ void Game::updateAll() {
   water.draw();
   water.update();
 
-  dog.Draw();
-  dog.Poo1();
+  greyCat.Draw();
+  greyCat.Poo1();
 
-  for (int i = 0; i < dog.currentPooCount; i++) {
-    dog.poos[i]->Draw();
+  for (int i = 0; i < greyCat.currentPooCount; i++) {
+    greyCat.poos[i]->Draw();
   }
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -95,23 +94,23 @@ void Game::updateAll() {
     Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
 
     Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
-    for (int i = 0; i < dog.currentPooCount; i++) {
-      if (CheckCollisionRecs(dog.poos[i]->getRect(), collisionRect)) {
-        dog.poos[i]->deactivate();
+    for (int i = 0; i < greyCat.currentPooCount; i++) {
+      if (CheckCollisionRecs(greyCat.poos[i]->getRect(), collisionRect)) {
+        greyCat.poos[i]->deactivate();
         scoreValue += 30;
         flag = 1;
       }
     }
 
     // Checks if the pet has been petted
-    if (CheckCollisionRecs(mouseRect, dog.getRect())) {
+    if (CheckCollisionRecs(mouseRect, greyCat.getRect())) {
       if (GetTime() - lastTimePetted > 4) {
-        pet.Update(dog.position);
+        pet.Update(greyCat.position);
         lastTimePetted = GetTime(); // reset the last time petted
-        if (dog.currentHappiness + 25 > 100) {
-          dog.currentHappiness = 100;
+        if (greyCat.currentHappiness + 25 > 100) {
+          greyCat.currentHappiness = 100;
         } else {
-          dog.currentHappiness += 25;
+          greyCat.currentHappiness += 25;
         }
       }
       flag = 1; // so that the cat doesnt move
@@ -123,12 +122,12 @@ void Game::updateAll() {
     }
   }
   if (flag == 0) {
-    dog.Update();
+    greyCat.Update();
   }
 
   pet.Draw();
 
-  dog.Draw();
+  greyCat.Draw();
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
                {static_cast<float>(windowWidth - coinBarImage.width) - 20,
@@ -145,17 +144,17 @@ void Game::updateAll() {
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(dog.position, dog.targetPosition, dog.isRunning, dog.movingRight);
+  food.update(greyCat.position, greyCat.targetPosition, greyCat.isRunning, greyCat.movingRight);
 
   // Health
   health.Draw();
 
   // if status bars are not replenished, deplete them
-  dog.updateStatus();
+  greyCat.updateStatus();
 
   // if any status bar is 0, take damage every second the status bar is 0
-  if (dog.currentHappiness == 0 || dog.currentHunger == 0 ||
-      dog.currentThirst == 0) {
+  if (greyCat.currentHappiness == 0 || greyCat.currentHunger == 0 ||
+      greyCat.currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 1.5) {
       for (int i = 0; i < 5; i++) {
         health.takeDamage(1);
@@ -164,8 +163,8 @@ void Game::updateAll() {
       if (health.getHealth() == 0) {
         if (petAlive == true) {
           petAlive = false;
-          dog.isRunning = false;
-          dog.isDead = true;
+          greyCat.isRunning = false;
+          greyCat.isDead = true;
           //replayGame();
         }
 
@@ -194,7 +193,7 @@ void Game::loadCoins() {
 
 void Game::checkCollisions() {
   for (auto &coin : coins) { // if pet touches with coin, consume coin
-    if (CheckCollisionRecs(coin.getRect(), dog.getRect())) {
+    if (CheckCollisionRecs(coin.getRect(), greyCat.getRect())) {
       if (coin.collision == false) {
         coinCounter += 1;
         scoreValue += 20;
@@ -205,24 +204,24 @@ void Game::checkCollisions() {
   }
 
   // if cat rectangle collides with water bowl rectangle, empty the water bowl
-  if (CheckCollisionRecs(water.getRect(), dog.getRect())) {
+  if (CheckCollisionRecs(water.getRect(), greyCat.getRect())) {
     water.drink();
-    dog.lastDrankTime = GetTime();
-    if (dog.currentThirst + 25 > 100) {
-      dog.currentThirst = 100;
+    greyCat.lastDrankTime = GetTime();
+    if (greyCat.currentThirst + 25 > 100) {
+      greyCat.currentThirst = 100;
     } else {
-      dog.currentThirst += 25;
+      greyCat.currentThirst += 25;
     }
   }
 
   // if cat rectangle collides with fish rectangle, consume fish
-  if (CheckCollisionRecs(food.getRect(), dog.getRect())) {
+  if (CheckCollisionRecs(food.getRect(), greyCat.getRect())) {
     food.eat();
-    dog.lastFedTime = GetTime();
-    if (dog.currentHunger + 50 > 100) {
-      dog.currentHunger = 100;
+    greyCat.lastFedTime = GetTime();
+    if (greyCat.currentHunger + 50 > 100) {
+      greyCat.currentHunger = 100;
     } else {
-      dog.currentHunger += 50;
+      greyCat.currentHunger += 50;
     }
   }
 }

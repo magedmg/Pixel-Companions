@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include "Coin.hpp"
 #include "DogX.hpp"
@@ -11,6 +12,8 @@
 #include "Water.hpp"
 #include "healthBar.hpp"
 #include <raylib.h>
+#include "greyCat.hpp"
+
 class Game {
 private:
   int windowWidth = 1000;
@@ -18,8 +21,11 @@ private:
   Image bgImage;
 
   Texture2D bgImageTexture;
+  std::string petType;
 
-  DogX dog;
+  //DogX dog;
+  //Cat cat;
+  greyCat greyCat;
 
   Image healthBarImage;
   Texture2D healthBarTexture;
@@ -77,7 +83,7 @@ public:
   int flag;
   void loadCoins();
   void replayGame();
-  
+
   void checkCollisions();
 
   void DrawUI();

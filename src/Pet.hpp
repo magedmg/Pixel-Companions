@@ -27,6 +27,7 @@ class Pet {
 
         Pet();
         void updateStatus();
+        virtual void Draw() = 0;
         virtual ~Pet();
 
         
