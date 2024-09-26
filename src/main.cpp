@@ -1,6 +1,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "Cat.cpp"
+#include "Cat.hpp"
 #include "Coin.cpp"
 #include "Coin.hpp"
 #include "DogX.cpp"
@@ -15,6 +17,8 @@
 #include "Poop.hpp"
 #include "Water.cpp"
 #include "Water.hpp"
+#include "greyCat.cpp"
+#include "greyCat.hpp"
 #include "healthBar.cpp"
 #include "healthBar.hpp"
 #include "pBlock.cpp"

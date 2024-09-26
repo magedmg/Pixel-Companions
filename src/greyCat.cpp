@@ -1,14 +1,26 @@
 #include "greyCat.hpp"
 
+void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
+                      const char *path) {
+  for (int i = 0; i < numLoop; i++) {
+    const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
+    Image targetImage = LoadImage(filename);
+    ImageResize(&targetImage, sizes[0], sizes[1]);
+    textures[i] = LoadTextureFromImage(targetImage);
+    UnloadImage(targetImage);
+    SetTextureFilter(textures[i],
+                     TEXTURE_FILTER_POINT); // makes the pixel art look clearer
+  }
+}
 
 greyCat::greyCat() {
-      int catSize[2] = {85, 95};
+  int catSize[2] = {85, 95};
 
   // Load all the images for left and right movements, as well as standing
   // still
-  createAnimation(4, catSize, standTextures, "cat/1");
-  createAnimation(6, catSize, runRightTextures, "cat/2");
-  createAnimation(6, catSize, runLeftTextures, "cat/3");
+  createAnimation4(4, catSize, standTextures, "cat/1");
+  createAnimation4(6, catSize, runRightTextures, "cat/2");
+  createAnimation4(6, catSize, runLeftTextures, "cat/3");
 
   // Load death image and resize it
   deathImage = LoadImage("resources/cat/114.png");
@@ -38,19 +50,19 @@ void greyCat::Draw() {
   }
 
   if (isDead) {
-      DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
-  } 
-  else if (isRunning) {
-      if (movingRight) {
-          DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y, WHITE);
-      } else {
-          DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y, WHITE);
-      }
-  } 
-  else {
-      DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y, WHITE);
+    DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
+  } else if (isRunning) {
+    if (movingRight) {
+      DrawTexture(runRightTextures[curFrame], (int)position.x, (int)position.y,
+                  WHITE);
+    } else {
+      DrawTexture(runLeftTextures[curFrame], (int)position.x, (int)position.y,
+                  WHITE);
+    }
+  } else {
+    DrawTexture(standTextures[curFrame], (int)position.x, (int)position.y,
+                WHITE);
   }
-
 }
 
 greyCat::~greyCat() {
