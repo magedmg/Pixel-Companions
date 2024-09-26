@@ -1,18 +1,18 @@
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
-#include "Coin.hpp"
-#include "DogX.hpp"
-#include "Food.hpp"
-#include "Pet.hpp"
-#include "Petting.hpp"
-#include "Poop.hpp"
-#include "Water.hpp"
-#include "healthBar.hpp"
+#include "../companion/Cat.hpp"
+#include "../companion/Pet.hpp"
+#include "../companion/greyCat.hpp"
+#include "../health/healthBar.hpp"
+#include "../pet-essentials/Coin.hpp"
+#include "../pet-essentials/Food.hpp"
+#include "../pet-essentials/Petting.hpp"
+#include "../pet-essentials/Poop.hpp"
+#include "../pet-essentials/Water.hpp"
 #include <raylib.h>
-#include "greyCat.hpp"
 
 class Game {
 private:
@@ -23,8 +23,8 @@ private:
   Texture2D bgImageTexture;
   std::string petType;
 
-  //DogX dog;
-  //Cat cat;
+  // DogX dog;
+  // Cat cat;
   greyCat greyCat;
 
   Image healthBarImage;

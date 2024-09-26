@@ -1,20 +1,11 @@
 #pragma once
-#include <raylib.h>
 #include "Pet.hpp"
+#include <raylib.h>
 #include <vector>
-#include "Pet.cpp"
 
-#include "Poop.hpp"
-
-class DogX : public Pet {
+class Cat : public Pet {
 protected:
   Texture2D image;
-  Image deathImage;
-
-  Texture2D standTextures[4];
-  Texture2D runRightTextures[6];
-  Texture2D runLeftTextures[6];
-  Texture2D deathTexture;
 
   float frameSpeed;
   float frameTime;
@@ -26,11 +17,12 @@ protected:
   int randomPooInterval;
 
 public:
-  DogX();
-  ~DogX();
-  void Draw();
+  Cat();
+  ~Cat();
+  virtual void Draw();
   void Update();
   void Poo1();
+  void createAnimation(int, int[2], Texture2D *, const char *);
 
   Poop **poos;
   int currentPooCount;
@@ -45,5 +37,4 @@ public:
   bool isRunning;
   bool isDead;
   bool movingRight;
-
 };

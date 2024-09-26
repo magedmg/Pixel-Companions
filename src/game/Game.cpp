@@ -1,8 +1,6 @@
 #include "Game.hpp"
-#include "Food.hpp"
-#include "Petting.hpp"
-#include "raylib.h"
 #include <iostream>
+#include <raylib.h>
 #include <string>
 using namespace std;
 
@@ -144,7 +142,8 @@ void Game::updateAll() {
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(greyCat.position, greyCat.targetPosition, greyCat.isRunning, greyCat.movingRight);
+  food.update(greyCat.position, greyCat.targetPosition, greyCat.isRunning,
+              greyCat.movingRight);
 
   // Health
   health.Draw();
@@ -165,9 +164,8 @@ void Game::updateAll() {
           petAlive = false;
           greyCat.isRunning = false;
           greyCat.isDead = true;
-          //replayGame();
+          // replayGame();
         }
-
       }
     }
   } else {
