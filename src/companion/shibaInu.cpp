@@ -14,7 +14,7 @@ void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
 }
 
 shibaInu::shibaInu() {
-  int dogSize[2] = {90, 100};
+  int dogSize[2] = {108, 95};
 
   // Load all the images for left and right movements, as well as standing
   // still
@@ -23,14 +23,14 @@ shibaInu::shibaInu() {
   createAnimation5(6, dogSize, runLeftTextures, "dog/3");
 
   // Load death image and resize it
-  deathImage = LoadImage("resources/dog/114.png");
+  deathImage = LoadImage("resources/dog/41.png");
   ImageResize(&deathImage, dogSize[0], dogSize[1]);
   deathTexture = LoadTextureFromImage(deathImage);
 
   moveSpeed = 100.0f; // Speed at which the dog moves (pixels per second)
 
   hungerInterval = 15;
-  thirstInterval = 3;
+  thirstInterval = 6;
   happinessInterval = 20;
 
   randomPooInterval = GetRandomValue(3, 8);

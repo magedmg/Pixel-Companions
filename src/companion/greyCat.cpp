@@ -30,7 +30,7 @@ greyCat::greyCat() {
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
   hungerInterval = 20;
-  thirstInterval = 3;
+  thirstInterval = 12;
   happinessInterval = 25;
 
   randomPooInterval = GetRandomValue(5, 10);

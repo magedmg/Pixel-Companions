@@ -29,9 +29,9 @@ pinkCat::pinkCat() {
 
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
-  hungerInterval = 20;
-  thirstInterval = 9;
-  happinessInterval = 25;
+  hungerInterval = 18;
+  thirstInterval = 10;
+  happinessInterval = 23;
 
   randomPooInterval = GetRandomValue(5, 10);
 }
