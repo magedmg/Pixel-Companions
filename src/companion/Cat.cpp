@@ -7,6 +7,7 @@ using namespace std;
 
 
 Cat::Cat() {
+  levelUpInterval = 10;
   // Initial position
   position = {250, 480};
 
@@ -19,6 +20,7 @@ Cat::Cat() {
   lastFedTime = GetTime();
   lastDrankTime = GetTime();
   lastPetTime = GetTime();
+  petType = "cat";
 
   // DEFINE VARIABLES TO USE IN LOOP
   targetPosition = position;

@@ -6,6 +6,7 @@
 using namespace std;
 
 Dog::Dog() {
+  levelUpInterval = 5;
   // Initial position
   position = {250, 480};
 
@@ -18,6 +19,7 @@ Dog::Dog() {
   lastFedTime = GetTime();
   lastDrankTime = GetTime();
   lastPetTime = GetTime();
+  petType = "dog";
 
   // DEFINE VARIABLES TO USE IN LOOP
   targetPosition = position;

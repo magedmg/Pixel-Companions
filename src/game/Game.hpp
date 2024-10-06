@@ -24,7 +24,8 @@ private:
   Image bgImage;
 
   Texture2D bgImageTexture;
-  std::string petType;
+  std::string petBreed;
+  std::string levelText;
 
    Dog dog;
    Cat cat;
@@ -80,6 +81,8 @@ private:
 
   float lastTimePetted;
 
+  Pet* currentPet;
+
 public:
   Game();
 
@@ -92,4 +95,6 @@ public:
   void checkCollisions();
 
   void DrawUI();
+
+  void createPet(std::string petBreed);
 };
