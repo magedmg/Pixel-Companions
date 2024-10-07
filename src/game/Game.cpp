@@ -52,13 +52,11 @@ Game::Game() {
 
   petAlive = true;
 
-  petBreed = "pinkCat";
+  petBreed = "greyCat";
   createPet(petBreed);
 }
 
 void Game::updateAll() {
-  int scoreTimer = GetTime(); // current time elapsed in seconds
-  flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
@@ -90,55 +88,62 @@ void Game::updateAll() {
   DrawTextureV(coinBarTexture, {770, 130}, WHITE);
   DrawText("1", 815, 135, 35, WHITE);
 
+  int scoreTimer = GetTime(); // current time elapsed in seconds
+  flag = 0;
+
   // Water
   water.draw();
+  if (petAlive) {
   water.update();
-
-  currentPet->Draw();
-  currentPet->Poo1();
-
-  for (int i = 0; i < currentPet->currentPooCount; i++) {
-    currentPet->poos[i]->Draw(); // error, no member "poos" in Pet
   }
 
-  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-    Vector2 mousePos = GetMousePosition();
-    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+  currentPet->Draw();
+  if (petAlive) {
+    currentPet->Poo1();
 
-    Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
     for (int i = 0; i < currentPet->currentPooCount; i++) {
-      if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
-        currentPet->poos[i]->deactivate();
-        scoreValue += 30;
+      currentPet->poos[i]->Draw(); 
+    }
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+      Vector2 mousePos = GetMousePosition();
+      Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+
+      Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
+      for (int i = 0; i < currentPet->currentPooCount; i++) {
+        if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
+          currentPet->poos[i]->deactivate();
+          scoreValue += 30;
+          flag = 1;
+        }
+      }
+
+      if (currentPet->petType == "cat") {
+        // Checks if the pet has been petted
+        if (CheckCollisionRecs(mouseRect, currentPet->getRect())) {
+          if (GetTime() - lastTimePetted > 4) {
+            pet.Update(currentPet->position);
+            lastTimePetted = GetTime(); // reset the last time petted
+            if (currentPet->currentHappiness + 25 > 100) {
+              currentPet->currentHappiness = 100;
+            } else {
+              currentPet->currentHappiness += 25;
+            }
+          }
+          flag = 1; // so that the cat doesnt move
+        }
+      }
+      // If the user clicks the food and water buttons dont move the pet
+      if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
+          CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
         flag = 1;
       }
     }
-
-    if (currentPet->petType == "cat") {
-      // Checks if the pet has been petted
-      if (CheckCollisionRecs(mouseRect, currentPet->getRect())) {
-        if (GetTime() - lastTimePetted > 4) {
-          pet.Update(currentPet->position);
-          lastTimePetted = GetTime(); // reset the last time petted
-          if (currentPet->currentHappiness + 25 > 100) {
-            currentPet->currentHappiness = 100;
-          } else {
-            currentPet->currentHappiness += 25;
-          }
-        }
-        flag = 1; // so that the cat doesnt move
-      }
-    }
-    // If the user clicks the food and water buttons dont move the pet
-    if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
-        CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
-      flag = 1;
+    
+    if (flag == 0) {
+      currentPet->Update();
     }
   }
-  if (flag == 0) {
-    currentPet->Update();
-  }
-
   pet.Draw();
 
   currentPet->Draw();
@@ -148,19 +153,22 @@ void Game::updateAll() {
                 static_cast<float>(windowHeight - coinBarImage.height) - 10},
                WHITE);
 
-  loadCoins();
+  if (petAlive) {
+    loadCoins();
 
-  for (auto &coin : coins) {
-    coin.Draw();
+    for (auto &coin : coins) {
+      coin.Draw();
+    }
+
+    checkCollisions();
   }
-
-  checkCollisions();
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(currentPet->position, currentPet->targetPosition,
-              currentPet->isRunning, currentPet->movingRight);
-
+  if (petAlive) {
+    food.update(currentPet->position, currentPet->targetPosition,
+                currentPet->isRunning, currentPet->movingRight);
+  }
   // Health
   health.Draw();
 
@@ -193,15 +201,12 @@ void Game::updateAll() {
     }
   }
 
-  if (currentPet->petWin == true) {
-    DrawText("YOU WIN!", 430, 320, 70, WHITE);
-  }
 }
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned
     randomCoinInterval =
-        GetRandomValue(5, 12); // Get a new interval for the next coin to spawn
+        GetRandomValue(5, 10); // Get a new interval for the next coin to spawn
     float randomSpawn = GetRandomValue(
         20, 980); // set to float so that it can be passed in the pushback
 
@@ -245,6 +250,7 @@ void Game::checkCollisions() {
 }
 
 void Game::createPet(std::string petBreed) {
+  delete currentPet;
   // creates pet breed
   if (petBreed == "pinkCat") {
     currentPet = new pinkCat();

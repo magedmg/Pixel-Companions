@@ -14,6 +14,7 @@ void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
 }
 
 shibaInu::shibaInu() {
+  scaleFactor = 0.3;
   int dogSize[2] = {108, 95};
 
   // Load all the images for left and right movements, as well as standing

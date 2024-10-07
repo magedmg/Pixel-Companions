@@ -106,7 +106,12 @@ void Dog::Update() {
   }
 }
 
-Dog::~Dog() {}
+Dog::~Dog() {
+  for (int i = 0; i < 5; i++) {
+    delete poos[i];
+  }
+  delete[] poos;
+}
 
 void Dog::Poo1() {
   if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
