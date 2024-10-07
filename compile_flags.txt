@@ -1,2 +1,6 @@
--std=c++17
+-std=c++17 
 -I/System/Volumes/Data/opt/homebrew/Cellar/raylib/5.0/include/
+-Wall 
+-Wextra 
+-Wpedantic
+-v

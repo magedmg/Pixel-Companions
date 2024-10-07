@@ -52,7 +52,7 @@ Game::Game() {
 
   petAlive = true;
 
-  petBreed = "greyCat";
+  petBreed = "pinkCat";
   createPet(petBreed);
 }
 
@@ -94,56 +94,55 @@ void Game::updateAll() {
   // Water
   water.draw();
   if (petAlive) {
-  water.update();
+    water.update();
+    currentPet->Poo1();
   }
 
   currentPet->Draw();
-  if (petAlive) {
-    currentPet->Poo1();
 
+  for (int i = 0; i < currentPet->currentPooCount; i++) {
+    currentPet->poos[i]->Draw();
+  }
+
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    Vector2 mousePos = GetMousePosition();
+    Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
+
+    Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
     for (int i = 0; i < currentPet->currentPooCount; i++) {
-      currentPet->poos[i]->Draw(); 
-    }
-
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-      Vector2 mousePos = GetMousePosition();
-      Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
-
-      Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
-      for (int i = 0; i < currentPet->currentPooCount; i++) {
-        if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
-          currentPet->poos[i]->deactivate();
-          scoreValue += 30;
-          flag = 1;
-        }
-      }
-
-      if (currentPet->petType == "cat") {
-        // Checks if the pet has been petted
-        if (CheckCollisionRecs(mouseRect, currentPet->getRect())) {
-          if (GetTime() - lastTimePetted > 4) {
-            pet.Update(currentPet->position);
-            lastTimePetted = GetTime(); // reset the last time petted
-            if (currentPet->currentHappiness + 25 > 100) {
-              currentPet->currentHappiness = 100;
-            } else {
-              currentPet->currentHappiness += 25;
-            }
-          }
-          flag = 1; // so that the cat doesnt move
-        }
-      }
-      // If the user clicks the food and water buttons dont move the pet
-      if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
-          CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
+      if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
+        currentPet->poos[i]->deactivate();
+        scoreValue += 30;
         flag = 1;
       }
     }
-    
-    if (flag == 0) {
-      currentPet->Update();
+
+    if (currentPet->petType == "cat") {
+      // Checks if the pet has been petted
+      if (CheckCollisionRecs(mouseRect, currentPet->getRect())) {
+        if (GetTime() - lastTimePetted > 4) {
+          pet.Update(currentPet->position);
+          lastTimePetted = GetTime(); // reset the last time petted
+          if (currentPet->currentHappiness + 25 > 100) {
+            currentPet->currentHappiness = 100;
+          } else {
+            currentPet->currentHappiness += 25;
+          }
+        }
+        flag = 1; // so that the cat doesnt move
+      }
+    }
+    // If the user clicks the food and water buttons dont move the pet
+    if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
+        CheckCollisionRecs(mouseRect, water.waterButtonRect)) {
+      flag = 1;
     }
   }
+
+  if (flag == 0) {
+    currentPet->Update();
+  }
+
   pet.Draw();
 
   currentPet->Draw();
@@ -200,8 +199,8 @@ void Game::updateAll() {
       lastTimeHealed = GetTime();
     }
   }
-
 }
+
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned
@@ -250,8 +249,8 @@ void Game::checkCollisions() {
 }
 
 void Game::createPet(std::string petBreed) {
-  delete currentPet;
-  // creates pet breed
+
+  //  creates pet breed
   if (petBreed == "pinkCat") {
     currentPet = new pinkCat();
   } else if (petBreed == "greyCat") {
