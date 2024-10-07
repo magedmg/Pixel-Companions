@@ -5,8 +5,7 @@
 #include <iostream>
 using namespace std;
 
-
-Cat::Cat() {
+Cat::Cat() : Pet() {
   levelUpInterval = 10;
   // Initial position
   position = {250, 480};
@@ -15,7 +14,7 @@ Cat::Cat() {
   for (int i = 0; i < 5; i++) {
     poos[i] = new Poop({0, 0});
   }
-    // setting last poop time
+  // setting last poop time
   lastPooTime = GetTime();
   lastFedTime = GetTime();
   lastDrankTime = GetTime();
@@ -29,7 +28,7 @@ Cat::Cat() {
   movingRight = true;
   targetPosition = position;
   curFrame = 0;       // Index of the current frame
-  frameSpeed = 0.25f;  // Speed at which frames change (seconds per frame)
+  frameSpeed = 0.25f; // Speed at which frames change (seconds per frame)
   frameTime = 0.0f;   // Time accumulator
 
   currentHunger = 100;
@@ -37,7 +36,6 @@ Cat::Cat() {
   currentHappiness = 100;
 
   currentPooCount = 0;
-
 }
 
 void Cat::Draw() {
@@ -54,60 +52,58 @@ void Cat::Draw() {
   }
 }
 
-
 void Cat::Update() {
   float deltaTime = GetFrameTime();
   // Make sure the cat cant go off the screen
-if (!isDead) {
-  if (position.x > (1000 - 85)) {
-    position.x = 915;
-    isRunning = false;
-  } else if (position.x < 20) {
-    position.x = 20;
-    isRunning = false;
-  }
+  if (!isDead) {
+    if (position.x > (1000 - 85)) {
+      position.x = 915;
+      isRunning = false;
+    } else if (position.x < 20) {
+      position.x = 20;
+      isRunning = false;
+    }
 
-  frameTime += deltaTime;
-  if (frameTime >= frameSpeed) {
-    frameTime = 0.0f;
+    frameTime += deltaTime;
+    if (frameTime >= frameSpeed) {
+      frameTime = 0.0f;
+      if (isRunning) {
+        curFrame = (curFrame + 1) % 6;
+      } else {
+        curFrame = (curFrame + 1) % 4;
+      }
+    }
+
+    // CAT RUNNING PART
     if (isRunning) {
-      curFrame = (curFrame + 1) % 6;
-    } else {
-      curFrame = (curFrame + 1) % 4;
-    }
-  }
-
-  // CAT RUNNING PART
-  if (isRunning) {
-    if (movingRight) {
-      position.x += moveSpeed * deltaTime;
-      if (position.x >= targetPosition.x) {
-        position.x = targetPosition.x;
-        isRunning = false;
-        // curFrame = 0;
-      }
-    } else {
-      position.x -= moveSpeed * deltaTime;
-      if (position.x <= targetPosition.x) {
-        position.x = targetPosition.x;
-        isRunning = false;
-        // curFrame = 0;
+      if (movingRight) {
+        position.x += moveSpeed * deltaTime;
+        if (position.x >= targetPosition.x) {
+          position.x = targetPosition.x;
+          isRunning = false;
+          // curFrame = 0;
+        }
+      } else {
+        position.x -= moveSpeed * deltaTime;
+        if (position.x <= targetPosition.x) {
+          position.x = targetPosition.x;
+          isRunning = false;
+          // curFrame = 0;
+        }
       }
     }
-  }
 
-
-  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-    targetPosition = GetMousePosition();
-    isRunning = true;
-    // Determine direction based on mouse position
-    if (targetPosition.x > position.x) {
-      movingRight = true;
-    } else if (targetPosition.x < position.x) {
-      movingRight = false;
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+      targetPosition = GetMousePosition();
+      isRunning = true;
+      // Determine direction based on mouse position
+      if (targetPosition.x > position.x) {
+        movingRight = true;
+      } else if (targetPosition.x < position.x) {
+        movingRight = false;
+      }
     }
   }
-}
 }
 
 Cat::~Cat() {}

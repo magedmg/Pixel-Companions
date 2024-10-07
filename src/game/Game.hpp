@@ -1,21 +1,22 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include "../companion/Cat.hpp"
+#include "../companion/Dog.hpp"
 #include "../companion/Pet.hpp"
 #include "../companion/greyCat.hpp"
+#include "../companion/pinkCat.hpp"
+#include "../companion/shibaInu.hpp"
 #include "../health/healthBar.hpp"
 #include "../pet-essentials/Coin.hpp"
 #include "../pet-essentials/Food.hpp"
 #include "../pet-essentials/Petting.hpp"
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
+
 #include <raylib.h>
-#include "../companion/pinkCat.hpp"
-#include "../companion/shibaInu.hpp"
-#include "../companion/Dog.hpp"
+
+#include <string>
+#include <vector>
 
 class Game {
 private:
@@ -26,12 +27,6 @@ private:
   Texture2D bgImageTexture;
   std::string petBreed;
   std::string levelText;
-
-   Dog dog;
-   Cat cat;
-   greyCat greyCat;
-   pinkCat pinkCat;
-   shibaInu shibaInu;
 
   Image healthBarImage;
   Texture2D healthBarTexture;
@@ -81,7 +76,7 @@ private:
 
   float lastTimePetted;
 
-  Pet* currentPet;
+  Pet *currentPet;
 
 public:
   Game();

@@ -1,8 +1,9 @@
 #include "Game.hpp"
-#include <iostream>
+
 #include <raylib.h>
+
+#include <iostream>
 #include <string>
-using namespace std;
 
 Game::Game() {
   // Load and resize background image
@@ -53,8 +54,6 @@ Game::Game() {
 
   petBreed = "pinkCat";
   createPet(petBreed);
-
-
 }
 
 void Game::updateAll() {
@@ -62,14 +61,15 @@ void Game::updateAll() {
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  DrawText(to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
-  DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
+  DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
+  DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
 
   // display status values
   DrawText(std::to_string(currentPet->currentHunger).c_str(), 370, 20, 30, RED);
   DrawTextureV(hungerTexture, {330, 20}, WHITE);
 
-  DrawText(std::to_string(currentPet->currentThirst).c_str(), 500, 20, 30, BLUE);
+  DrawText(std::to_string(currentPet->currentThirst).c_str(), 500, 20, 30,
+           BLUE);
   DrawTextureV(waterTexture, {460, 20}, WHITE);
 
   // display current pet level
@@ -77,8 +77,9 @@ void Game::updateAll() {
   DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
 
   if (currentPet->petType == "cat") {
-  DrawText(std::to_string(currentPet->currentHappiness).c_str(), 630, 20, 30, PINK);
-  DrawTextureV(happinessTexture, {590, 20}, WHITE);
+    DrawText(std::to_string(currentPet->currentHappiness).c_str(), 630, 20, 30,
+             PINK);
+    DrawTextureV(happinessTexture, {590, 20}, WHITE);
   }
 
   // displays cost for food
@@ -94,7 +95,7 @@ void Game::updateAll() {
   water.update();
 
   currentPet->Draw();
-  currentPet->Poo1(); 
+  currentPet->Poo1();
 
   for (int i = 0; i < currentPet->currentPooCount; i++) {
     currentPet->poos[i]->Draw(); // error, no member "poos" in Pet
@@ -157,8 +158,8 @@ void Game::updateAll() {
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(currentPet->position, currentPet->targetPosition, currentPet->isRunning,
-              currentPet->movingRight);
+  food.update(currentPet->position, currentPet->targetPosition,
+              currentPet->isRunning, currentPet->movingRight);
 
   // Health
   health.Draw();
@@ -245,13 +246,13 @@ void Game::checkCollisions() {
 
 void Game::createPet(std::string petBreed) {
   // creates pet breed
-    if (petBreed == "pinkCat") {
-        currentPet = new class pinkCat();
-    } else if (petBreed == "greyCat") {
-        currentPet = new class greyCat();
-    } else if (petBreed == "shibaInu") {
-        currentPet = new class shibaInu();
-    }
+  if (petBreed == "pinkCat") {
+    currentPet = new pinkCat();
+  } else if (petBreed == "greyCat") {
+    currentPet = new greyCat();
+  } else if (petBreed == "shibaInu") {
+    currentPet = new shibaInu();
+  }
 }
 
 /*void Game::replayGame() {
