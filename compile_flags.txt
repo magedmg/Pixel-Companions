@@ -1,7 +1,2 @@
 -std=c++17
 -I/System/Volumes/Data/opt/homebrew/Cellar/raylib/5.0/include/
--I/usr/local/include
--I/opt/homebrew/include
--I/path/to/clang++/includes
--I/usr/local/include
--I/opt/homebrew/include

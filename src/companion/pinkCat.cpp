@@ -13,7 +13,7 @@ void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-pinkCat::pinkCat() {
+pinkCat::pinkCat() : Cat() {
   int catSize[2] = {85, 95};
 
   // Load all the images for left and right movements, as well as standing

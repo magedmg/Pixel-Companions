@@ -1,6 +1,9 @@
 #include "Pet.hpp"
 
-Pet::Pet() {}
+Pet::Pet() {
+  this->petWin = false;
+  this->level = 0;
+}
 
 void Pet::updateStatus() {
   // decreases status bars over time if respective needs are not met
@@ -29,6 +32,15 @@ void Pet::updateStatus() {
       this->currentHappiness -= 25;
     }
     this->lastPetTime = GetTime();
+  }
+
+  if (GetTime() - this->lastLevelUpTime >= this-> levelUpInterval) {
+    if (this->level + 1 == 10) {
+      petWin = true;
+    } else {
+      this->level += 1;
+    }
+    this->lastLevelUpTime = GetTime();
   }
 }
 

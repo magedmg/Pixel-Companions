@@ -1,8 +1,9 @@
 #include "Game.hpp"
-#include <iostream>
+
 #include <raylib.h>
+
+#include <iostream>
 #include <string>
-using namespace std;
 
 Game::Game() {
   // Load and resize background image
@@ -47,8 +48,12 @@ Game::Game() {
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
 
+  levelText = "LVL ";
+
   petAlive = true;
 
+  petBreed = "pinkCat";
+  createPet(petBreed);
 }
 
 void Game::updateAll() {
@@ -56,18 +61,26 @@ void Game::updateAll() {
   flag = 0;
 
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  DrawText(to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
-  DrawText(to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
+  DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
+  DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
 
   // display status values
-  DrawText(std::to_string(shibaInu.currentHunger).c_str(), 370, 20, 30, RED);
+  DrawText(std::to_string(currentPet->currentHunger).c_str(), 370, 20, 30, RED);
   DrawTextureV(hungerTexture, {330, 20}, WHITE);
 
-  DrawText(std::to_string(shibaInu.currentThirst).c_str(), 500, 20, 30, BLUE);
+  DrawText(std::to_string(currentPet->currentThirst).c_str(), 500, 20, 30,
+           BLUE);
   DrawTextureV(waterTexture, {460, 20}, WHITE);
 
-  DrawText(std::to_string(shibaInu.currentHappiness).c_str(), 630, 20, 30, PINK);
-  DrawTextureV(happinessTexture, {590, 20}, WHITE);
+  // display current pet level
+  DrawText("LVL ", 13, 75, 40, BLACK);
+  DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
+
+  if (currentPet->petType == "cat") {
+    DrawText(std::to_string(currentPet->currentHappiness).c_str(), 630, 20, 30,
+             PINK);
+    DrawTextureV(happinessTexture, {590, 20}, WHITE);
+  }
 
   // displays cost for food
   DrawTextureV(coinBarTexture, {885, 130}, WHITE);
@@ -81,11 +94,11 @@ void Game::updateAll() {
   water.draw();
   water.update();
 
-  shibaInu.Draw();
-  shibaInu.Poo1();
+  currentPet->Draw();
+  currentPet->Poo1();
 
-  for (int i = 0; i < shibaInu.currentPooCount; i++) {
-    shibaInu.poos[i]->Draw();
+  for (int i = 0; i < currentPet->currentPooCount; i++) {
+    currentPet->poos[i]->Draw(); // error, no member "poos" in Pet
   }
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -93,26 +106,28 @@ void Game::updateAll() {
     Rectangle mouseRect = {mousePos.x, mousePos.y, 1, 1};
 
     Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
-    for (int i = 0; i < shibaInu.currentPooCount; i++) {
-      if (CheckCollisionRecs(shibaInu.poos[i]->getRect(), collisionRect)) {
-        shibaInu.poos[i]->deactivate();
+    for (int i = 0; i < currentPet->currentPooCount; i++) {
+      if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
+        currentPet->poos[i]->deactivate();
         scoreValue += 30;
         flag = 1;
       }
     }
 
-    // Checks if the pet has been petted
-    if (CheckCollisionRecs(mouseRect, shibaInu.getRect())) {
-      if (GetTime() - lastTimePetted > 4) {
-        pet.Update(shibaInu.position);
-        lastTimePetted = GetTime(); // reset the last time petted
-        if (shibaInu.currentHappiness + 25 > 100) {
-          shibaInu.currentHappiness = 100;
-        } else {
-          shibaInu.currentHappiness += 25;
+    if (currentPet->petType == "cat") {
+      // Checks if the pet has been petted
+      if (CheckCollisionRecs(mouseRect, currentPet->getRect())) {
+        if (GetTime() - lastTimePetted > 4) {
+          pet.Update(currentPet->position);
+          lastTimePetted = GetTime(); // reset the last time petted
+          if (currentPet->currentHappiness + 25 > 100) {
+            currentPet->currentHappiness = 100;
+          } else {
+            currentPet->currentHappiness += 25;
+          }
         }
+        flag = 1; // so that the cat doesnt move
       }
-      flag = 1; // so that the cat doesnt move
     }
     // If the user clicks the food and water buttons dont move the pet
     if (CheckCollisionRecs(mouseRect, food.foodButtonRect) ||
@@ -121,12 +136,12 @@ void Game::updateAll() {
     }
   }
   if (flag == 0) {
-    shibaInu.Update();
+    currentPet->Update();
   }
 
   pet.Draw();
 
-  shibaInu.Draw();
+  currentPet->Draw();
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
                {static_cast<float>(windowWidth - coinBarImage.width) - 20,
@@ -143,18 +158,18 @@ void Game::updateAll() {
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(shibaInu.position, shibaInu.targetPosition, shibaInu.isRunning,
-              shibaInu.movingRight);
+  food.update(currentPet->position, currentPet->targetPosition,
+              currentPet->isRunning, currentPet->movingRight);
 
   // Health
   health.Draw();
 
   // if status bars are not replenished, deplete them
-  shibaInu.updateStatus();
+  currentPet->updateStatus();
 
   // if any status bar is 0, take damage every second the status bar is 0
-  if (shibaInu.currentHappiness == 0 || shibaInu.currentHunger == 0 ||
-      shibaInu.currentThirst == 0) {
+  if (currentPet->currentHappiness == 0 || currentPet->currentHunger == 0 ||
+      currentPet->currentThirst == 0) {
     if (GetTime() - lastTimeDamaged > 1.5) {
       for (int i = 0; i < 5; i++) {
         health.takeDamage(1);
@@ -163,8 +178,8 @@ void Game::updateAll() {
       if (health.getHealth() == 0) {
         if (petAlive == true) {
           petAlive = false;
-          shibaInu.isRunning = false;
-          shibaInu.isDead = true;
+          currentPet->isRunning = false;
+          currentPet->isDead = true;
           // replayGame();
         }
       }
@@ -176,6 +191,10 @@ void Game::updateAll() {
       }
       lastTimeHealed = GetTime();
     }
+  }
+
+  if (currentPet->petWin == true) {
+    DrawText("YOU WIN!", 430, 320, 70, WHITE);
   }
 }
 void Game::loadCoins() {
@@ -192,7 +211,7 @@ void Game::loadCoins() {
 
 void Game::checkCollisions() {
   for (auto &coin : coins) { // if pet touches with coin, consume coin
-    if (CheckCollisionRecs(coin.getRect(), shibaInu.getRect())) {
+    if (CheckCollisionRecs(coin.getRect(), currentPet->getRect())) {
       if (coin.collision == false) {
         coinCounter += 1;
         scoreValue += 20;
@@ -202,26 +221,37 @@ void Game::checkCollisions() {
     }
   }
 
-  // if cat rectangle collides with water bowl rectangle, empty the water bowl
-  if (CheckCollisionRecs(water.getRect(), shibaInu.getRect())) {
+  // if pet rectangle collides with water bowl rectangle, empty the water bowl
+  if (CheckCollisionRecs(water.getRect(), currentPet->getRect())) {
     water.drink();
-    shibaInu.lastDrankTime = GetTime();
-    if (shibaInu.currentThirst + 25 > 100) {
-      shibaInu.currentThirst = 100;
+    currentPet->lastDrankTime = GetTime();
+    if (currentPet->currentThirst + 25 > 100) {
+      currentPet->currentThirst = 100;
     } else {
-      shibaInu.currentThirst += 25;
+      currentPet->currentThirst += 25;
     }
   }
 
-  // if cat rectangle collides with fish rectangle, consume fish
-  if (CheckCollisionRecs(food.getRect(), shibaInu.getRect())) {
+  // if pet rectangle collides with fish rectangle, consume fish
+  if (CheckCollisionRecs(food.getRect(), currentPet->getRect())) {
     food.eat();
-    shibaInu.lastFedTime = GetTime();
-    if (shibaInu.currentHunger + 50 > 100) {
-      shibaInu.currentHunger = 100;
+    currentPet->lastFedTime = GetTime();
+    if (currentPet->currentHunger + 50 > 100) {
+      currentPet->currentHunger = 100;
     } else {
-      shibaInu.currentHunger += 50;
+      currentPet->currentHunger += 50;
     }
+  }
+}
+
+void Game::createPet(std::string petBreed) {
+  // creates pet breed
+  if (petBreed == "pinkCat") {
+    currentPet = new pinkCat();
+  } else if (petBreed == "greyCat") {
+    currentPet = new greyCat();
+  } else if (petBreed == "shibaInu") {
+    currentPet = new shibaInu();
   }
 }
 
