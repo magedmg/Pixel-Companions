@@ -11,6 +11,11 @@ Game::Game() {
   ImageResize(&bgImage, windowWidth, windowHeight);
   bgImageTexture = LoadTextureFromImage(bgImage);
 
+  // Load and resize opening screen image
+  openingImage = LoadImage("resources/opening.png");
+  ImageResize(&openingImage, windowWidth, windowHeight);
+  openingImageTexture = LoadTextureFromImage(openingImage);
+
   // Load health bar image and resize it
   healthBarImage = LoadImage("resources/health bar.png");
   ImageResize(&healthBarImage, 300, 40);
@@ -31,29 +36,29 @@ Game::Game() {
   ImageResize(&happinessImage, 30, 30);
   happinessTexture = LoadTextureFromImage(happinessImage);
 
-  // Coin in the menu
+  // Load coin in the menu and resize it
   coinBarImage = LoadImage("resources/Coins/c1.png");
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
-  randomCoinInterval = GetRandomValue(5, 10);
-  lastCoinTime = GetTime();
-  lastTimeDamaged = GetTime();
-  lastTimeHealed = GetTime();
-  lastTimePetted = GetTime();
+    randomCoinInterval = GetRandomValue(5, 10);
+    lastCoinTime = GetTime();
+    lastTimeDamaged = GetTime();
+    lastTimeHealed = GetTime();
+    lastTimePetted = GetTime();
 
-  coinCounter = 0;
-  scoreValue = 0;
+    coinCounter = 0;
+    scoreValue = 0;
 
-  food.getCoins(&coinCounter);
-  water.getCoins(&coinCounter);
+    food.getCoins(&coinCounter);
+    water.getCoins(&coinCounter);
 
-  levelText = "LVL ";
+    levelText = "LVL ";
 
-  petAlive = true;
+    petAlive = true;
 
-  petBreed = "pinkCat";
-  createPet(petBreed);
+    petBreed = "pinkCat";
+    createPet(petBreed);
 }
 
 void Game::updateAll() {

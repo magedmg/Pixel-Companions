@@ -22,9 +22,13 @@ class Game {
 private:
   int windowWidth = 1000;
   int windowHeight = 700;
-  Image bgImage;
 
+  Image bgImage;
   Texture2D bgImageTexture;
+
+  Image openingImage;
+  Texture2D openingImageTexture;
+
   std::string petBreed;
   std::string levelText;
 
