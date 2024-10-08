@@ -41,24 +41,24 @@ Game::Game() {
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
-    randomCoinInterval = GetRandomValue(5, 10);
-    lastCoinTime = GetTime();
-    lastTimeDamaged = GetTime();
-    lastTimeHealed = GetTime();
-    lastTimePetted = GetTime();
+  randomCoinInterval = GetRandomValue(5, 10);
+  lastCoinTime = GetTime();
+  lastTimeDamaged = GetTime();
+  lastTimeHealed = GetTime();
+  lastTimePetted = GetTime();
 
-    coinCounter = 0;
-    scoreValue = 0;
+  coinCounter = 0;
+  scoreValue = 0;
 
-    food.getCoins(&coinCounter);
-    water.getCoins(&coinCounter);
+  food.getCoins(&coinCounter);
+  water.getCoins(&coinCounter);
 
-    levelText = "LVL ";
+  levelText = "LVL ";
 
-    petAlive = true;
+  petAlive = true;
 
-    petBreed = "pinkCat";
-    createPet(petBreed);
+  petBreed = "pinkCat";
+  createPet(petBreed);
 }
 
 void Game::updateAll() {
