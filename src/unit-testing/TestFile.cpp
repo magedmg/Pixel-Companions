@@ -1,8 +1,8 @@
-#include "CoinUnitTest.h"
-#include "FoodUnitTest.h"
-#include "PettingUnitTest.h"
-#include "PoopUnitTest.h"
-#include "WaterUnitTest.h"
+#include "CoinUnitTest.hpp"
+#include "FoodUnitTest.hpp"
+#include "PettingUnitTest.hpp"
+#include "PoopUnitTest.hpp"
+#include "WaterUnitTest.hpp"
 
 using namespace std;
 

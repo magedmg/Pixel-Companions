@@ -19,10 +19,10 @@ class PettingUnitTest {
             Petting pets;
             // testing if data members are correctly initialised when constructed
             if (pets.Status() != false) {
-                std::cout << "Petting Test 1 failed (constructor)" << endl;
+                std::cout << "Petting Test 1 failed (constructor)" << std::endl;
             }
             else {
-                std::cout << "Petting Test 1 succeeded (constructor)" << endl;
+                std::cout << "Petting Test 1 succeeded (constructor)" << std::endl;
             }
 
         }
@@ -30,19 +30,19 @@ class PettingUnitTest {
             Petting pets;
             // testing if correct status is set
             if (pets.Status() != false) {
-                std::cout << "Petting Test 2 failed (status before update)" << endl;
+                std::cout << "Petting Test 2 failed (status before update)" << std::endl;
             }
             else {
-                std::cout << "Petting Test 2 succeeded (status before update)" << endl;
+                std::cout << "Petting Test 2 succeeded (status before update)" << std::endl;
             }
 
             // testing if status is updated
             pets.Update({100,20});
             if (pets.Status() == false) {
-                std::cout << "Petting Test 3 failed (status after update)" << endl;
+                std::cout << "Petting Test 3 failed (status after update)" << std::endl;
             }
             else {
-                std::cout << "Petting Test 3 succeeded (status after update)" << endl;
+                std::cout << "Petting Test 3 succeeded (status after update)" << std::endl;
             }
         }
 
