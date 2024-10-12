@@ -1,5 +1,6 @@
 #include "Game.hpp"
 
+#include <ostream>
 #include <raylib.h>
 
 #include <iostream>
@@ -10,11 +11,6 @@ Game::Game() {
   bgImage = LoadImage("resources/bg.png");
   ImageResize(&bgImage, windowWidth, windowHeight);
   bgImageTexture = LoadTextureFromImage(bgImage);
-
-  // Load and resize opening screen image
-  openingImage = LoadImage("resources/opening.png");
-  ImageResize(&openingImage, windowWidth, windowHeight);
-  openingImageTexture = LoadTextureFromImage(openingImage);
 
   // Load health bar image and resize it
   healthBarImage = LoadImage("resources/health bar.png");
@@ -36,10 +32,66 @@ Game::Game() {
   ImageResize(&happinessImage, 30, 30);
   happinessTexture = LoadTextureFromImage(happinessImage);
 
-  // Load coin in the menu and resize it
+  // Coin in the menu
   coinBarImage = LoadImage("resources/Coins/c1.png");
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
+
+  // Background Replay image
+  UIImage = LoadImage("resources/opening.png");
+  ImageResize(&UIImage, windowWidth, windowHeight);
+  UITexture = LoadTextureFromImage(UIImage);
+
+  // UI pet Images
+  UIPinkCat = LoadImage("resources/cat/41.png");
+  ImageResize(&UIPinkCat, 85, 95);
+  UIPinkCatTexture = LoadTextureFromImage(UIPinkCat);
+
+  UIGreyCat = LoadImage("resources/cat/11.png");
+  ImageResize(&UIGreyCat, 85, 95);
+  UIGreyCatTexture = LoadTextureFromImage(UIGreyCat);
+
+  UIShibaInu = LoadImage("resources/dog/21.png");
+  ImageResize(&UIShibaInu, 85, 95);
+  UIShibaInuTexture = LoadTextureFromImage(UIShibaInu);
+
+  startButton = LoadImage("resources/startButton.png");
+  ImageResize(&startButton, 300, 200);
+  startTexture = LoadTextureFromImage(startButton);
+
+  UIpets = LoadImage("resources/breedchoosing.png");
+  ImageResize(&UIpets, windowWidth, windowHeight);
+  UIpetsTexture = LoadTextureFromImage(UIpets);
+
+  // Instructions
+  instructions = LoadImage("resources/instruction.png");
+  ImageResize(&instructions, windowWidth, windowHeight);
+  instructionsTexture = LoadTextureFromImage(instructions);
+
+  instructionsButton = LoadImage("resources/instructions-button.png");
+  ImageResize(&instructionsButton, 200, 150);
+  instructionsButtonTexture = LoadTextureFromImage(instructionsButton);
+  UIstate = 0;
+  instructionsRect = {
+      static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560,
+      200, 150};
+
+  // Declare the rectanges for the pets on the screen
+  petRects[0] = {static_cast<float>((875 / 4) - 65), 300, 140, 200};
+  petRects[1] = {static_cast<float>((875 / 4) * 2 - 35), 300, 170, 200};
+  petRects[2] = {static_cast<float>((875 / 4) * 3 + 20), 300, 170, 200};
+
+  DrawRectangle(875 / 4 - 65, 300, 140, 200, RED);
+  DrawRectangle((875 / 4) * 2 - 35, 300, 170, 200, RED);
+  DrawRectangle((875 / 4) * 3 + 20, 300, 170, 200, RED);
+
+  petOptions[0] = ("shibaInu");
+  petOptions[1] = ("pinkCat");
+  petOptions[2] = ("greyCat");
+
+  boxLocation = -200;
+
+  // Load all the pets for the UI
 
   randomCoinInterval = GetRandomValue(5, 10);
   lastCoinTime = GetTime();
@@ -57,14 +109,119 @@ Game::Game() {
 
   petAlive = true;
 
-  petBreed = "pinkCat";
+  // petBreed = "greyCat";
   createPet(petBreed);
+
+  gameState = 0;
 }
 
 void Game::updateAll() {
-  int scoreTimer = GetTime(); // current time elapsed in seconds
-  flag = 0;
 
+  switch (gameState) {
+  case 0:
+    startUI();
+    break;
+
+  case 1:
+    activeGame();
+  }
+}
+
+/*void Game::replayGame() {
+  DrawText("You died!", 500, 135, 35, WHITE);
+  DrawText("Play again?", 500, 135, 35, WHITE);
+}
+*/
+
+void Game::startUI() {
+  switch (UIstate) {
+  case 0:
+    pickPet();
+    break;
+  case 1:
+    instructionsUI();
+    break;
+  }
+}
+
+void Game::instructionsUI() {
+  DrawTextureV(instructionsTexture, {0, 0}, WHITE);
+  DrawText("Pixel Companion", 300, 20, 50, WHITE);
+
+  // DrawRectangle(100, 100, 115, 80, RED);
+
+  Rectangle exitButton{100, 100, 115, 80};
+
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
+    if (CheckCollisionRecs(mouseRect, exitButton)) {
+      UIstate = 0;
+    }
+  }
+}
+
+void Game::pickPet() {
+
+  DrawTextureV(UIpetsTexture, {0, 0}, WHITE);
+  DrawText("Pixel Companion", 300, 20, 50, WHITE);
+
+  DrawTextureV(
+      instructionsButtonTexture,
+      {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
+      WHITE);
+
+  /*
+
+  DrawRectangle(875 / 4 - 65, 300, 140, 200, RED);
+  DrawRectangle((875 / 4) * 2 - 35, 300, 170, 200, RED);
+  DrawRectangle((875 / 4) * 3 + 20, 300, 170, 200, RED);
+  */
+
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
+    for (int i = 0; i < 3; i++) {
+      if (CheckCollisionRecs(mouseRect, petRects[i])) {
+        petBreed = petOptions[i];
+        boxLocation = i;
+        std::cout << "yes" << std::endl;
+        std::cout << boxLocation << std::endl;
+        std::cout << petBreed << std::endl;
+      }
+    }
+    // Check to see if the game should start
+    if (petBreed != "") {
+      Rectangle startRect{
+          static_cast<float>((windowWidth / 3) * 2 - startButton.width / 2),
+          560, 300, 200};
+      if (CheckCollisionRecs(startRect, mouseRect)) {
+        createPet(petBreed);
+        gameState = 1;
+      }
+    }
+
+    // Check if the player has clicked the instructions button
+    if (CheckCollisionRecs(mouseRect, instructionsRect)) {
+      UIstate = 1;
+      petBreed = "";      // Unselect the pet
+      boxLocation = -200; // reset the box location
+    }
+  }
+
+  DrawRectangle(((865 / 4) * (boxLocation) + 70 * boxLocation + 110), 300, 20,
+                20, YELLOW);
+
+  // Draws the button on the screen if a pet has been picked
+  if (petBreed != "") {
+    DrawTextureV(
+        startTexture,
+        {static_cast<float>((windowWidth / 3) * 2 - startButton.width / 2),
+         530},
+        WHITE);
+  }
+}
+
+// When the game is actually being played
+void Game::activeGame() {
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
   DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
@@ -95,15 +252,20 @@ void Game::updateAll() {
   DrawTextureV(coinBarTexture, {770, 130}, WHITE);
   DrawText("1", 815, 135, 35, WHITE);
 
+  int scoreTimer = GetTime(); // current time elapsed in seconds
+  flag = 0;
+
   // Water
   water.draw();
-  water.update();
+  if (petAlive) {
+    water.update();
+    currentPet->Poo1();
+  }
 
   currentPet->Draw();
-  currentPet->Poo1();
 
   for (int i = 0; i < currentPet->currentPooCount; i++) {
-    currentPet->poos[i]->Draw(); // error, no member "poos" in Pet
+    currentPet->poos[i]->Draw();
   }
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -140,6 +302,7 @@ void Game::updateAll() {
       flag = 1;
     }
   }
+
   if (flag == 0) {
     currentPet->Update();
   }
@@ -153,19 +316,22 @@ void Game::updateAll() {
                 static_cast<float>(windowHeight - coinBarImage.height) - 10},
                WHITE);
 
-  loadCoins();
+  if (petAlive) {
+    loadCoins();
 
-  for (auto &coin : coins) {
-    coin.Draw();
+    for (auto &coin : coins) {
+      coin.Draw();
+    }
+
+    checkCollisions();
   }
-
-  checkCollisions();
 
   // Drawing food on the screen and updating it each frame
   food.draw();
-  food.update(currentPet->position, currentPet->targetPosition,
-              currentPet->isRunning, currentPet->movingRight);
-
+  if (petAlive) {
+    food.update(currentPet->position, currentPet->targetPosition,
+                currentPet->isRunning, currentPet->movingRight);
+  }
   // Health
   health.Draw();
 
@@ -185,7 +351,9 @@ void Game::updateAll() {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
-          // replayGame();
+          // Can change this to a dead screen first
+          gameState = 0;
+          delete currentPet;
         }
       }
     }
@@ -197,16 +365,13 @@ void Game::updateAll() {
       lastTimeHealed = GetTime();
     }
   }
-
-  if (currentPet->petWin == true) {
-    DrawText("YOU WIN!", 430, 320, 70, WHITE);
-  }
 }
+
 void Game::loadCoins() {
   if (GetTime() - lastCoinTime >= randomCoinInterval) {
     lastCoinTime = GetTime(); // Reset the last time a coin was spawned
     randomCoinInterval =
-        GetRandomValue(5, 12); // Get a new interval for the next coin to spawn
+        GetRandomValue(5, 10); // Get a new interval for the next coin to spawn
     float randomSpawn = GetRandomValue(
         20, 980); // set to float so that it can be passed in the pushback
 
@@ -250,7 +415,8 @@ void Game::checkCollisions() {
 }
 
 void Game::createPet(std::string petBreed) {
-  // creates pet breed
+
+  //  creates pet breed
   if (petBreed == "pinkCat") {
     currentPet = new pinkCat();
   } else if (petBreed == "greyCat") {
@@ -258,10 +424,30 @@ void Game::createPet(std::string petBreed) {
   } else if (petBreed == "shibaInu") {
     currentPet = new shibaInu();
   }
+  Reset();
 }
 
-/*void Game::replayGame() {
-  DrawText("You died!", 500, 135, 35, WHITE);
-  DrawText("Play again?", 500, 135, 35, WHITE);
+void Game::Reset() {
+
+  randomCoinInterval = GetRandomValue(5, 10);
+  lastCoinTime = GetTime();
+  lastTimeDamaged = GetTime();
+  lastTimeHealed = GetTime();
+  lastTimePetted = GetTime();
+
+  coinCounter = 0;
+  scoreValue = 0;
+
+  food.getCoins(&coinCounter);
+  water.getCoins(&coinCounter);
+
+  levelText = "LVL ";
+
+  petAlive = true;
+
+  Food food;
+  Water water;
+  healthBar health;
+
+  gameState = 0;
 }
-*/

@@ -82,6 +82,39 @@ private:
 
   Pet *currentPet;
 
+  // Images and Texures for the UI
+  Image UIImage;
+  Texture2D UITexture;
+  Image UIGreyCat;
+  Texture2D UIGreyCatTexture;
+  Image UIPinkCat;
+  Texture2D UIPinkCatTexture;
+  Image UIShibaInu;
+  Texture2D UIShibaInuTexture;
+  Image startButton;
+  Texture2D startTexture;
+
+  Image UIpets;
+  Texture2D UIpetsTexture;
+
+  Image instructions;
+  Texture2D instructionsTexture;
+  Image instructionsButton;
+  Texture2D instructionsButtonTexture;
+
+  Rectangle instructionsRect;
+
+  // Game state for switching to the UI
+  int gameState;
+
+  int UIstate;
+
+  Rectangle petRects[3];
+  std::string petOptions[3];
+
+  // location of the yellow rectangle appearing around the pet
+  int boxLocation;
+
 public:
   Game();
 
@@ -96,4 +129,12 @@ public:
   void DrawUI();
 
   void createPet(std::string petBreed);
+
+  void activeGame();
+  void startUI();
+
+  void pickPet();
+  void instructionsUI();
+
+  void Reset();
 };
