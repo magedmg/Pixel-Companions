@@ -91,27 +91,6 @@ Game::Game() {
 
   boxLocation = -200;
 
-  // Load all the pets for the UI
-
-  randomCoinInterval = GetRandomValue(5, 10);
-  lastCoinTime = GetTime();
-  lastTimeDamaged = GetTime();
-  lastTimeHealed = GetTime();
-  lastTimePetted = GetTime();
-
-  coinCounter = 0;
-  scoreValue = 0;
-
-  food.getCoins(&coinCounter);
-  water.getCoins(&coinCounter);
-
-  levelText = "LVL ";
-
-  petAlive = true;
-
-  // petBreed = "greyCat";
-  createPet(petBreed);
-
   gameState = 0;
 }
 
@@ -148,10 +127,8 @@ void Game::instructionsUI() {
   DrawTextureV(instructionsTexture, {0, 0}, WHITE);
   DrawText("Pixel Companion", 300, 20, 50, WHITE);
 
-  // DrawRectangle(100, 100, 115, 80, RED);
-
+  // If the user hits the exit button go back the UI menu
   Rectangle exitButton{100, 100, 115, 80};
-
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
     if (CheckCollisionRecs(mouseRect, exitButton)) {
@@ -170,22 +147,12 @@ void Game::pickPet() {
       {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
       WHITE);
 
-  /*
-
-  DrawRectangle(875 / 4 - 65, 300, 140, 200, RED);
-  DrawRectangle((875 / 4) * 2 - 35, 300, 170, 200, RED);
-  DrawRectangle((875 / 4) * 3 + 20, 300, 170, 200, RED);
-  */
-
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
     for (int i = 0; i < 3; i++) {
       if (CheckCollisionRecs(mouseRect, petRects[i])) {
         petBreed = petOptions[i];
         boxLocation = i;
-        std::cout << "yes" << std::endl;
-        std::cout << boxLocation << std::endl;
-        std::cout << petBreed << std::endl;
       }
     }
     // Check to see if the game should start
@@ -351,7 +318,7 @@ void Game::activeGame() {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
-          // Can change this to a dead screen first
+          // Can change this to a dead screen later
           gameState = 0;
           delete currentPet;
         }
@@ -428,6 +395,15 @@ void Game::createPet(std::string petBreed) {
 }
 
 void Game::Reset() {
+  // Clear the coins on screen
+  auto it = coins.begin();
+  while (it != coins.end()) {
+
+    it = coins.erase(it);
+  }
+
+  // Reset the health
+  health.healDamage(97);
 
   randomCoinInterval = GetRandomValue(5, 10);
   lastCoinTime = GetTime();
