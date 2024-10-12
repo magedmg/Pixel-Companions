@@ -31,6 +31,8 @@ public:
 
   int levelUpInterval;
 
+  float scalingFactor;
+
   Poop **poos;
   int currentPooCount;
 
@@ -43,7 +45,6 @@ public:
   bool movingRight;
   bool isDead;
 
-  bool petWin;
 
 
   Pet();

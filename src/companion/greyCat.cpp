@@ -14,6 +14,7 @@ void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
 }
 
 greyCat::greyCat() {
+  scalingFactor = 0.5;
   int catSize[2] = {85, 95};
 
   // Load all the images for left and right movements, as well as standing

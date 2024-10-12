@@ -88,11 +88,6 @@ void Game::updateAll() {
   }
 }
 
-/*void Game::replayGame() {
-  DrawText("You died!", 500, 135, 35, WHITE);
-  DrawText("Play again?", 500, 135, 35, WHITE);
-}
-*/
 
 void Game::startUI() {
   switch (UIstate) {

@@ -6,7 +6,7 @@
 using namespace std;
 
 Dog::Dog() {
-  levelUpInterval = 5;
+  levelUpInterval = 12;
   // Initial position
   position = {250, 480};
 

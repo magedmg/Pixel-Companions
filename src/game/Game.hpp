@@ -115,7 +115,6 @@ public:
 
   int flag;
   void loadCoins();
-  void replayGame();
 
   void checkCollisions();
 
