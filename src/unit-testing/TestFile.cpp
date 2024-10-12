@@ -4,6 +4,11 @@
 #include "PoopUnitTest.hpp"
 #include "WaterUnitTest.hpp"
 
+#include "GreyCatUnitTest.hpp"
+#include "CatUnitTest.hpp"
+#include "PetUnitTest.hpp"
+#include "HealthBarUnitTest.hpp"
+
 using namespace std;
 
 int main() {
@@ -21,5 +26,18 @@ int main() {
 
     WaterUnitTest waterTest;
     waterTest.runTests();
+
+    GreyCatUnitTest greyCatTest;
+    greyCatTest.runTests();
+
+    CatUnitTest catTest;
+    catTest.runTests();
+
+    PettingUnitTest petTest;
+    petTest.runTests();
+
+    HealthBarUnitTest healthTest;
+    healthTest.runTests();
+
     return 0;
 }

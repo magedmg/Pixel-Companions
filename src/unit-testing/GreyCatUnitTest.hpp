@@ -15,6 +15,7 @@ class GreyCatUnitTest {
     private:
         void testGreyCatConstructor() {
             greyCat cat;
+            // tests if constructor correctly initialises data members
             if (cat.hungerInterval != 20 || cat.thirstInterval != 12 || cat.happinessInterval != 25 ||
             cat.scalingFactor != 0.5) {
                 std::cout << "GreyCat Test 1 failed (constructor initialisations)" << std::endl;
