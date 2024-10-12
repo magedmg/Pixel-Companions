@@ -37,24 +37,6 @@ Game::Game() {
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
-  // Background Replay image
-  UIImage = LoadImage("resources/opening.png");
-  ImageResize(&UIImage, windowWidth, windowHeight);
-  UITexture = LoadTextureFromImage(UIImage);
-
-  // UI pet Images
-  UIPinkCat = LoadImage("resources/cat/41.png");
-  ImageResize(&UIPinkCat, 85, 95);
-  UIPinkCatTexture = LoadTextureFromImage(UIPinkCat);
-
-  UIGreyCat = LoadImage("resources/cat/11.png");
-  ImageResize(&UIGreyCat, 85, 95);
-  UIGreyCatTexture = LoadTextureFromImage(UIGreyCat);
-
-  UIShibaInu = LoadImage("resources/dog/21.png");
-  ImageResize(&UIShibaInu, 85, 95);
-  UIShibaInuTexture = LoadTextureFromImage(UIShibaInu);
-
   startButton = LoadImage("resources/startButton.png");
   ImageResize(&startButton, 300, 200);
   startTexture = LoadTextureFromImage(startButton);
