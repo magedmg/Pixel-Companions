@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../companion/Pet.hpp"
-#include "../companion/greyCat.hpp"
+#include "../companion/GreyCat.hpp"
 
 #include <string>
 #include <vector>
@@ -16,7 +16,7 @@ class PetUnitTest {
 
     private:
         void testPetConstructor() {
-            greyCat cat;
+            GreyCat cat;
             // tests if constructor correctly initialises data members
             if (cat.level != 0) {
                 std::cout << "Pet Test 1 failed (constructor initialisations)" << std::endl;
@@ -27,7 +27,7 @@ class PetUnitTest {
         }
 
         void testPetUpdateStatus() {
-            greyCat cat;
+            GreyCat cat;
             float initialTime = GetTime();
             // update status over 12 seconds (for grey cat)
             float lastPrintTime = GetTime();

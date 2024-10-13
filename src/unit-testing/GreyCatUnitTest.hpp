@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../companion/greyCat.hpp"
+#include "../companion/GreyCat.hpp"
 
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@ class GreyCatUnitTest {
 
     private:
         void testGreyCatConstructor() {
-            greyCat cat;
+            GreyCat cat;
             // tests if constructor correctly initialises data members
             if (cat.hungerInterval != 18 || cat.thirstInterval != 10 || cat.happinessInterval != 21 ||
             cat.scalingFactor != 0.5) {

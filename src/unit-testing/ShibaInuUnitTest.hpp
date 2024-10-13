@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../companion/shibaInu.hpp"
+#include "../companion/ShibaInu.hpp"
 
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@ class ShibaInuUnitTest {
 
     private:
         void testShibaInuConstructor() {
-            shibaInu shiba;
+            ShibaInu shiba;
             // tests if constructor correctly initialises data members
             if (shiba.hungerInterval != 20 || shiba.thirstInterval != 12 || shiba.happinessInterval != 25 ||
             shiba.scalingFactor != 0.2) {

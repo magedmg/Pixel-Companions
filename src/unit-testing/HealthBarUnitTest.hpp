@@ -17,7 +17,7 @@ class HealthBarUnitTest {
 
     private:
         void testHealthConstructor() {
-            healthBar health;
+            HealthBar health;
             // tests if constructor sets the health data member to the correct value
             if (health.getHealth() != 97) {
                 std::cout << "Healthbar Test 1 failed (constructor initialisations)" << std::endl;
@@ -28,7 +28,7 @@ class HealthBarUnitTest {
         }
 
         void testHealthTakeDamage() {
-            healthBar health;
+            HealthBar health;
             health.takeDamage(50);
             // tests if damage is taken correctly
             if (health.getHealth() != 47) {
@@ -50,7 +50,7 @@ class HealthBarUnitTest {
         }
         
         void testHealthHealDamage() {
-            healthBar health;
+            HealthBar health;
             health.takeDamage(50);
             health.healDamage(30);
             // tests healing function
@@ -72,7 +72,7 @@ class HealthBarUnitTest {
         }
 
         void testGetHealth() {
-            healthBar health;
+            HealthBar health;
             // tests if correct health is returned
             if (health.getHealth() != 97) {
                 std::cout << "Healthbar Test 6 failed (getHealth)" << std::endl;

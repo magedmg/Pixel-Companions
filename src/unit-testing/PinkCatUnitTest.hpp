@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../companion/pinkCat.hpp"
+#include "../companion/PinkCat.hpp"
 
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@ class PinkCatUnitTest {
 
     private:
         void testPinkCatConstructor() {
-            pinkCat cat;
+            PinkCat cat;
             // tests if constructor correctly initialises data members
             if (cat.hungerInterval != 18 || cat.thirstInterval != 11 || cat.happinessInterval != 23 ||
             cat.scalingFactor != 0.4) {
