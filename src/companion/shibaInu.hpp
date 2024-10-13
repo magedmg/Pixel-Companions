@@ -1,7 +1,7 @@
 #pragma once
 #include "Dog.hpp"
 
-class shibaInu : public Dog {
+class ShibaInu : public Dog {
 private:
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
@@ -10,7 +10,7 @@ private:
   Texture2D deathTexture;
 
 public:
-  shibaInu();
-  ~shibaInu();
+  ShibaInu();
+  ~ShibaInu();
   void Draw();
 };

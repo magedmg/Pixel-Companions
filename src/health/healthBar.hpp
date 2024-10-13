@@ -3,13 +3,13 @@
 #include <raylib.h>
 #include <vector>
 
-class healthBar {
+class HealthBar {
 private:
   Vector2 position;
   int health;
 
 public:
-  healthBar();
+  HealthBar();
 
   std::vector<pRow> rows;
 

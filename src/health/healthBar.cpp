@@ -1,8 +1,8 @@
-#include "healthBar.hpp"
+#include "HealthBar.hpp"
 #include "pRow.hpp"
 #include "raylib.h"
 
-healthBar::healthBar() {
+HealthBar::HealthBar() {
   position = {14, 22};
   health = 97;
   for (int i = 0; i < health; i++) {
@@ -13,13 +13,13 @@ healthBar::healthBar() {
   }
 }
 
-void healthBar::Draw() {
+void HealthBar::Draw() {
   for (auto &row : rows) {
     row.Draw();
   }
 }
 
-void healthBar::takeDamage(int damage) {
+void HealthBar::takeDamage(int damage) {
   health -= damage;
   if (health >= 0) {
     for (int i = 0; i < damage; i++) {
@@ -30,7 +30,7 @@ void healthBar::takeDamage(int damage) {
   }
 }
 
-void healthBar::healDamage(int heal) {
+void HealthBar::healDamage(int heal) {
 
   int previoushealth = health;
   if (heal + health > 96) {
@@ -47,4 +47,4 @@ void healthBar::healDamage(int heal) {
   }
 }
 
-int healthBar::getHealth() { return health; }
+int HealthBar::getHealth() { return health; }

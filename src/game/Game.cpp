@@ -295,6 +295,7 @@ void Game::activeGame() {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
+          highscore.addHighscore(std::to_string(scoreValue), petBreed);
           // Can change this to a dead screen later
           gameState = 0;
           delete currentPet;
@@ -362,11 +363,11 @@ void Game::createPet(std::string petBreed) {
 
   //  creates pet breed
   if (petBreed == "pinkCat") {
-    currentPet = new pinkCat();
+    currentPet = new PinkCat();
   } else if (petBreed == "greyCat") {
-    currentPet = new greyCat();
+    currentPet = new GreyCat();
   } else if (petBreed == "shibaInu") {
-    currentPet = new shibaInu();
+    currentPet = new ShibaInu();
   }
   Reset();
 }
@@ -400,7 +401,7 @@ void Game::Reset() {
 
   Food food;
   Water water;
-  healthBar health;
+  HealthBar health;
 
   gameState = 0;
 }

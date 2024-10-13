@@ -1,4 +1,4 @@
-#include "pinkCat.hpp"
+#include "PinkCat.hpp"
 
 void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
@@ -13,7 +13,7 @@ void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-pinkCat::pinkCat() : Cat() {
+PinkCat::PinkCat() : Cat() {
   scalingFactor = 0.4;
   int catSize[2] = {85, 95};
 
@@ -31,13 +31,13 @@ pinkCat::pinkCat() : Cat() {
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
   hungerInterval = 18;
-  thirstInterval = 10;
+  thirstInterval = 11;
   happinessInterval = 23;
 
   randomPooInterval = GetRandomValue(5, 10);
 }
 
-void pinkCat::Draw() {
+void PinkCat::Draw() {
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -66,7 +66,7 @@ void pinkCat::Draw() {
   }
 }
 
-pinkCat::~pinkCat() {
+PinkCat::~PinkCat() {
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
   }

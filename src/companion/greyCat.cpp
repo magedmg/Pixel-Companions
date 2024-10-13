@@ -1,4 +1,4 @@
-#include "greyCat.hpp"
+#include "GreyCat.hpp"
 
 void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
@@ -13,7 +13,7 @@ void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-greyCat::greyCat() {
+GreyCat::GreyCat() {
   scalingFactor = 0.5;
   int catSize[2] = {85, 95};
 
@@ -30,14 +30,14 @@ greyCat::greyCat() {
 
   moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
-  hungerInterval = 20;
-  thirstInterval = 12;
-  happinessInterval = 25;
+  hungerInterval = 18;
+  thirstInterval = 10;
+  happinessInterval = 21;
 
   randomPooInterval = GetRandomValue(5, 10);
 }
 
-void greyCat::Draw() {
+void GreyCat::Draw() {
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -66,7 +66,7 @@ void greyCat::Draw() {
   }
 }
 
-greyCat::~greyCat() {
+GreyCat::~GreyCat() {
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
   }

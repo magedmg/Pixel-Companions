@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../health/healthBar.hpp"
+#include "../health/HealthBar.hpp"
 
 #include <string>
 #include <vector>

@@ -3,15 +3,16 @@
 #include "../companion/Cat.hpp"
 #include "../companion/Dog.hpp"
 #include "../companion/Pet.hpp"
-#include "../companion/greyCat.hpp"
-#include "../companion/pinkCat.hpp"
-#include "../companion/shibaInu.hpp"
-#include "../health/healthBar.hpp"
+#include "../companion/GreyCat.hpp"
+#include "../companion/PinkCat.hpp"
+#include "../companion/ShibaInu.hpp"
+#include "../health/HealthBar.hpp"
 #include "../pet-essentials/Coin.hpp"
 #include "../pet-essentials/Food.hpp"
 #include "../pet-essentials/Petting.hpp"
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
+#include "Highscore.hpp"
 
 #include <raylib.h>
 
@@ -70,7 +71,9 @@ private:
 
   Food food;
   Water water;
-  healthBar health;
+  HealthBar health;
+
+  Highscore highscore;
 
   int lastTimeDamaged;
   int lastTimeHealed;
@@ -96,9 +99,6 @@ private:
   Texture2D instructionsButtonTexture;
 
   Rectangle instructionsRect;
-
-  // Game state for switching to the UI
-  int gameState;
 
   int UIstate;
 
@@ -129,4 +129,7 @@ public:
   void instructionsUI();
 
   void Reset();
+
+  // Game state for switching to the UI
+  int gameState;
 };

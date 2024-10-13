@@ -1,4 +1,4 @@
-#include "shibaInu.hpp"
+#include "ShibaInu.hpp"
 
 void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
@@ -13,7 +13,7 @@ void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-shibaInu::shibaInu() {
+ShibaInu::ShibaInu() {
   scalingFactor = 0.2;
   int dogSize[2] = {108, 95};
 
@@ -30,14 +30,14 @@ shibaInu::shibaInu() {
 
   moveSpeed = 100.0f; // Speed at which the dog moves (pixels per second)
 
-  hungerInterval = 15;
-  thirstInterval = 6;
-  happinessInterval = 20;
+  hungerInterval = 20;
+  thirstInterval = 12;
+  happinessInterval = 25;
 
   randomPooInterval = GetRandomValue(3, 8);
 }
 
-void shibaInu::Draw() {
+void ShibaInu::Draw() {
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -66,7 +66,7 @@ void shibaInu::Draw() {
   }
 }
 
-shibaInu::~shibaInu() {
+ShibaInu::~ShibaInu() {
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
   }
