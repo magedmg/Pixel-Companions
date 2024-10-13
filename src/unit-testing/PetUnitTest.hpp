@@ -30,8 +30,15 @@ class PetUnitTest {
             greyCat cat;
             float initialTime = GetTime();
             // update status over 12 seconds (for grey cat)
+            float lastPrintTime = GetTime();
             while (GetTime() - initialTime < 12) {
                 cat.updateStatus();
+                float currentTime = GetTime();
+                if (currentTime - lastPrintTime >= 1) { 
+                    // print statement while 12 seconds pass
+                    std::cout << "Simulating frames for pet status check..." << std::endl;
+                    lastPrintTime = currentTime; 
+        }
             }
             // tests if thirst status has changed
 

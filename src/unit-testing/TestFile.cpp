@@ -9,6 +9,11 @@
 #include "PetUnitTest.hpp"
 #include "HealthBarUnitTest.hpp"
 
+#include "PinkCatUnitTest.hpp"
+#include "DogUnitTest.hpp"
+#include "ShibaInuUnitTest.hpp"
+#include "GameUnitTest.hpp"
+
 using namespace std;
 
 int main() {
@@ -38,6 +43,18 @@ int main() {
 
     HealthBarUnitTest healthTest;
     healthTest.runTests();
+
+    PinkCatUnitTest pinkCatTest;
+    pinkCatTest.runTests();
+
+    DogUnitTest dogTest;
+    dogTest.runTests();
+
+    ShibaInuUnitTest shibaTest;
+    shibaTest.runTests();
+
+    GameUnitTest gameTest;
+    gameTest.runTests();
 
     return 0;
 }
