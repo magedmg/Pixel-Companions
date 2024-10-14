@@ -38,7 +38,7 @@ Cat::Cat() : Pet() {
   currentPooCount = 0;
 }
 
-void Cat::Draw() {
+void Cat::Draw() { // calculates the next frame for the cat
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -108,10 +108,10 @@ void Cat::Update() {
 
 Cat::~Cat() {}
 
-void Cat::Poo1() {
+void Cat::Poo1() { // triggers poop function
   if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
     poos[currentPooCount]->position = {position.x - image.width - 30,
-                                       position.y + 40};
+                                       position.y + 40}; // saves position
     poos[currentPooCount]->Spawn();
     lastPooTime = GetTime();
     currentPooCount++;
@@ -119,7 +119,7 @@ void Cat::Poo1() {
   }
 }
 
-Rectangle Cat::getRect() {
+Rectangle Cat::getRect() { // returns collision rectangle for cat
   Rectangle rect;
   rect.x = position.x;
   rect.y = position.y;
@@ -128,6 +128,7 @@ Rectangle Cat::getRect() {
   return rect;
 }
 
+// creates the animation loop
 void createAnimation(int numLoop, int sizes[2], Texture2D *textures,
                      const char *path) {
   for (int i = 0; i < numLoop; i++) {

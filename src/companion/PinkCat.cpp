@@ -1,6 +1,6 @@
-#include "shibaInu.hpp"
+#include "PinkCat.hpp"
 
-void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
+void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
     const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
@@ -13,30 +13,31 @@ void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-shibaInu::shibaInu() {
-  int dogSize[2] = {108, 95};
+PinkCat::PinkCat() : Cat() {
+  scalingFactor = 0.4;
+  int catSize[2] = {85, 95};
 
   // Load all the images for left and right movements, as well as standing
   // still
-  createAnimation5(4, dogSize, standTextures, "dog/2");
-  createAnimation5(6, dogSize, runRightTextures, "dog/1");
-  createAnimation5(6, dogSize, runLeftTextures, "dog/3");
+  createAnimation6(4, catSize, standTextures, "cat/4");
+  createAnimation6(6, catSize, runRightTextures, "cat/5");
+  createAnimation6(6, catSize, runLeftTextures, "cat/6");
 
   // Load death image and resize it
-  deathImage = LoadImage("resources/dog/41.png");
-  ImageResize(&deathImage, dogSize[0], dogSize[1]);
+  deathImage = LoadImage("resources/cat/214.png");
+  ImageResize(&deathImage, catSize[0], catSize[1]);
   deathTexture = LoadTextureFromImage(deathImage);
 
-  moveSpeed = 100.0f; // Speed at which the dog moves (pixels per second)
+  moveSpeed = 100.0f; // Speed at which the cat moves (pixels per second)
 
-  hungerInterval = 15;
-  thirstInterval = 6;
-  happinessInterval = 20;
+  hungerInterval = 18;
+  thirstInterval = 11;
+  happinessInterval = 23;
 
-  randomPooInterval = GetRandomValue(3, 8);
+  randomPooInterval = GetRandomValue(5, 10);
 }
 
-void shibaInu::Draw() {
+void PinkCat::Draw() { // calculates next frame
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -49,7 +50,7 @@ void shibaInu::Draw() {
     }
   }
 
-  if (isDead) {
+  if (isDead) { // draws textures
     DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
   } else if (isRunning) {
     if (movingRight) {
@@ -65,7 +66,7 @@ void shibaInu::Draw() {
   }
 }
 
-shibaInu::~shibaInu() {
+PinkCat::~PinkCat() {
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
   }

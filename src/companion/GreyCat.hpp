@@ -1,7 +1,7 @@
 #pragma once
 #include "Cat.hpp"
 
-class pinkCat : public Cat {
+class GreyCat : public Cat {
 private:
   Texture2D standTextures[4];
   Texture2D runRightTextures[6];
@@ -10,7 +10,7 @@ private:
   Texture2D deathTexture;
 
 public:
-  pinkCat();
-  ~pinkCat();
+  GreyCat();
+  ~GreyCat();
   void Draw();
 };

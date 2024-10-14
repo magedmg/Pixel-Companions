@@ -6,7 +6,7 @@
 using namespace std;
 
 Dog::Dog() {
-  levelUpInterval = 5;
+  levelUpInterval = 12;
   // Initial position
   position = {250, 480};
 
@@ -38,7 +38,7 @@ Dog::Dog() {
   currentPooCount = 0;
 }
 
-void Dog::Draw() {
+void Dog::Draw() { // calculates next frame for dog
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -108,10 +108,10 @@ void Dog::Update() {
 
 Dog::~Dog() {}
 
-void Dog::Poo1() {
+void Dog::Poo1() { // triggers poop function
   if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
     poos[currentPooCount]->position = {position.x - image.width - 30,
-                                       position.y + 40};
+                                       position.y + 40}; // saves poop position
     poos[currentPooCount]->Spawn();
     lastPooTime = GetTime();
     currentPooCount++;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../health/healthBar.hpp"
+#include "../health/HealthBar.hpp"
 #include "../pet-essentials/Food.hpp"
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
@@ -31,6 +31,8 @@ public:
 
   int levelUpInterval;
 
+  float scalingFactor;
+
   Poop **poos;
   int currentPooCount;
 
@@ -43,7 +45,6 @@ public:
   bool movingRight;
   bool isDead;
 
-  bool petWin;
 
 
   Pet();

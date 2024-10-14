@@ -1,11 +1,12 @@
-#include "healthBar.hpp"
+#include "HealthBar.hpp"
 #include "pRow.hpp"
 #include "raylib.h"
 
-healthBar::healthBar() {
+HealthBar::HealthBar() {
   position = {14, 22};
   health = 97;
   for (int i = 0; i < health; i++) {
+    // creates health bar made of pRows (as a vector)
     Vector2 positionCol;
     positionCol.x = position.x + (i * 3);
     positionCol.y = position.y;
@@ -13,13 +14,14 @@ healthBar::healthBar() {
   }
 }
 
-void healthBar::Draw() {
+void HealthBar::Draw() {
   for (auto &row : rows) {
     row.Draw();
   }
 }
 
-void healthBar::takeDamage(int damage) {
+void HealthBar::takeDamage(int damage) {
+  // reduces number of rows based on damage taken
   health -= damage;
   if (health >= 0) {
     for (int i = 0; i < damage; i++) {
@@ -30,8 +32,8 @@ void healthBar::takeDamage(int damage) {
   }
 }
 
-void healthBar::healDamage(int heal) {
-
+void HealthBar::healDamage(int heal) {
+// adds rows based on healing
   int previoushealth = health;
   if (heal + health > 96) {
     health = 97;
@@ -47,4 +49,4 @@ void healthBar::healDamage(int heal) {
   }
 }
 
-int healthBar::getHealth() { return health; }
+int HealthBar::getHealth() { return health; }

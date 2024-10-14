@@ -3,15 +3,16 @@
 #include "../companion/Cat.hpp"
 #include "../companion/Dog.hpp"
 #include "../companion/Pet.hpp"
-#include "../companion/greyCat.hpp"
-#include "../companion/pinkCat.hpp"
-#include "../companion/shibaInu.hpp"
-#include "../health/healthBar.hpp"
+#include "../companion/GreyCat.hpp"
+#include "../companion/PinkCat.hpp"
+#include "../companion/ShibaInu.hpp"
+#include "../health/HealthBar.hpp"
 #include "../pet-essentials/Coin.hpp"
 #include "../pet-essentials/Food.hpp"
 #include "../pet-essentials/Petting.hpp"
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
+#include "Highscore.hpp"
 
 #include <raylib.h>
 
@@ -47,6 +48,9 @@ private:
   Image happinessImage;
   Texture2D happinessTexture;
 
+  Image deathbgImage;
+  Texture2D deathbgTexture;
+
   int catSize[2], fishSize[2], buttonSize[2];
   Texture2D fishTexture, foodbuttonTexture, foodbuttonClickedTexture;
   Texture2D waterbuttonTexture, waterbuttonClickedTexture;
@@ -68,9 +72,16 @@ private:
   int scoreValue;
   int scoreTimer;
 
+  int UITimer;
+  int endingTimer;
+  int endCounter;
+  int timeTracker;
+
   Food food;
   Water water;
-  healthBar health;
+  HealthBar health;
+
+  Highscore highscore;
 
   int lastTimeDamaged;
   int lastTimeHealed;
@@ -97,10 +108,8 @@ private:
 
   Rectangle instructionsRect;
 
-  // Game state for switching to the UI
-  int gameState;
-
   int UIstate;
+  int playingState;
 
   Rectangle petRects[3];
   std::string petOptions[3];
@@ -115,7 +124,6 @@ public:
 
   int flag;
   void loadCoins();
-  void replayGame();
 
   void checkCollisions();
 
@@ -125,9 +133,14 @@ public:
 
   void activeGame();
   void startUI();
+  void deathScreen();
+  void playingGame();
 
   void pickPet();
   void instructionsUI();
 
   void Reset();
+
+  // Game state for switching to the UI
+  int gameState;
 };

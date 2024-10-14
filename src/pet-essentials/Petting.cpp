@@ -34,6 +34,7 @@ Petting::Petting() {
 void Petting::Draw() {
 
   if (active) {
+    // calculates next frame
     float deltaTime = GetFrameTime();
 
     frameTime += deltaTime;
@@ -42,7 +43,7 @@ void Petting::Draw() {
 
       currentFrame = (currentFrame + 1) % 5;
     }
-    position.y -= deltaTime * 30;
+    position.y -= deltaTime * 30; // calculates y position of floating heart
 
     DrawTexture(heartTextures[currentFrame], (int)position.x + 20,
                 (int)position.y - 55, WHITE);

@@ -1,6 +1,6 @@
-#include "pinkCat.hpp"
+#include "GreyCat.hpp"
 
-void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
+void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
     const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
@@ -13,17 +13,18 @@ void createAnimation6(int numLoop, int sizes[2], Texture2D *textures,
   }
 }
 
-pinkCat::pinkCat() : Cat() {
+GreyCat::GreyCat() {
+  scalingFactor = 0.5;
   int catSize[2] = {85, 95};
 
   // Load all the images for left and right movements, as well as standing
   // still
-  createAnimation6(4, catSize, standTextures, "cat/4");
-  createAnimation6(6, catSize, runRightTextures, "cat/5");
-  createAnimation6(6, catSize, runLeftTextures, "cat/6");
+  createAnimation4(4, catSize, standTextures, "cat/1");
+  createAnimation4(6, catSize, runRightTextures, "cat/2");
+  createAnimation4(6, catSize, runLeftTextures, "cat/3");
 
   // Load death image and resize it
-  deathImage = LoadImage("resources/cat/214.png");
+  deathImage = LoadImage("resources/cat/114.png");
   ImageResize(&deathImage, catSize[0], catSize[1]);
   deathTexture = LoadTextureFromImage(deathImage);
 
@@ -31,12 +32,12 @@ pinkCat::pinkCat() : Cat() {
 
   hungerInterval = 18;
   thirstInterval = 10;
-  happinessInterval = 23;
+  happinessInterval = 21;
 
   randomPooInterval = GetRandomValue(5, 10);
 }
 
-void pinkCat::Draw() {
+void GreyCat::Draw() { // calculates next frame
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -49,7 +50,7 @@ void pinkCat::Draw() {
     }
   }
 
-  if (isDead) {
+  if (isDead) { // draws textures
     DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
   } else if (isRunning) {
     if (movingRight) {
@@ -65,7 +66,7 @@ void pinkCat::Draw() {
   }
 }
 
-pinkCat::~pinkCat() {
+GreyCat::~GreyCat() {
   for (int i = 0; i < 4; i++) {
     UnloadTexture(standTextures[i]);
   }
