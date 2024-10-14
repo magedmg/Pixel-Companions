@@ -125,6 +125,10 @@ void Game::pickPet() {
       {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
       WHITE);
 
+  DrawText(highscore.getShibaScore().c_str(), 180, 500, 40, GRAY);
+  DrawText(highscore.getPinkCatScore().c_str(), 470, 500, 40, GRAY);
+  DrawText(highscore.getGreyCatScore().c_str(), 750, 500, 40, GRAY);
+
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
     for (int i = 0; i < 3; i++) {
@@ -296,6 +300,7 @@ void Game::activeGame() {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
+          water.drink();
           highscore.addHighscore((scoreValue+scoreTimer), petBreed);
           // Can change this to a dead screen later
           gameState = 0;

@@ -7,6 +7,10 @@ class Highscore {
         std::string pinkCatScore;
         std::string greyCatScore;
 
+        int shibaIntScore;
+        int pinkCatIntScore;
+        int greyCatIntScore;
+
     public:
         Highscore();
 
@@ -14,6 +18,7 @@ class Highscore {
         std::string getShibaScore();
         std::string getPinkCatScore();
         std::string getGreyCatScore();
+
 };
 
 

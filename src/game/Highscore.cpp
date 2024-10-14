@@ -15,41 +15,45 @@ Highscore::Highscore() {
     getline(HighscoreFile,pinkCatScore);
     getline(HighscoreFile, textPlaceHolder);
     getline(HighscoreFile,shibaScore);
+
+    greyCatIntScore = stoi(greyCatScore);
+    pinkCatIntScore = stoi(pinkCatScore);
+    shibaIntScore = stoi(shibaScore);
 }
 
 
 void Highscore::addHighscore(int score, string petBreed) {
-    std::cout << "Grey Cat Score: " << greyCatScore << std::endl;
-    std::cout << "Pink Cat Score: " << pinkCatScore << std::endl;
-    std::cout << "Shiba Score: " << shibaScore << std::endl;
 
     // checks if incoming score is higher than current scores/number of entries, and inserts it
     if (petBreed == "shibaInu") {
-        if (score > stoi(shibaScore)) {
+        if (score > shibaIntScore) {
             shibaScore = to_string(score);
+            shibaIntScore = score;
         }
     } 
 
     if (petBreed == "pinkCat") {
-        if (score > stoi(pinkCatScore)) {
+        if (score > pinkCatIntScore) {
             pinkCatScore = to_string(score);
+            pinkCatIntScore = score;
         }
     }
 
     if (petBreed == "greyCat") {
-        if (score > stoi(greyCatScore)) {
+        if (score > greyCatIntScore) {
             greyCatScore = to_string(score);
+            greyCatIntScore = score;
         }
     }
 
     // rewrites new values into file
     ofstream newHighscoreFile("src/game/Highscore.txt");
     newHighscoreFile << "Grey Cat Highscore:" << endl;
-    newHighscoreFile << greyCatScore << endl;
+    newHighscoreFile << greyCatIntScore << endl;
     newHighscoreFile << "Pink Cat Highscore:" << endl;
-    newHighscoreFile << pinkCatScore << endl;
+    newHighscoreFile << pinkCatIntScore << endl;
     newHighscoreFile << "Shiba Inu Highscore:" << endl;
-    newHighscoreFile << shibaScore << endl;
+    newHighscoreFile << shibaIntScore << endl;
 }
 
 string Highscore::getShibaScore() {
