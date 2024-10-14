@@ -10,7 +10,7 @@ void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
   UnloadImage(targetImage);
 }
 
-Water::Water() {
+Water::Water() { // initialises water bowl image and water button image
   float buttonSize[2] = {95, 95};
   float emptyWaterBowlSize[2] = {95, 70};
   float fullWaterBowlSize[2] = {110, 90};
@@ -19,7 +19,8 @@ Water::Water() {
                "buttons/waterbuttonclicked");
   createImage2(emptyWaterBowlSize, emptyWaterBowlTexture, "water/emptyWater");
   createImage2(fullWaterBowlSize, fullWaterBowlTexture, "water/fullWater");
-
+  
+  // positioning and resizing
   waterButtonRect = {750, 16, buttonSize[0], buttonSize[1]};
   waterBowlRect = {700, 470, fullWaterBowlSize[0], fullWaterBowlSize[1]};
 
@@ -34,6 +35,7 @@ void Water::update() {
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, waterButtonRect) && isBowlFull == false) {
+      // if water button is clicked and bowl is not full, consume coins and fill bowl
       if (*currCoins >= 1) {
         iswaterbuttonPressed = true;
         isBowlFull = true;
@@ -46,7 +48,7 @@ void Water::update() {
 }
 
 void Water::draw() {
-  if (iswaterbuttonPressed) {
+  if (iswaterbuttonPressed) { // draw appropriate water bowl textures
     DrawTexture(waterbuttonClickedTexture, 750, 16, WHITE);
   } else {
     DrawTexture(waterbuttonTexture, 750, 16, WHITE);
@@ -67,7 +69,7 @@ void Water::unloadTextures() {
 void Water::drink() { isBowlFull = false; }
 void Water::getCoins(int *currentCoins) { this->currCoins = currentCoins; }
 
-Rectangle Water::getRect() {
+Rectangle Water::getRect() { // return collision rectangle of water bowl if it is full
   if (isBowlFull) {
     return waterBowlRect;
   } else {

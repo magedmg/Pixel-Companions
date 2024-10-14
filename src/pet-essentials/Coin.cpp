@@ -58,6 +58,7 @@ void Coin::Draw() {
 }
 
 Rectangle Coin::getRect() {
+  // returns coin collision rectangle, no rectagle when coin has been touched
   if (collision == true) {
     return {0, 0, 0, 0};
   } else {

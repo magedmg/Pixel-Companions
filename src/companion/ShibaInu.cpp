@@ -37,7 +37,7 @@ ShibaInu::ShibaInu() {
   randomPooInterval = GetRandomValue(3, 8);
 }
 
-void ShibaInu::Draw() {
+void ShibaInu::Draw() { // calculates next frame
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -50,7 +50,7 @@ void ShibaInu::Draw() {
     }
   }
 
-  if (isDead) {
+  if (isDead) { // draws textures
     DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
   } else if (isRunning) {
     if (movingRight) {

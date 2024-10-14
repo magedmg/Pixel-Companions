@@ -4,7 +4,7 @@
 using namespace std;
 
 Poop::Poop(Vector2 position) {
-
+// initialisations
   active = false;
   pooImage = LoadImage("resources/poo.png");
   ImageResize(&pooImage, 35, 35);
@@ -25,6 +25,7 @@ void Poop::Draw() {
 Poop::~Poop() { UnloadTexture(pooTexture); }
 
 Rectangle Poop::getRect() {
+  // returns collision rectangle if poop is active
   if (active == false) {
     return {};
   } else {

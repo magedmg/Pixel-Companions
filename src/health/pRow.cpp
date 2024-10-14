@@ -9,6 +9,7 @@ void pRow::Draw() {
 }
 
 pRow::pRow(Vector2 position) {
+  // creates a column of pBlocks
   for (int i = 0; i < 5; i++) {
     Vector2 positionDraw;
     positionDraw.x = position.x;

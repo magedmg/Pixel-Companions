@@ -8,6 +8,7 @@
 void createImage(float sizes[2], Texture2D &ImgTexture, const char *path);
 
 Food::Food() {
+  // define food and button sizes, define images, initialise data members
   float buttonSize[2] = {95, 95};
   float fishSize[2] = {55, 65};
 
@@ -32,9 +33,10 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
+      // if mouse clicks food button collision rectangle, activate food button and consume coins. spawn food.
       if (*currCoins >= 2) {
         isfoodbuttonPressed = true;
-
+        // determines spawn position of food based on cat position so it is catchable
         foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
         while (foodPosition.x < 0 || foodPosition.x > 950) {
           foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
@@ -48,18 +50,18 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     }
   }
 
-  if (foodFalling) {
+  if (foodFalling) { // food y coordinate increases (goes down onscreen) over time
     float fishSize[2] = {55, 65};
     foodPosition.y += foodSpeed * deltaTime;
     foodRect = {foodPosition.x, foodPosition.y, fishSize[0], fishSize[1]};
-    if (foodPosition.y >= 480) {
+    if (foodPosition.y >= 480) { // if food hits floor, despawn
       foodFalling = false;
     }
   }
 }
 
 void Food::draw() {
-  if (foodFalling) {
+  if (foodFalling) { // draw textures
     DrawTexture(fishTexture, (int)foodPosition.x, (int)foodPosition.y, WHITE);
   }
 

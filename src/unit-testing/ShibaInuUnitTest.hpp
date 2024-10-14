@@ -17,7 +17,7 @@ class ShibaInuUnitTest {
             ShibaInu shiba;
             // tests if constructor correctly initialises data members
             if (shiba.hungerInterval != 20 || shiba.thirstInterval != 12 || shiba.happinessInterval != 25 ||
-            shiba.scalingFactor != 0.2) {
+            shiba.scalingFactor != 0.2f) {
                 std::cout << "ShibaInu Test 1 failed (constructor initialisations)" << std::endl;
             }
             else {

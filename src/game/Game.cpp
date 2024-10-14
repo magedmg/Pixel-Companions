@@ -58,7 +58,7 @@ Game::Game() {
       static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560,
       200, 150};
 
-  // Declare the rectanges for the pets on the screen
+  // Declare the rectangles for the pets on the screen
   petRects[0] = {static_cast<float>((875 / 4) - 65), 300, 140, 200};
   petRects[1] = {static_cast<float>((875 / 4) * 2 - 35), 300, 170, 200};
   petRects[2] = {static_cast<float>((875 / 4) * 3 + 20), 300, 170, 200};
@@ -77,7 +77,7 @@ Game::Game() {
 }
 
 void Game::updateAll() {
-
+// updates game whether it is in starting UI or in an active game
   switch (gameState) {
   case 0:
     startUI();
@@ -91,6 +91,7 @@ void Game::updateAll() {
 
 
 void Game::startUI() {
+  // can be either a selection screen or instructions screen
   switch (UIstate) {
   case 0:
     pickPet();
@@ -102,6 +103,7 @@ void Game::startUI() {
 }
 
 void Game::instructionsUI() {
+  // displays instructions
   DrawTextureV(instructionsTexture, {0, 0}, WHITE);
   DrawText("Pixel Companion", 300, 20, 50, WHITE);
 
@@ -125,6 +127,7 @@ void Game::pickPet() {
       {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
       WHITE);
 
+// displays current highscores for each pet type
   DrawText(highscore.getShibaScore().c_str(), 180, 500, 40, GRAY);
   DrawText(highscore.getPinkCatScore().c_str(), 470, 500, 40, GRAY);
   DrawText(highscore.getGreyCatScore().c_str(), 750, 500, 40, GRAY);
@@ -133,6 +136,7 @@ void Game::pickPet() {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
     for (int i = 0; i < 3; i++) {
       if (CheckCollisionRecs(mouseRect, petRects[i])) {
+        // if mouse clicks any pet, select that pet
         petBreed = petOptions[i];
         boxLocation = i;
       }
@@ -188,6 +192,7 @@ void Game::activeGame() {
   DrawText("LVL ", 13, 75, 40, BLACK);
   DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
 
+// only show happiness status if pet is a cat
   if (currentPet->petType == "cat") {
     DrawText(std::to_string(currentPet->currentHappiness).c_str(), 630, 20, 30,
              PINK);
@@ -213,6 +218,7 @@ void Game::activeGame() {
 
   currentPet->Draw();
 
+// draw poops
   for (int i = 0; i < currentPet->currentPooCount; i++) {
     currentPet->poos[i]->Draw();
   }
@@ -223,6 +229,7 @@ void Game::activeGame() {
 
     Rectangle collisionRect = {mousePos.x, mousePos.y, 5, 5};
     for (int i = 0; i < currentPet->currentPooCount; i++) {
+      // if poop is clicked, deactivate the poop and award points
       if (CheckCollisionRecs(currentPet->poos[i]->getRect(), collisionRect)) {
         currentPet->poos[i]->deactivate();
         scoreValue += 30;
@@ -237,6 +244,7 @@ void Game::activeGame() {
           pet.Update(currentPet->position);
           lastTimePetted = GetTime(); // reset the last time petted
           if (currentPet->currentHappiness + 25 > 100) {
+            // add to happiness status when petted
             currentPet->currentHappiness = 100;
           } else {
             currentPet->currentHappiness += 25;
@@ -259,6 +267,7 @@ void Game::activeGame() {
   pet.Draw();
 
   currentPet->Draw();
+  // draw health bar and coins
   DrawTextureV(healthBarTexture, {10, 10}, WHITE);
   DrawTextureV(coinBarTexture,
                {static_cast<float>(windowWidth - coinBarImage.width) - 20,
@@ -266,13 +275,13 @@ void Game::activeGame() {
                WHITE);
 
   if (petAlive) {
-    loadCoins();
+    loadCoins(); // spawns coins randomly
 
     for (auto &coin : coins) {
       coin.Draw();
     }
 
-    checkCollisions();
+    checkCollisions(); // check for any collisions ingame
   }
 
   // Drawing food on the screen and updating it each frame
@@ -295,6 +304,7 @@ void Game::activeGame() {
         health.takeDamage(1);
       }
       lastTimeDamaged = GetTime();
+      // when health is 0, trigger pet death, stop everything and save highscore if appropriate
       if (health.getHealth() == 0) {
         if (petAlive == true) {
           petAlive = false;
@@ -309,6 +319,7 @@ void Game::activeGame() {
       }
     }
   } else {
+    // heal over time if status bars are not 0
     if (GetTime() - lastTimeHealed > 2) {
       for (int i = 0; i < 5; i++) {
         health.healDamage(1);

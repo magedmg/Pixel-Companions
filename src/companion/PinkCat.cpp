@@ -37,7 +37,7 @@ PinkCat::PinkCat() : Cat() {
   randomPooInterval = GetRandomValue(5, 10);
 }
 
-void PinkCat::Draw() {
+void PinkCat::Draw() { // calculates next frame
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -50,7 +50,7 @@ void PinkCat::Draw() {
     }
   }
 
-  if (isDead) {
+  if (isDead) { // draws textures
     DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
   } else if (isRunning) {
     if (movingRight) {

@@ -37,7 +37,7 @@ GreyCat::GreyCat() {
   randomPooInterval = GetRandomValue(5, 10);
 }
 
-void GreyCat::Draw() {
+void GreyCat::Draw() { // calculates next frame
   float deltaTime = GetFrameTime();
 
   frameTime += deltaTime;
@@ -50,7 +50,7 @@ void GreyCat::Draw() {
     }
   }
 
-  if (isDead) {
+  if (isDead) { // draws textures
     DrawTexture(deathTexture, (int)position.x, (int)position.y, WHITE);
   } else if (isRunning) {
     if (movingRight) {

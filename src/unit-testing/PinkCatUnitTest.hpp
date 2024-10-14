@@ -17,7 +17,7 @@ class PinkCatUnitTest {
             PinkCat cat;
             // tests if constructor correctly initialises data members
             if (cat.hungerInterval != 18 || cat.thirstInterval != 11 || cat.happinessInterval != 23 ||
-            cat.scalingFactor != 0.4) {
+            cat.scalingFactor != 0.4f) {
                 std::cout << "PinkCat Test 1 failed (constructor initialisations)" << std::endl;
             }
             else {

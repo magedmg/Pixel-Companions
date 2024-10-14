@@ -15,6 +15,7 @@ void Pet::updateStatus() {
     this->lastFedTime = GetTime();
   }
 
+// thirst status
   if (GetTime() - this->lastDrankTime >= this->thirstInterval) {
     if (this->currentThirst - (25*scalingFactor*level) < 0) {
       this->currentThirst = 0;
@@ -24,6 +25,7 @@ void Pet::updateStatus() {
     this->lastDrankTime = GetTime();
   }
 
+// happiness status
   if (GetTime() - this->lastPetTime >= this->happinessInterval) {
     if (this->currentHappiness - (25*scalingFactor*level) < 0) {
       this->currentHappiness = 0;
@@ -33,6 +35,7 @@ void Pet::updateStatus() {
     this->lastPetTime = GetTime();
   }
 
+// controls levelling up over time
   if (GetTime() - this->lastLevelUpTime >= this-> levelUpInterval) {
     this->level += 1;
     this->lastLevelUpTime = GetTime();
