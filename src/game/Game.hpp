@@ -48,6 +48,9 @@ private:
   Image happinessImage;
   Texture2D happinessTexture;
 
+  Image deathbgImage;
+  Texture2D deathbgTexture;
+
   int catSize[2], fishSize[2], buttonSize[2];
   Texture2D fishTexture, foodbuttonTexture, foodbuttonClickedTexture;
   Texture2D waterbuttonTexture, waterbuttonClickedTexture;
@@ -70,6 +73,9 @@ private:
   int scoreTimer;
 
   int UITimer;
+  int endingTimer;
+  int endCounter;
+  int timeTracker;
 
   Food food;
   Water water;
@@ -103,6 +109,7 @@ private:
   Rectangle instructionsRect;
 
   int UIstate;
+  int playingState;
 
   Rectangle petRects[3];
   std::string petOptions[3];
@@ -126,6 +133,8 @@ public:
 
   void activeGame();
   void startUI();
+  void deathScreen();
+  void playingGame();
 
   void pickPet();
   void instructionsUI();

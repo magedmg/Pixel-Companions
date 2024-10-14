@@ -37,6 +37,11 @@ Game::Game() {
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
+  // death background image
+  deathbgImage = LoadImage("resources/deathbg.png");
+  ImageResize(&deathbgImage, 600, 350);
+  deathbgTexture = LoadTextureFromImage(deathbgImage);
+
   startButton = LoadImage("resources/startButton.png");
   ImageResize(&startButton, 300, 200);
   startTexture = LoadTextureFromImage(startButton);
@@ -74,6 +79,7 @@ Game::Game() {
   boxLocation = -200;
 
   gameState = 0;
+  playingState = 0;
 }
 
 void Game::updateAll() {
@@ -87,6 +93,7 @@ void Game::updateAll() {
   case 1:
     activeGame();
   }
+
 }
 
 
@@ -173,8 +180,21 @@ void Game::pickPet() {
   }
 }
 
-// When the game is actually being played
+// game is either currently being played, or player has died
 void Game::activeGame() {
+  switch (playingState) {
+  case 0:
+    playingGame();
+    break;
+  
+  case 1:
+    deathScreen();
+    break;
+  }
+}
+
+// when the game is actually being played
+void Game::playingGame() {
   int scoreTimer = GetTime() - UITimer; // current time elapsed in seconds
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
@@ -191,6 +211,7 @@ void Game::activeGame() {
   // display current pet level
   DrawText("LVL ", 13, 75, 40, BLACK);
   DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
+
 
 // only show happiness status if pet is a cat
   if (currentPet->petType == "cat") {
@@ -312,9 +333,10 @@ void Game::activeGame() {
           currentPet->isDead = true;
           water.drink();
           highscore.addHighscore((scoreValue+scoreTimer), petBreed);
-          // Can change this to a dead screen later
-          gameState = 0;
-          delete currentPet;
+          endingTimer = GetTime();
+          timeTracker = GetTime();
+          endCounter = 3;
+          playingState = 1; // send to ending screen
         }
       }
     }
@@ -421,4 +443,32 @@ void Game::Reset() {
   HealthBar health;
 
   gameState = 0;
+}
+
+void Game::deathScreen() {
+  DrawTextureV(bgImageTexture, {0, 0}, WHITE);
+  
+  // display current pet level
+  DrawText("LVL ", 13, 75, 40, BLACK);
+  DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
+
+  currentPet->Draw(); // draw dead pet
+
+  // keeps track of seconds remaining until deathscreen closes
+  if (GetTime() - timeTracker >= 1) {
+    endCounter--;
+    timeTracker = GetTime();
+  }
+
+  DrawTextureV(deathbgTexture, {200, 60}, WHITE);
+  DrawText("You died!", 350, 170, 70, WHITE);
+  DrawText("Returning in", 320, 240, 50, GRAY);
+  DrawText(std::to_string(endCounter).c_str(), 650, 240, 50, GRAY);
+
+// if 3 seconds have passed, switch back to starting screen
+  if (GetTime() - endingTimer >= 3) {
+    playingState = 0;
+    gameState = 0;
+    delete currentPet;
+  }
 }
