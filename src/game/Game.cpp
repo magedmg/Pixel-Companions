@@ -57,6 +57,19 @@ Game::Game() {
   instructionsRect = {
       static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560,
       200, 150};
+  
+  // Ending Screen
+  ending = LoadImage("resources/endingscreen.png");
+  ImageResize(&ending, windowWidth, windowHeight);
+  endingTexture = LoadTextureFromImage(ending);
+
+  endingButton = LoadImage("resources/buttons/tryagainbutton.png");
+  ImageResize(&endingButton, 200, 80);
+  endingButtonTexture = LoadTextureFromImage(endingButton);
+  UIstate = 2;
+  endingButtonRect = {
+      static_cast<float>(windowWidth / 3 - endingButton.width / 2), 480,
+      200, 80};
 
   // Declare the rectangles for the pets on the screen
   petRects[0] = {static_cast<float>((875 / 4) - 65), 300, 140, 200};
@@ -99,6 +112,9 @@ void Game::startUI() {
   case 1:
     instructionsUI();
     break;
+  case 2:
+    endingUI();
+    break;
   }
 }
 
@@ -112,6 +128,21 @@ void Game::instructionsUI() {
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
     if (CheckCollisionRecs(mouseRect, exitButton)) {
+      UIstate = 0;
+    }
+  }
+}
+
+void Game::endingUI() {
+  // displays instructions
+  DrawTextureV(endingTexture, {0, 0}, WHITE);
+  DrawText("Pixel Companion", 300, 20, 50, WHITE);
+
+  // If the user hits the ending button go back the UI menu
+  Rectangle endingButton{100, 100, 115, 80};
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
+    if (CheckCollisionRecs(mouseRect, endingButton)) {
       UIstate = 0;
     }
   }

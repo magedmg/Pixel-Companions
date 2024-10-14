@@ -100,7 +100,13 @@ private:
   Image instructionsButton;
   Texture2D instructionsButtonTexture;
 
+  Image ending;
+  Texture2D endingTexture;
+  Image endingButton;
+  Texture2D endingButtonTexture;
+
   Rectangle instructionsRect;
+  Rectangle endingButtonRect;
 
   int UIstate;
 
@@ -129,6 +135,8 @@ public:
 
   void pickPet();
   void instructionsUI();
+
+  void endingUI();
 
   void Reset();
 
