@@ -37,8 +37,8 @@ Game::Game() {
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
-  startButton = LoadImage("resources/startButton.png");
-  ImageResize(&startButton, 300, 200);
+  startButton = LoadImage("resources/buttons/startgamebutton.png");
+  ImageResize(&startButton, 200, 80);
   startTexture = LoadTextureFromImage(startButton);
 
   UIpets = LoadImage("resources/breedchoosing.png");
@@ -50,12 +50,12 @@ Game::Game() {
   ImageResize(&instructions, windowWidth, windowHeight);
   instructionsTexture = LoadTextureFromImage(instructions);
 
-  instructionsButton = LoadImage("resources/instructions-button.png");
-  ImageResize(&instructionsButton, 200, 150);
+  instructionsButton = LoadImage("resources/buttons/instructionbutton.png");
+  ImageResize(&instructionsButton, 200, 80);
   instructionsButtonTexture = LoadTextureFromImage(instructionsButton);
   UIstate = 0;
   instructionsRect = {
-      static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560,
+      static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 510,
       200, 150};
 
   // Declare the rectanges for the pets on the screen
@@ -126,7 +126,7 @@ void Game::pickPet() {
 
   DrawTextureV(
       instructionsButtonTexture,
-      {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
+      {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 510},
       WHITE);
 
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
@@ -141,7 +141,7 @@ void Game::pickPet() {
     if (petBreed != "") {
       Rectangle startRect{
           static_cast<float>((windowWidth / 3) * 2 - startButton.width / 2),
-          560, 300, 200};
+          510, 300, 200};
       if (CheckCollisionRecs(startRect, mouseRect)) {
         createPet(petBreed);
         gameState = 1;
@@ -164,7 +164,7 @@ void Game::pickPet() {
     DrawTextureV(
         startTexture,
         {static_cast<float>((windowWidth / 3) * 2 - startButton.width / 2),
-         530},
+         510},
         WHITE);
   }
 }
