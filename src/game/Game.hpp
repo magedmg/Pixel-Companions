@@ -69,6 +69,8 @@ private:
   int scoreValue;
   int scoreTimer;
 
+  int UITimer;
+
   Food food;
   Water water;
   HealthBar health;

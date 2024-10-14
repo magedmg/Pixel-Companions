@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-
+#include <string>
 class Highscore {
     private:
         std::string shibaScore;
@@ -10,9 +10,10 @@ class Highscore {
     public:
         Highscore();
 
-        void addHighscore(std::string score, std::string petBreed);
+        void addHighscore(int score, std::string petBreed);
         std::string getShibaScore();
         std::string getPinkCatScore();
         std::string getGreyCatScore();
 };
+
 

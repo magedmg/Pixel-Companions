@@ -33,7 +33,7 @@ void Water::update() {
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     Vector2 mousePosition = GetMousePosition();
 
-    if (CheckCollisionPointRec(mousePosition, waterButtonRect)) {
+    if (CheckCollisionPointRec(mousePosition, waterButtonRect) && isBowlFull == false) {
       if (*currCoins >= 1) {
         iswaterbuttonPressed = true;
         isBowlFull = true;

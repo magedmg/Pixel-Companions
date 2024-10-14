@@ -81,6 +81,7 @@ void Game::updateAll() {
   switch (gameState) {
   case 0:
     startUI();
+    UITimer = GetTime();
     break;
 
   case 1:
@@ -166,6 +167,7 @@ void Game::pickPet() {
 
 // When the game is actually being played
 void Game::activeGame() {
+  int scoreTimer = GetTime() - UITimer; // current time elapsed in seconds
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
   DrawText(std::to_string(coinCounter).c_str(), 915, 655, 30, WHITE);
   DrawText(std::to_string(scoreValue + scoreTimer).c_str(), 30, 648, 50, WHITE);
@@ -196,7 +198,6 @@ void Game::activeGame() {
   DrawTextureV(coinBarTexture, {770, 130}, WHITE);
   DrawText("1", 815, 135, 35, WHITE);
 
-  int scoreTimer = GetTime(); // current time elapsed in seconds
   flag = 0;
 
   // Water
@@ -295,7 +296,7 @@ void Game::activeGame() {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
-          highscore.addHighscore(std::to_string(scoreValue), petBreed);
+          highscore.addHighscore((scoreValue+scoreTimer), petBreed);
           // Can change this to a dead screen later
           gameState = 0;
           delete currentPet;
