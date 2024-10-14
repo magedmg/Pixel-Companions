@@ -4,9 +4,9 @@
 using namespace std;
 
 Poop::Poop(Vector2 position) {
-// initialisations
+  // initialisations
   active = false;
-  pooImage = LoadImage("resources/poo.png");
+  pooImage = LoadImage("../resources/poo.png");
   ImageResize(&pooImage, 35, 35);
   pooTexture = LoadTextureFromImage(pooImage);
 

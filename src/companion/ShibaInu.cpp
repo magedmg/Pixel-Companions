@@ -3,7 +3,7 @@
 void createAnimation5(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
-    const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
+    const char *filename = TextFormat("../resources/%s%d.png", path, i + 1);
     Image targetImage = LoadImage(filename);
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);
@@ -24,7 +24,7 @@ ShibaInu::ShibaInu() {
   createAnimation5(6, dogSize, runLeftTextures, "dog/3");
 
   // Load death image and resize it
-  deathImage = LoadImage("resources/dog/41.png");
+  deathImage = LoadImage("../resources/dog/41.png");
   ImageResize(&deathImage, dogSize[0], dogSize[1]);
   deathTexture = LoadTextureFromImage(deathImage);
 

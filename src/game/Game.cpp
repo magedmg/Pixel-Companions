@@ -8,54 +8,54 @@
 
 Game::Game() {
   // Load and resize background image
-  bgImage = LoadImage("resources/bg.png");
+  bgImage = LoadImage("../resources/bg.png");
   ImageResize(&bgImage, windowWidth, windowHeight);
   bgImageTexture = LoadTextureFromImage(bgImage);
 
   // Load health bar image and resize it
-  healthBarImage = LoadImage("resources/health bar.png");
+  healthBarImage = LoadImage("../resources/health bar.png");
   ImageResize(&healthBarImage, 300, 40);
   healthBarTexture = LoadTextureFromImage(healthBarImage);
 
   // Load fish hunger image and resize it
-  hungerImage = LoadImage("resources/food/fish.png");
+  hungerImage = LoadImage("../resources/food/fish.png");
   ImageResize(&hungerImage, 30, 30);
   hungerTexture = LoadTextureFromImage(hungerImage);
 
   // Load water image and resize it
-  waterImage = LoadImage("resources/water.png");
+  waterImage = LoadImage("../resources/water.png");
   ImageResize(&waterImage, 30, 30);
   waterTexture = LoadTextureFromImage(waterImage);
 
   // Load heart happiness image and resize it
-  happinessImage = LoadImage("resources/happiness.png");
+  happinessImage = LoadImage("../resources/happiness.png");
   ImageResize(&happinessImage, 30, 30);
   happinessTexture = LoadTextureFromImage(happinessImage);
 
   // Coin in the menu
-  coinBarImage = LoadImage("resources/Coins/c1.png");
+  coinBarImage = LoadImage("../resources/Coins/c1.png");
   ImageResize(&coinBarImage, 35, 40);
   coinBarTexture = LoadTextureFromImage(coinBarImage);
 
   // death background image
-  deathbgImage = LoadImage("resources/deathbg.png");
+  deathbgImage = LoadImage("../resources/deathbg.png");
   ImageResize(&deathbgImage, 600, 350);
   deathbgTexture = LoadTextureFromImage(deathbgImage);
 
-  startButton = LoadImage("resources/startButton.png");
+  startButton = LoadImage("../resources/startButton.png");
   ImageResize(&startButton, 300, 200);
   startTexture = LoadTextureFromImage(startButton);
 
-  UIpets = LoadImage("resources/breedchoosing.png");
+  UIpets = LoadImage("../resources/breedchoosing.png");
   ImageResize(&UIpets, windowWidth, windowHeight);
   UIpetsTexture = LoadTextureFromImage(UIpets);
 
   // Instructions
-  instructions = LoadImage("resources/instruction.png");
+  instructions = LoadImage("../resources/instruction.png");
   ImageResize(&instructions, windowWidth, windowHeight);
   instructionsTexture = LoadTextureFromImage(instructions);
 
-  instructionsButton = LoadImage("resources/instructions-button.png");
+  instructionsButton = LoadImage("../resources/instructions-button.png");
   ImageResize(&instructionsButton, 200, 150);
   instructionsButtonTexture = LoadTextureFromImage(instructionsButton);
   UIstate = 0;
@@ -83,7 +83,7 @@ Game::Game() {
 }
 
 void Game::updateAll() {
-// updates game whether it is in starting UI or in an active game
+  // updates game whether it is in starting UI or in an active game
   switch (gameState) {
   case 0:
     startUI();
@@ -93,9 +93,7 @@ void Game::updateAll() {
   case 1:
     activeGame();
   }
-
 }
-
 
 void Game::startUI() {
   // can be either a selection screen or instructions screen
@@ -134,7 +132,7 @@ void Game::pickPet() {
       {static_cast<float>(windowWidth / 3 - instructionsButton.width / 2), 560},
       WHITE);
 
-// displays current highscores for each pet type
+  // displays current highscores for each pet type
   DrawText(highscore.getShibaScore().c_str(), 180, 500, 40, GRAY);
   DrawText(highscore.getPinkCatScore().c_str(), 470, 500, 40, GRAY);
   DrawText(highscore.getGreyCatScore().c_str(), 750, 500, 40, GRAY);
@@ -186,7 +184,7 @@ void Game::activeGame() {
   case 0:
     playingGame();
     break;
-  
+
   case 1:
     deathScreen();
     break;
@@ -212,8 +210,7 @@ void Game::playingGame() {
   DrawText("LVL ", 13, 75, 40, BLACK);
   DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
 
-
-// only show happiness status if pet is a cat
+  // only show happiness status if pet is a cat
   if (currentPet->petType == "cat") {
     DrawText(std::to_string(currentPet->currentHappiness).c_str(), 630, 20, 30,
              PINK);
@@ -239,7 +236,7 @@ void Game::playingGame() {
 
   currentPet->Draw();
 
-// draw poops
+  // draw poops
   for (int i = 0; i < currentPet->currentPooCount; i++) {
     currentPet->poos[i]->Draw();
   }
@@ -325,14 +322,15 @@ void Game::playingGame() {
         health.takeDamage(1);
       }
       lastTimeDamaged = GetTime();
-      // when health is 0, trigger pet death, stop everything and save highscore if appropriate
+      // when health is 0, trigger pet death, stop everything and save highscore
+      // if appropriate
       if (health.getHealth() == 0) {
         if (petAlive == true) {
           petAlive = false;
           currentPet->isRunning = false;
           currentPet->isDead = true;
           water.drink();
-          highscore.addHighscore((scoreValue+scoreTimer), petBreed);
+          highscore.addHighscore((scoreValue + scoreTimer), petBreed);
           endingTimer = GetTime();
           timeTracker = GetTime();
           endCounter = 3;
@@ -447,7 +445,7 @@ void Game::Reset() {
 
 void Game::deathScreen() {
   DrawTextureV(bgImageTexture, {0, 0}, WHITE);
-  
+
   // display current pet level
   DrawText("LVL ", 13, 75, 40, BLACK);
   DrawText(std::to_string(currentPet->level).c_str(), 106, 75, 40, BLACK);
@@ -465,7 +463,7 @@ void Game::deathScreen() {
   DrawText("Returning in", 320, 240, 50, GRAY);
   DrawText(std::to_string(endCounter).c_str(), 650, 240, 50, GRAY);
 
-// if 3 seconds have passed, switch back to starting screen
+  // if 3 seconds have passed, switch back to starting screen
   if (GetTime() - endingTimer >= 3) {
     playingState = 0;
     gameState = 0;

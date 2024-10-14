@@ -4,3 +4,12 @@
 
 # Ignore macOS system files
 .DS_Store
+
+
+build/
+
+.cache/
+
+.direnv/
+
+.vscode/

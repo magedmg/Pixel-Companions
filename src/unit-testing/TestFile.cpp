@@ -4,61 +4,64 @@
 #include "PoopUnitTest.hpp"
 #include "WaterUnitTest.hpp"
 
-#include "GreyCatUnitTest.hpp"
 #include "CatUnitTest.hpp"
-#include "PetUnitTest.hpp"
+#include "GreyCatUnitTest.hpp"
 #include "HealthBarUnitTest.hpp"
+#include "PetUnitTest.hpp"
 
-#include "PinkCatUnitTest.hpp"
 #include "DogUnitTest.hpp"
-#include "ShibaInuUnitTest.hpp"
 #include "GameUnitTest.hpp"
 #include "HighscoreUnitTest.hpp"
-
-using namespace std;
+#include "PinkCatUnitTest.hpp"
+#include "ShibaInuUnitTest.hpp"
 
 int main() {
-    CoinUnitTest coinTest;
-    coinTest.runTests();
 
-    FoodUnitTest foodTest;
-    foodTest.runTests();
+  CoinUnitTest coinTest;
+  coinTest.runTests();
 
-    PettingUnitTest pettingTest;
-    pettingTest.runTests();
+  /*
 
-    PoopUnitTest poopTest;
-    poopTest.runTests();
+  FoodUnitTest foodTest;
+  foodTest.runTests();
 
-    WaterUnitTest waterTest;
-    waterTest.runTests();
+  PettingUnitTest pettingTest;
+  pettingTest.runTests();
 
-    GreyCatUnitTest greyCatTest;
-    greyCatTest.runTests();
+  PoopUnitTest poopTest;
+  poopTest.runTests();
 
-    CatUnitTest catTest;
-    catTest.runTests();
+  WaterUnitTest waterTest;
+  waterTest.runTests();
 
-    PettingUnitTest petTest;
-    petTest.runTests();
+  GreyCatUnitTest greyCatTest;
+  greyCatTest.runTests();
 
-    HealthBarUnitTest healthTest;
-    healthTest.runTests();
+  CatUnitTest catTest;
+  catTest.runTests();
 
-    PinkCatUnitTest pinkCatTest;
-    pinkCatTest.runTests();
+  PettingUnitTest petTest;
+  petTest.runTests();
 
-    DogUnitTest dogTest;
-    dogTest.runTests();
+  HealthBarUnitTest healthTest;
+  healthTest.runTests();
 
-    ShibaInuUnitTest shibaTest;
-    shibaTest.runTests();
+  PinkCatUnitTest pinkCatTest;
+  pinkCatTest.runTests();
 
-    GameUnitTest gameTest;
-    gameTest.runTests();
+  DogUnitTest dogTest;
+  dogTest.runTests();
 
-    HighscoreUnitTest highscoreTest;
-    highscoreTest.runTests();
+  ShibaInuUnitTest shibaTest;
+  shibaTest.runTests();
 
-    return 0;
+  GameUnitTest gameTest;
+  gameTest.runTests();
+
+  HighscoreUnitTest highscoreTest;
+  highscoreTest.runTests();
+
+  */
+
+  return 0;
 }

@@ -10,7 +10,7 @@ private:
   int currentFrame;
   float frameSpeed;
   int moveSpeed;
-  Image coinImage;
+  Image coinImage[6];
 
 public:
   bool collision;

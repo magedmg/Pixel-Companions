@@ -33,10 +33,12 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     Vector2 mousePosition = GetMousePosition();
 
     if (CheckCollisionPointRec(mousePosition, foodButtonRect)) {
-      // if mouse clicks food button collision rectangle, activate food button and consume coins. spawn food.
+      // if mouse clicks food button collision rectangle, activate food button
+      // and consume coins. spawn food.
       if (*currCoins >= 2) {
         isfoodbuttonPressed = true;
-        // determines spawn position of food based on cat position so it is catchable
+        // determines spawn position of food based on cat position so it is
+        // catchable
         foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
         while (foodPosition.x < 0 || foodPosition.x > 950) {
           foodPosition.x = catPosition.x + (float)GetRandomValue(-300, 300);
@@ -50,7 +52,8 @@ void Food::update(Vector2 &catPosition, Vector2 &targetPosition,
     }
   }
 
-  if (foodFalling) { // food y coordinate increases (goes down onscreen) over time
+  if (foodFalling) { // food y coordinate increases (goes down onscreen) over
+                     // time
     float fishSize[2] = {55, 65};
     foodPosition.y += foodSpeed * deltaTime;
     foodRect = {foodPosition.x, foodPosition.y, fishSize[0], fishSize[1]};
@@ -79,7 +82,7 @@ void Food::unloadTextures() {
 }
 
 void createImage(float sizes[2], Texture2D &ImgTexture, const char *path) {
-  const char *filename = TextFormat("resources/%s.png", path);
+  const char *filename = TextFormat("../resources/%s.png", path);
   Image targetImage = LoadImage(filename);
   ImageResize(&targetImage, sizes[0], sizes[1]);
   ImgTexture = LoadTextureFromImage(targetImage);
