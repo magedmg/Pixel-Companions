@@ -1,6 +1,6 @@
 Grey Cat Highscore:
 0
 Pink Cat Highscore:
-123
+0
 Shiba Inu Highscore:
-251
+0
