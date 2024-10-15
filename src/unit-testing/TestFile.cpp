@@ -1,4 +1,5 @@
 #include "CoinUnitTest.hpp"
+
 #include "FoodUnitTest.hpp"
 #include "PettingUnitTest.hpp"
 #include "PoopUnitTest.hpp"
@@ -15,12 +16,15 @@
 #include "PinkCatUnitTest.hpp"
 #include "ShibaInuUnitTest.hpp"
 
+#include "CoinUnitTest.hpp"
+#include <raylib.h>
+
 int main() {
+  SetTraceLogLevel(LOG_WARNING); // only prints out errors in terminal
+  InitWindow(800, 600, "Test Window");
 
   CoinUnitTest coinTest;
   coinTest.runTests();
-
-  /*
 
   FoodUnitTest foodTest;
   foodTest.runTests();
@@ -55,13 +59,13 @@ int main() {
   ShibaInuUnitTest shibaTest;
   shibaTest.runTests();
 
-  GameUnitTest gameTest;
-  gameTest.runTests();
+  // GameUnitTest gameTest;
+  // gameTest.runTests();
 
   HighscoreUnitTest highscoreTest;
   highscoreTest.runTests();
 
-  */
+  CloseWindow();
 
   return 0;
 }

@@ -33,6 +33,8 @@
 #include "companion/Dog.hpp"
 
 int main() {
+  SetTraceLogLevel(
+      LOG_WARNING); // doesnt print out anything except errors in terminal
 
   int windowWidth = 1000;
   int windowHeight = 700;
