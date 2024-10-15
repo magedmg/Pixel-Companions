@@ -5,7 +5,7 @@
 
 ## Build
 
-To build this project, make sure to have CMake installed locally.
+Ensure you have CMake installed.
 
 ```sh
 mkdir build
@@ -16,7 +16,7 @@ make
 
 ## Run
 
-In `build` folder
+To run the game go into `build` folder and run:
 
 ```sh
 ./game # Run the game
