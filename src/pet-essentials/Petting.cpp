@@ -7,7 +7,7 @@ using namespace std;
 void createAnimation2(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
-    const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
+    const char *filename = TextFormat("../resources/%s%d.png", path, i + 1);
     Image targetImage = LoadImage(filename);
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);

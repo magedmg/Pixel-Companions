@@ -3,7 +3,7 @@
 void createAnimation4(int numLoop, int sizes[2], Texture2D *textures,
                       const char *path) {
   for (int i = 0; i < numLoop; i++) {
-    const char *filename = TextFormat("resources/%s%d.png", path, i + 1);
+    const char *filename = TextFormat("../resources/%s%d.png", path, i + 1);
     Image targetImage = LoadImage(filename);
     ImageResize(&targetImage, sizes[0], sizes[1]);
     textures[i] = LoadTextureFromImage(targetImage);
@@ -24,7 +24,7 @@ GreyCat::GreyCat() {
   createAnimation4(6, catSize, runLeftTextures, "cat/3");
 
   // Load death image and resize it
-  deathImage = LoadImage("resources/cat/114.png");
+  deathImage = LoadImage("../resources/cat/114.png");
   ImageResize(&deathImage, catSize[0], catSize[1]);
   deathTexture = LoadTextureFromImage(deathImage);
 

@@ -1,15 +1,15 @@
 #include "Coin.hpp"
 #include "raylib.h"
 #include <filesystem>
+#include <iostream>
 #include <string>
 
 Coin::Coin(Vector2 position) {
   for (int i = 1; i < 7; i++) {
-    coinImage = LoadImage(TextFormat("resources/Coins/c%d.png", i));
-
+    coinImage = LoadImage(TextFormat("../resources/Coins/c%d.png", i));
     ImageResize(&coinImage, 15, 35);
-
     coinTextures[i - 1] = LoadTextureFromImage(coinImage);
+
     UnloadImage(coinImage); // Unload image after converting to texture
   }
   collision = false;

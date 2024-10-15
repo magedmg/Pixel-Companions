@@ -4,3 +4,14 @@
 
 # Ignore macOS system files
 .DS_Store
+
+# Compiled static libraries
+*.lib
+
+build/
+
+.cache/
+
+.direnv/
+
+.vscode/

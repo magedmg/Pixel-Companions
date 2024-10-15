@@ -36,16 +36,12 @@ public:
   Poop **poos;
   int currentPooCount;
 
-  std::vector<Poop> poos1;
-
   Vector2 position;
   Vector2 targetPosition;
 
   bool isRunning;
   bool movingRight;
   bool isDead;
-
-
 
   Pet();
   void updateStatus();

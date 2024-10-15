@@ -1,64 +1,73 @@
 #include "CoinUnitTest.hpp"
+
 #include "FoodUnitTest.hpp"
 #include "PettingUnitTest.hpp"
 #include "PoopUnitTest.hpp"
 #include "WaterUnitTest.hpp"
 
-#include "GreyCatUnitTest.hpp"
 #include "CatUnitTest.hpp"
-#include "PetUnitTest.hpp"
+#include "GreyCatUnitTest.hpp"
 #include "HealthBarUnitTest.hpp"
+#include "PetUnitTest.hpp"
 
-#include "PinkCatUnitTest.hpp"
 #include "DogUnitTest.hpp"
-#include "ShibaInuUnitTest.hpp"
 #include "GameUnitTest.hpp"
 #include "HighscoreUnitTest.hpp"
+#include "PinkCatUnitTest.hpp"
+#include "ShibaInuUnitTest.hpp"
 
-using namespace std;
+#include "CoinUnitTest.hpp"
+#include <raylib.h>
 
 int main() {
-    CoinUnitTest coinTest;
-    coinTest.runTests();
+  SetTraceLogLevel(LOG_WARNING); // only prints out errors in terminal
+  InitWindow(800, 600, "Test Window");
 
-    FoodUnitTest foodTest;
-    foodTest.runTests();
+  CoinUnitTest coinTest;
+  coinTest.runTests();
 
-    PettingUnitTest pettingTest;
-    pettingTest.runTests();
+  FoodUnitTest foodTest;
+  foodTest.runTests();
 
-    PoopUnitTest poopTest;
-    poopTest.runTests();
+  PettingUnitTest pettingTest;
+  pettingTest.runTests();
 
-    WaterUnitTest waterTest;
-    waterTest.runTests();
+  PoopUnitTest poopTest;
+  poopTest.runTests();
 
-    GreyCatUnitTest greyCatTest;
-    greyCatTest.runTests();
+  WaterUnitTest waterTest;
+  waterTest.runTests();
 
-    CatUnitTest catTest;
-    catTest.runTests();
+  GreyCatUnitTest greyCatTest;
+  greyCatTest.runTests();
 
-    PettingUnitTest petTest;
-    petTest.runTests();
+  CatUnitTest catTest;
+  catTest.runTests();
 
-    HealthBarUnitTest healthTest;
-    healthTest.runTests();
+  PettingUnitTest petTest;
+  petTest.runTests();
 
-    PinkCatUnitTest pinkCatTest;
-    pinkCatTest.runTests();
+  HealthBarUnitTest healthTest;
+  healthTest.runTests();
 
-    DogUnitTest dogTest;
-    dogTest.runTests();
+  PinkCatUnitTest pinkCatTest;
+  pinkCatTest.runTests();
 
-    ShibaInuUnitTest shibaTest;
-    shibaTest.runTests();
+  DogUnitTest dogTest;
+  dogTest.runTests();
 
-    GameUnitTest gameTest;
-    gameTest.runTests();
+  ShibaInuUnitTest shibaTest;
+  shibaTest.runTests();
 
-    HighscoreUnitTest highscoreTest;
-    highscoreTest.runTests();
+  GameUnitTest gameTest;
+  gameTest.runTests();
 
-    return 0;
+  HighscoreUnitTest highscoreTest;
+  highscoreTest.runTests();
+
+  CloseWindow();
+
+  return 0;
 }
+
+

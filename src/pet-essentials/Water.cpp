@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 void createImage2(float sizes[2], Texture2D &ImgTexture, const char *path) {
-  const char *filename = TextFormat("resources/%s.png", path);
+  const char *filename = TextFormat("../resources/%s.png", path);
   Image targetImage = LoadImage(filename);
   ImageResize(&targetImage, sizes[0], sizes[1]);
   ImgTexture = LoadTextureFromImage(targetImage);
@@ -19,7 +19,7 @@ Water::Water() { // initialises water bowl image and water button image
                "buttons/waterbuttonclicked");
   createImage2(emptyWaterBowlSize, emptyWaterBowlTexture, "water/emptyWater");
   createImage2(fullWaterBowlSize, fullWaterBowlTexture, "water/fullWater");
-  
+
   // positioning and resizing
   waterButtonRect = {750, 16, buttonSize[0], buttonSize[1]};
   waterBowlRect = {700, 470, fullWaterBowlSize[0], fullWaterBowlSize[1]};
@@ -34,8 +34,10 @@ void Water::update() {
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     Vector2 mousePosition = GetMousePosition();
 
-    if (CheckCollisionPointRec(mousePosition, waterButtonRect) && isBowlFull == false) {
-      // if water button is clicked and bowl is not full, consume coins and fill bowl
+    if (CheckCollisionPointRec(mousePosition, waterButtonRect) &&
+        isBowlFull == false) {
+      // if water button is clicked and bowl is not full, consume coins and fill
+      // bowl
       if (*currCoins >= 1) {
         iswaterbuttonPressed = true;
         isBowlFull = true;
@@ -69,7 +71,8 @@ void Water::unloadTextures() {
 void Water::drink() { isBowlFull = false; }
 void Water::getCoins(int *currentCoins) { this->currCoins = currentCoins; }
 
-Rectangle Water::getRect() { // return collision rectangle of water bowl if it is full
+Rectangle
+Water::getRect() { // return collision rectangle of water bowl if it is full
   if (isBowlFull) {
     return waterBowlRect;
   } else {

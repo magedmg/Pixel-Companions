@@ -24,6 +24,5 @@ public:
   void Poo1();
   void createAnimation(int, int[2], Texture2D *, const char *);
 
-
   Rectangle getRect();
 };
