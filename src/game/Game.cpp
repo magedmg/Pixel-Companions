@@ -74,7 +74,7 @@ Game::Game() {
   DrawRectangle((875 / 4) * 2 - 35, 300, 170, 200, RED);
   DrawRectangle((875 / 4) * 3 + 20, 300, 170, 200, RED);
 
-  petOptions[0] = ("shibaInu");
+  petOptions[0] = ("shibaInu"); // define pet options for player when they click on a box
   petOptions[1] = ("pinkCat");
   petOptions[2] = ("greyCat");
 
@@ -184,11 +184,11 @@ void Game::pickPet() {
 void Game::activeGame() {
   switch (playingState) {
   case 0:
-    playingGame();
+    playingGame(); // game is either currently being played (alive pet)
     break;
 
   case 1:
-    deathScreen();
+    deathScreen(); // or pet has died and will return to menu screen
     break;
   }
 }
@@ -232,11 +232,11 @@ void Game::playingGame() {
   // Water
   water.draw();
   if (petAlive) {
-    water.update();
+    water.update(); 
     currentPet->Poo1();
   }
 
-  currentPet->Draw();
+  currentPet->Draw(); // draw pet textures and frames
 
   // draw poops
   for (int i = 0; i < currentPet->currentPooCount; i++) {
@@ -366,7 +366,7 @@ void Game::loadCoins() {
 void Game::checkCollisions() {
   for (auto &coin : coins) { // if pet touches with coin, consume coin
     if (CheckCollisionRecs(coin.getRect(), currentPet->getRect())) {
-      if (coin.collision == false) {
+      if (coin.collision == false) { // once coin is touched, add to coin counter and score
         coinCounter += 1;
         scoreValue += 20;
       }
@@ -390,7 +390,7 @@ void Game::checkCollisions() {
   if (CheckCollisionRecs(food.getRect(), currentPet->getRect())) {
     food.eat();
     currentPet->lastFedTime = GetTime();
-    if (currentPet->currentHunger + 50 > 100) {
+    if (currentPet->currentHunger + 50 > 100) { // add to status bar
       currentPet->currentHunger = 100;
     } else {
       currentPet->currentHunger += 50;
@@ -408,10 +408,10 @@ void Game::createPet(std::string petBreed) {
   } else if (petBreed == "shibaInu") {
     currentPet = new ShibaInu();
   }
-  Reset();
+  Reset(); // reset game when new pet is made
 }
 
-void Game::Reset() {
+void Game::Reset() { // reset data members to reset game
   // Clear the coins on screen
   auto it = coins.begin();
   while (it != coins.end()) {
@@ -431,6 +431,7 @@ void Game::Reset() {
   coinCounter = 0;
   scoreValue = 0;
 
+  // pass coins pointer to food and water to keep track of consumption
   food.getCoins(&coinCounter);
   water.getCoins(&coinCounter);
 
@@ -460,6 +461,7 @@ void Game::deathScreen() {
     timeTracker = GetTime();
   }
 
+// text and background image for deathscreen countdown
   DrawTextureV(deathbgTexture, {200, 60}, WHITE);
   DrawText("You died!", 350, 170, 70, WHITE);
   DrawText("Returning in", 320, 240, 50, GRAY);
