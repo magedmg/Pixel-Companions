@@ -5,6 +5,8 @@
 # Ignore macOS system files
 .DS_Store
 
+# Compiled static libraries
+*.lib
 
 build/
 
