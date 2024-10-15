@@ -2,8 +2,8 @@
 
 #include "../companion/Cat.hpp"
 #include "../companion/Dog.hpp"
-#include "../companion/Pet.hpp"
 #include "../companion/GreyCat.hpp"
+#include "../companion/Pet.hpp"
 #include "../companion/PinkCat.hpp"
 #include "../companion/ShibaInu.hpp"
 #include "../health/HealthBar.hpp"
@@ -143,4 +143,6 @@ public:
 
   // Game state for switching to the UI
   int gameState;
+
+  ~Game();
 };

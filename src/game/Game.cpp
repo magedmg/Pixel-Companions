@@ -472,3 +472,6 @@ void Game::deathScreen() {
     delete currentPet;
   }
 }
+
+// deletes current pet
+Game::~Game() { delete currentPet; }
