@@ -59,8 +59,8 @@ int main() {
   ShibaInuUnitTest shibaTest;
   shibaTest.runTests();
 
-  // GameUnitTest gameTest;
-  // gameTest.runTests();
+  GameUnitTest gameTest;
+  gameTest.runTests();
 
   HighscoreUnitTest highscoreTest;
   highscoreTest.runTests();
@@ -69,3 +69,5 @@ int main() {
 
   return 0;
 }
+
+

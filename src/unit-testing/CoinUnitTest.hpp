@@ -9,8 +9,8 @@ class CoinUnitTest {
 
 public:
   void runTests() {
-    testCoinConstructor();
     testCoinGetRect();
+    testCoinConstructor();
   }
 
 private:
@@ -20,7 +20,7 @@ private:
 
     // testing for rectangle with no collision
     Rectangle rectangle = coin1.getRect();
-    if (rectangle.width <= 15 || rectangle.height <= 35 || rectangle.x != 10 ||
+    if (rectangle.width != 15 || rectangle.height != 35 || rectangle.x != 10 ||
         rectangle.y != 40) {
       std::cout << "Coin Test 1 failed (getRect with no collision)"
                 << std::endl;

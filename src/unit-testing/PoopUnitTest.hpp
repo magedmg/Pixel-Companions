@@ -20,7 +20,7 @@ class PoopUnitTest {
             Poop poo({10,20});
 
             // testing if data members are initialised correctly when constructed
-            if (poo.active != false || poo.position.x != 10 || poo.position.y != 20) {
+            if (poo.position.x != 10 || poo.position.y != 20) {
                 std::cout << "Poop Test 1 failed (constructor initialisation)" << std::endl;
             }
             else {

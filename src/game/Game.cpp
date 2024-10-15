@@ -466,7 +466,7 @@ void Game::deathScreen() {
   DrawText(std::to_string(endCounter).c_str(), 650, 240, 50, GRAY);
 
   // if 3 seconds have passed, switch back to starting screen
-  if (GetTime() - endingTimer >= 3) {
+  if (GetTime() - endingTimer >= 5) {
     playingState = 0;
     gameState = 0;
     delete currentPet;
