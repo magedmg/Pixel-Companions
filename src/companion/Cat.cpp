@@ -106,7 +106,13 @@ void Cat::Update() {
   }
 }
 
-Cat::~Cat() {}
+// Deletes the heap allocated poops
+Cat::~Cat() {
+  for (int i = 0; i < 5; i++) {
+    delete poos[i];
+  }
+  delete[] poos;
+}
 
 void Cat::Poo1() { // triggers poop function
   if (GetTime() - lastPooTime >= randomPooInterval && currentPooCount < 5) {
