@@ -16,7 +16,7 @@ make
 
 ## Run
 
-To run the game go into `build` folder and run:
+To run the game go into `build` and run:
 
 ```sh
 ./game # Run the game
