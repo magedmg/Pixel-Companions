@@ -335,7 +335,7 @@ void Game::playingGame() {
           highscore.addHighscore((scoreValue + scoreTimer), petBreed);
           endingTimer = GetTime();
           timeTracker = GetTime();
-          endCounter = 3;
+          endCounter = 5;
           playingState = 1; // send to ending screen
         }
       }
