@@ -20,7 +20,7 @@ To run the game go into `build` and run:
 
 ```sh
 ./game # Run the game
-./test_runner # Run the unit testing
+./test # Run the unit testing
 ```
 
 
