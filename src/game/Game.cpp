@@ -135,9 +135,7 @@ void Game::pickPet() {
       WHITE);
 
   // displays current highscores for each pet type
-  DrawText(highscore.getShibaScore().c_str(), 180, 500, 40, GRAY);
-  DrawText(highscore.getPinkCatScore().c_str(), 470, 500, 40, GRAY);
-  DrawText(highscore.getGreyCatScore().c_str(), 750, 500, 40, GRAY);
+  // disabled for web
 
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
     Rectangle mouseRect{GetMousePosition().x, GetMousePosition().y, 1, 1};
@@ -332,7 +330,8 @@ void Game::playingGame() {
           currentPet->isRunning = false;
           currentPet->isDead = true;
           water.drink();
-          highscore.addHighscore((scoreValue + scoreTimer), petBreed);
+          // highscore addition used to be below
+          // deleted highscore
           endingTimer = GetTime();
           timeTracker = GetTime();
           endCounter = 5;

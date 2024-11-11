@@ -4,7 +4,6 @@
 class Petting {
 private:
   Texture2D heartTextures[5];
-  Image loveImage;
   int currentFrame;
   float frameTime;
   float frameSpeed;

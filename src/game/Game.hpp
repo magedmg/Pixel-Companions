@@ -12,7 +12,6 @@
 #include "../pet-essentials/Petting.hpp"
 #include "../pet-essentials/Poop.hpp"
 #include "../pet-essentials/Water.hpp"
-#include "Highscore.hpp"
 
 #include <raylib.h>
 
@@ -81,7 +80,6 @@ private:
   Water water;
   HealthBar health;
 
-  Highscore highscore;
 
   int lastTimeDamaged;
   int lastTimeHealed;
